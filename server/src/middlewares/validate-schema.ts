@@ -1,8 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
-import { reportError } from "../utils/error";
-
 export const validateSchema =
   (schema: z.AnyZodObject) =>
   (req: Request, res: Response, next: NextFunction) => {
@@ -14,6 +12,6 @@ export const validateSchema =
       });
       next();
     } catch (error) {
-      next(reportError(error));
+      next(error);
     }
   };
