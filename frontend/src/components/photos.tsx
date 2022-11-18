@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import Photo from "./photo";
 
@@ -41,43 +42,41 @@ const Photos = () => {
       <div className="flex space-x-10">
         <div className="w-full flex flex-col space-y-10">
           {images.slice(0, half).map(({ id, src, alt }) => (
-            <Photo
-              key={id}
-              className="relative"
-              src={src}
-              alt={alt}
-              width={400}
-              height={300}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-            />
+            <Link href={`/photo/${id}`}>
+              <Photo
+                key={id}
+                className="relative"
+                src={src}
+                alt={alt}
+                width={400}
+                height={300}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+              />
+            </Link>
           ))}
         </div>
         <div className="w-full flex flex-col space-y-10">
           {images.slice(half, images.length).map(({ id, src, alt }) => (
-            <Photo
-              key={id}
-              className="relative"
-              src={src}
-              alt={alt}
-              width={700}
-              height={475}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-              //   fill
-            />
+            <Link href={`/photo/${id}`}>
+              <Photo
+                key={id}
+                className="relative"
+                src={src}
+                alt={alt}
+                width={700}
+                height={475}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+              />
+            </Link>
           ))}
         </div>
       </div>
-      {/* <div className="columns-3">
-        <span>w</span>
-        <span>o</span>
-        <span>w</span>
-      </div> */}
     </section>
   );
 };
