@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/header";
+import Newsletter from "../components/newsletter";
 import Photos from "../components/photos";
 
 const Home: NextPage = () => {
@@ -14,6 +15,9 @@ const Home: NextPage = () => {
 
       <Header />
       <Photos />
+      <footer className="container mx-auto py-20 mt-[7.5rem] flex">
+        <Newsletter />
+      </footer>
     </>
   );
 };
