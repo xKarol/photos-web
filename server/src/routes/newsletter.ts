@@ -1,18 +1,9 @@
-import express, { type NextFunction } from "express";
+import express from "express";
 
-import { prisma } from "../db";
-import { reportError } from "../utils/error";
+import * as newsletterController from "../controllers/newsletter";
 
 const router = express.Router();
 
-router.post("/newsletter/subscribe", async (req, res, next: NextFunction) => {
-  try {
-    const data = req.body;
-    const subscriber = await prisma.newsletterSubscriber.create({ data: data });
-    return res.send(subscriber);
-  } catch (error) {
-    next(reportError(error));
-  }
-});
+router.post("/newsletter/subscribe", newsletterController.Subscribe);
 
 export default router;
