@@ -3,7 +3,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="container mx-auto my-10 font-light flex justify-between">
+    <header className="container mx-auto my-20 font-light flex justify-between">
       <figure>Logo</figure>
       <nav>
         <ul className="flex space-x-7">
