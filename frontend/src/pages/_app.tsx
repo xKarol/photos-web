@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Quicksand } from "@next/font/google";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 const openSans = Quicksand({
   subsets: ["latin"],
@@ -8,6 +9,7 @@ const openSans = Quicksand({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const queryClient = new QueryClient();
   return (
     <>
       <style jsx global>{`
@@ -15,7 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           font-family: ${openSans.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </>
   );
 }
