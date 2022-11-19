@@ -13,7 +13,18 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-app.use(cors({ origin: process.env.HOST }));
+const whiteList = [process.env.HOST, process.env.HOST_FRONTEND];
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (whiteList.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 app.use(helmet());
 app.use(morgan("dev", { stream }));
 app.use(express.json());
