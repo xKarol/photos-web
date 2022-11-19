@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import axios from "axios";
 import Spinner from "./spinner";
+import { newsletterSubscribe } from "../services/newsletter";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  const { mutate, isLoading, error, isError } = useMutation(
-    (data: { email: string }) =>
-      axios.post("http://localhost:4000/newsletter/subscribe", data)
-  );
+  const { mutate, isLoading, error, isError } =
+    useMutation(newsletterSubscribe);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate({ email });
+    mutate(email);
   };
 
   return (

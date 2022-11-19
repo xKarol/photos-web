@@ -1,13 +1,13 @@
-import axios from "axios";
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
+import { getPhotos } from "../services/photos";
 import Photo from "./photo";
 
 const Photos = () => {
   const { data } = useQuery<any>({
     queryKey: ["todos"],
-    queryFn: async () => await axios.get("http://localhost:4000/photos"),
+    queryFn: getPhotos,
   });
 
   const half = data?.data.data.length / 2;
