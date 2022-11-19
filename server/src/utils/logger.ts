@@ -12,7 +12,7 @@ const consoleFormat = format.combine(
   )
 );
 
-const fileFormat = format.combine(format.timestamp());
+const fileFormat = format.combine(format.timestamp(), format.json());
 
 const logger = createLogger({
   level: "info",
@@ -21,6 +21,7 @@ const logger = createLogger({
     new transports.File({
       filename: path("info.log"),
       level: "info",
+      format: fileFormat,
     }),
     new transports.File({
       filename: path("error.log"),
