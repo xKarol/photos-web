@@ -2,7 +2,27 @@ import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
 
 import { prisma } from "../db";
-import { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
+import {
+  CreatePhotoSchema,
+  DeletePhotoSchema,
+  GetPhotosSchema,
+} from "../schemas/photos";
+
+export const Create = async (
+  req: Request<any, any, CreatePhotoSchema["body"]>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const body = req.body;
+
+    const data = await prisma.photos.create({ data: body });
+
+    return res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const Get = async (
   req: Request<any, any, any, GetPhotosSchema["query"]>,
