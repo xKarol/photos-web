@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import Spinner from "./spinner";
-import { newsletterSubscribe } from "../services/newsletter";
+import Spinner from "../spinner";
+import { newsletterSubscribe } from "../../services/newsletter";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
