@@ -10,13 +10,15 @@ const Photos = () => {
     queryFn: getPhotos,
   });
 
-  const half = data?.data.data.length / 2;
+  const photos = data?.data.data || [];
+
+  const half = photos.length / 2;
 
   return (
     <section className="container mx-auto">
       <div className="flex space-x-10">
         <div className="w-full flex flex-col space-y-10">
-          {data?.data.data.slice(0, half).map(({ id, src, alt }: any) => (
+          {photos.slice(0, half).map(({ id, src, alt }: any) => (
             <Link href={`/photo/${id}`} key={id}>
               <Photo
                 className="relative"
@@ -33,23 +35,21 @@ const Photos = () => {
           ))}
         </div>
         <div className="w-full flex flex-col space-y-10">
-          {data?.data.data
-            .slice(half, data?.data.data.length)
-            .map(({ id, src, alt }: any) => (
-              <Link href={`/photo/${id}`} key={id}>
-                <Photo
-                  className="relative"
-                  src={src}
-                  alt={alt}
-                  width={700}
-                  height={475}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
-                />
-              </Link>
-            ))}
+          {photos.slice(half, photos.length).map(({ id, src, alt }: any) => (
+            <Link href={`/photo/${id}`} key={id}>
+              <Photo
+                className="relative"
+                src={src}
+                alt={alt}
+                width={700}
+                height={475}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </section>
