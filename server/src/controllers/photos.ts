@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
 
+import { prisma } from "../db";
 import { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
 
 export const Get = async (
@@ -9,14 +10,18 @@ export const Get = async (
   next: NextFunction
 ) => {
   try {
-    const data = req.query;
-    const query: GetPhotosSchema["query"] = queryString.parse(
-      queryString.stringify(data),
-      {
+    const query = req.query;
+    const { page = 0, limit = 10 }: { limit?: number; page?: number } =
+      queryString.parse(queryString.stringify(query), {
         parseNumbers: true,
-      }
-    );
-    return res.send(query);
+      });
+
+    const data = await prisma.photos.findMany({
+      skip: page * limit,
+      take: limit,
+    });
+
+    return res.send({ data, page, limit });
   } catch (error) {
     next(error);
   }
