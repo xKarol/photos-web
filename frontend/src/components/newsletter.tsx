@@ -5,8 +5,9 @@ import Spinner from "./spinner";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  const { mutate, isLoading } = useMutation((data: { email: string }) =>
-    axios.post("http://localhost:4000/newsletter/subscribe", data)
+  const { mutate, isLoading, error, isError } = useMutation(
+    (data: { email: string }) =>
+      axios.post("http://localhost:4000/newsletter/subscribe", data)
   );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +35,11 @@ const Newsletter = () => {
         >
           {isLoading ? <Spinner /> : "Submit"}
         </button>
+        {isError ? (
+          <span>
+            {error instanceof Error ? error.message : "Unknown error"}
+          </span>
+        ) : null}
       </form>
     </section>
   );
