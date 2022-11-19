@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/header";
-import Photos from "../components/photos";
 import { Footer } from "../components/footer";
+import { PhotosGrid } from "../components/photos-grid";
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <Photos />
+      <PhotosGrid />
       <Footer />
     </>
   );

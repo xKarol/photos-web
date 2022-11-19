@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { useQuery } from "react-query";
-import { getPhotos } from "../services/photos";
+import { getPhotos } from "../../services/photos";
 import Photo from "./photo";
 
 const Photos = () => {
