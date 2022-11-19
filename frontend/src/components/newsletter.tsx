@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import axios from "axios";
+import Spinner from "./spinner";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  const { mutate } = useMutation((data: { email: string }) =>
+  const { mutate, isLoading } = useMutation((data: { email: string }) =>
     axios.post("http://localhost:4000/newsletter/subscribe", data)
   );
 
@@ -25,13 +26,13 @@ const Newsletter = () => {
         />
         <button
           type="submit"
-          className="relative px-5 bg-black text-white borderborder-black h-[calc(100%-1px)] mt-[-3px] ml-[3px] 
+          className="relative px-5 w-[100px] bg-black text-white h-[calc(100%-1px)] mt-[-3px] ml-[3px] 
          before:absolute before:left-[-4px] before:top-[2px] before:h-full
          before:w-[4px] before:border before:border-black before:skew-y-[-45deg]
          after:absolute after:left-[-2px] after:top-[100%] after:h-[4px]
          after:w-full after:border after:border-black after:skew-x-[-45deg]"
         >
-          Submit
+          {isLoading ? <Spinner /> : "Submit"}
         </button>
       </form>
     </section>
