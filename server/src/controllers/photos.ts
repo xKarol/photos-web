@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import queryString from "query-string";
 
 import { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
 
@@ -9,8 +10,13 @@ export const Get = async (
 ) => {
   try {
     const data = req.query;
-
-    return res.send(data);
+    const query: GetPhotosSchema["query"] = queryString.parse(
+      queryString.stringify(data),
+      {
+        parseNumbers: true,
+      }
+    );
+    return res.send(query);
   } catch (error) {
     next(error);
   }
