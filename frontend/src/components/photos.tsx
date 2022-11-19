@@ -11,14 +11,14 @@ const Photos = () => {
   });
 
   const half = data?.data.data.length / 2;
+
   return (
     <section className="container mx-auto">
       <div className="flex space-x-10">
         <div className="w-full flex flex-col space-y-10">
           {data?.data.data.slice(0, half).map(({ id, src, alt }: any) => (
-            <Link href={`/photo/${id}`}>
+            <Link href={`/photo/${id}`} key={id}>
               <Photo
-                key={id}
                 className="relative"
                 src={src}
                 alt={alt}
@@ -36,9 +36,8 @@ const Photos = () => {
           {data?.data.data
             .slice(half, data?.data.data.length)
             .map(({ id, src, alt }: any) => (
-              <Link href={`/photo/${id}`}>
+              <Link href={`/photo/${id}`} key={id}>
                 <Photo
-                  key={id}
                   className="relative"
                   src={src}
                   alt={alt}
