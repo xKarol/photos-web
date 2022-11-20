@@ -1,17 +1,19 @@
 import Link from "next/link";
 import React from "react";
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import { getPhotos } from "../../services/photos";
 import Photo from "./photo";
 
 const Photos = () => {
-  const { data } = useQuery<any>({
-    queryKey: ["todos"],
-    queryFn: getPhotos,
-  });
+  const { data, fetchNextPage } = useInfiniteQuery<any, any, any>(
+    "photos",
+    ({ pageParam: page }) => getPhotos(page),
+    {
+      getNextPageParam: (lastPage) => lastPage.data.page + 1 ?? undefined,
+    }
+  );
 
-  const photos = data?.data.data || [];
-
+  const photos = data?.pages.map(({ data }) => data.data).flat(1) || [];
   const half = photos.length / 2;
 
   return (
@@ -52,6 +54,7 @@ const Photos = () => {
           ))}
         </div>
       </div>
+      <button onClick={async () => await fetchNextPage()}>More</button>
     </section>
   );
 };
