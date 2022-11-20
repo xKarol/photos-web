@@ -1,6 +1,7 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
+import { useInView } from "react-intersection-observer";
 import { getPhotos } from "../../services/photos";
 import Photo from "./photo";
 
@@ -12,6 +13,11 @@ const Photos = () => {
       getNextPageParam: (lastPage) => lastPage.data.page + 1 ?? undefined,
     }
   );
+  const { ref, inView } = useInView({ threshold: 0 });
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView, fetchNextPage]);
 
   const photos = data?.pages.map(({ data }) => data.data).flat(1) || [];
   const half = photos.length / 2;
@@ -54,7 +60,9 @@ const Photos = () => {
           ))}
         </div>
       </div>
-      <button onClick={async () => await fetchNextPage()}>More</button>
+      <button onClick={() => fetchNextPage()} ref={ref}>
+        Load More
+      </button>
     </section>
   );
 };
