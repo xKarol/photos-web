@@ -6,11 +6,11 @@ import { getPhotos } from "../../services/photos";
 import Photo from "./photo";
 
 const Photos = () => {
-  const { data, fetchNextPage } = useInfiniteQuery<any, any, any>(
+  const { data, fetchNextPage } = useInfiniteQuery(
     "photos",
-    ({ pageParam: page }) => getPhotos(page),
+    ({ pageParam: page }) => getPhotos(page, 1),
     {
-      getNextPageParam: (lastPage) => lastPage.data.page + 1 ?? undefined,
+      getNextPageParam: (lastPage) => lastPage.page + 1 ?? undefined,
     }
   );
   const { ref, inView } = useInView({ threshold: 0 });
@@ -19,7 +19,7 @@ const Photos = () => {
     if (inView) fetchNextPage();
   }, [inView, fetchNextPage]);
 
-  const photos = data?.pages.map(({ data }) => data.data).flat(1) || [];
+  const photos = data?.pages.map(({ data }) => data).flat(1) || [];
   const half = photos.length / 2;
 
   return (
