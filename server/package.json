@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@prisma/client": "^4.6.0",
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",
