@@ -6,6 +6,8 @@ const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+const PHOTOS_LIMIT = 25;
+
 const seedPhoto = async () => {
   const data = () => ({
     src: `${faker.image.unsplash.image(
@@ -16,8 +18,7 @@ const seedPhoto = async () => {
   });
 
   const photos = [];
-  for (let i = 0; i < 100; i++) photos.push(data());
-  console.log(photos);
+  for (let i = 0; i < PHOTOS_LIMIT; i++) photos.push(data());
   await prisma.photos.createMany({
     data: photos,
   });
