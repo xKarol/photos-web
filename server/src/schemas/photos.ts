@@ -4,7 +4,9 @@ import { stringAsNumber } from ".";
 
 export const createPhotoSchema = z.object({
   body: z.object({
-    // image: z.instanceof(File),
+    image: z
+      .any()
+      .refine((files) => files?.length === 0, "Image file is required."),
     alt: z.string().optional(),
   }),
 });
