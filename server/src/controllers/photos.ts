@@ -2,7 +2,6 @@ import { v2 as cloudinary } from "cloudinary";
 import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
 import sharp from "sharp";
-import { Readable } from "readable-stream";
 
 import { prisma } from "../db";
 import type {
@@ -10,6 +9,7 @@ import type {
   DeletePhotoSchema,
   GetPhotosSchema,
 } from "../schemas/photos";
+import { bufferToStream } from "../utils/buffer";
 
 export const Create = async (
   req: Request<any, any, CreatePhotoSchema["body"]>,
@@ -21,13 +21,6 @@ export const Create = async (
     if (!file?.buffer) throw new Error("Error occurred.");
 
     const data = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
-    const readable = (buffer: Buffer) =>
-      new Readable({
-        read() {
-          this.push(buffer);
-          this.push(null);
-        },
-      });
 
     const stream = cloudinary.uploader.upload_stream(
       { folder: "photos" },
@@ -36,7 +29,7 @@ export const Create = async (
         res.send({ src: result?.secure_url });
       }
     );
-    readable(data).pipe(stream);
+    bufferToStream(data).pipe(stream);
   } catch (error) {
     next(error);
   }
