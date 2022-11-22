@@ -4,7 +4,7 @@ import { stringAsNumber } from ".";
 
 export const createPhotoSchema = z.object({
   body: z.object({
-    src: z.string({ required_error: "Src is required." }).url(),
+    // image: z.instanceof(File),
     alt: z.string().optional(),
   }),
 });

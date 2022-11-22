@@ -1,6 +1,7 @@
 import express from "express";
 
 import * as photosController from "../controllers/photos";
+import { upload } from "../middlewares/multer";
 import { validateSchema } from "../middlewares/validate-schema";
 import {
   createPhotoSchema,
@@ -12,7 +13,8 @@ const router = express.Router();
 
 router.post(
   "/photos",
-  validateSchema(createPhotoSchema),
+  // validateSchema(createPhotoSchema),
+  upload.single("image"),
   photosController.Create
 );
 
