@@ -1,5 +1,6 @@
 import express from "express";
 
+import { cloudinaryConfig } from "../config/cloudinary";
 import * as photosController from "../controllers/photos";
 import { upload } from "../middlewares/multer";
 import { validateSchema } from "../middlewares/validate-schema";
@@ -10,6 +11,8 @@ import {
 } from "../schemas/photos";
 
 const router = express.Router();
+
+cloudinaryConfig();
 
 router.post(
   "/photos",

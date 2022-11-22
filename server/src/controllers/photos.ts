@@ -1,5 +1,8 @@
+import { v2 as cloudinary } from "cloudinary";
 import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
+import sharp from "sharp";
+import { Readable } from "readable-stream";
 
 import { prisma } from "../db";
 import type {
@@ -14,12 +17,26 @@ export const Create = async (
   next: NextFunction
 ) => {
   try {
-    const body = req.body;
-    console.log(req.file);
-    // const data = await prisma.photos.create({ data: body });
+    const file = req.file;
+    if (!file?.buffer) throw new Error("Error occurred.");
 
-    // return res.send(data);
-    return res.send(body);
+    const data = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
+    const readable = (buffer: Buffer) =>
+      new Readable({
+        read() {
+          this.push(buffer);
+          this.push(null);
+        },
+      });
+
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "photos" },
+      (error, result) => {
+        if (error) throw error;
+        res.send({ src: result?.secure_url });
+      }
+    );
+    readable(data).pipe(stream);
   } catch (error) {
     next(error);
   }

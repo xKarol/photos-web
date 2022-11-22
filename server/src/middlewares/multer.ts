@@ -5,12 +5,14 @@ import path from "path";
 // const upload = multer({ storage });
 //
 
-const storage = multer.diskStorage({
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-  destination: "uploads/",
-});
+// const storage = multer.diskStorage({
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + path.extname(file.originalname));
+//   },
+//   destination: "uploads/",
+// });
+
+const storage = multer.memoryStorage();
 
 const upload = multer({
   fileFilter: async function (req, file, cb) {
