@@ -1,4 +1,3 @@
-import { type UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
 import sharp from "sharp";
