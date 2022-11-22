@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { type UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import type { NextFunction, Request, Response } from "express";
 import queryString from "query-string";
 import sharp from "sharp";
@@ -9,7 +9,7 @@ import type {
   DeletePhotoSchema,
   GetPhotosSchema,
 } from "../schemas/photos";
-import { bufferToStream } from "../utils/buffer";
+import { uploadFromBuffer } from "../utils/upload";
 
 export const Create = async (
   req: Request<any, any, CreatePhotoSchema["body"]>,
@@ -18,18 +18,19 @@ export const Create = async (
 ) => {
   try {
     const file = req.file;
+    const body = req.body;
     if (!file?.buffer) throw new Error("Error occurred.");
 
-    const data = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
+    const sharpImg = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
 
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "photos" },
-      (error, result) => {
-        if (error) throw error;
-        res.send({ src: result?.secure_url });
-      }
-    );
-    bufferToStream(data).pipe(stream);
+    const data = await uploadFromBuffer(sharpImg);
+    const newPhoto = await prisma.photos.create({
+      data: {
+        src: data.secure_url,
+        alt: body.alt,
+      },
+    });
+    return res.send(newPhoto);
   } catch (error) {
     next(error);
   }
