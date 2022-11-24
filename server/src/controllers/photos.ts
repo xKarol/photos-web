@@ -3,22 +3,23 @@ import queryString from "query-string";
 import sharp from "sharp";
 
 import { prisma } from "../db";
-import type {
-  CreatePhotoSchema,
-  DeletePhotoSchema,
-  GetPhotosSchema,
-} from "../schemas/photos";
+import type { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
 import { uploadFromBuffer } from "../utils/upload";
 
+type CreatePhotoBody = {
+  image?: Express.Multer.File;
+  alt?: string;
+};
+
 export const Create = async (
-  req: Request<any, any, CreatePhotoSchema["body"]>,
+  req: Request<any, any, CreatePhotoBody>,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const file = req.file;
     const body = req.body;
-    if (!file?.buffer) throw new Error("Error occurred.");
+    if (!file?.buffer) throw new Error("Image is required.");
 
     const sharpImg = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
 

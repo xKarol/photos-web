@@ -1,11 +1,21 @@
 import multer from "multer";
 
+import { getFileExtension } from "../utils/file";
+
 const storage = multer.memoryStorage();
+
+const allowedExtensions = ["jpg", "jpeg", "png"];
 
 const upload = multer({
   fileFilter: async function (req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error("Only image files are allowed!"));
+    const extension = getFileExtension(file.originalname) || "";
+    if (!allowedExtensions.includes(extension)) {
+      return cb(
+        new Error(
+          `Invalid file extension. Received: ${extension}
+           Expected: ${allowedExtensions.join(", ")}`
+        )
+      );
     }
     cb(null, true);
   },

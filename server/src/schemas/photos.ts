@@ -2,17 +2,6 @@ import { z } from "zod";
 
 import { stringAsNumber } from ".";
 
-export const createPhotoSchema = z.object({
-  body: z.object({
-    image: z
-      .any()
-      .refine((files) => files?.length === 0, "Image file is required."),
-    alt: z.string().optional(),
-  }),
-});
-
-export type CreatePhotoSchema = z.infer<typeof createPhotoSchema>;
-
 export const getPhotosSchema = z.object({
   query: z.object({
     page: stringAsNumber().optional(),

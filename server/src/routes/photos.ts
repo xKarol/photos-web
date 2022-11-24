@@ -5,7 +5,6 @@ import * as photosController from "../controllers/photos";
 import { upload } from "../middlewares/multer";
 import { validateSchema } from "../middlewares/validate-schema";
 import {
-  createPhotoSchema,
   deletePhotoSchema,
   getPhotosSchema,
 } from "../schemas/photos";
@@ -17,7 +16,6 @@ cloudinaryConfig();
 router.post(
   "/photos",
   upload.single("image"),
-  validateSchema(createPhotoSchema),
   photosController.Create
 );
 
