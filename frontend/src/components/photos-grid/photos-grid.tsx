@@ -8,7 +8,7 @@ import Photo from "./photo";
 const Photos = () => {
   const { data, fetchNextPage } = useInfiniteQuery(
     "photos",
-    ({ pageParam: page }) => getPhotos(page, 1),
+    ({ pageParam: page }) => getPhotos(page, 10),
     {
       getNextPageParam: (lastPage) => lastPage.page + 1 ?? undefined,
     }
