@@ -1,26 +1,10 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { useInfiniteQuery } from "react-query";
-import { useInView } from "react-intersection-observer";
-import { getPhotos } from "../../services/photos";
+import React from "react";
 import Photo from "./photo";
+import { usePhotos } from "../../hooks/usePhotos";
 
 const Photos = () => {
-  const { data, fetchNextPage } = useInfiniteQuery(
-    "photos",
-    ({ pageParam: page }) => getPhotos(page, 10),
-    {
-      getNextPageParam: (lastPage) => lastPage.page + 1 ?? undefined,
-    }
-  );
-  const { ref, inView } = useInView({
-    threshold: 0,
-    rootMargin: "-500px 0px 0px 0px",
-  });
-
-  useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView, fetchNextPage]);
+  const { ref, data, fetchNextPage } = usePhotos();
 
   const photos = data?.pages.map(({ data }) => data).flat(1) || [];
   const half = photos.length / 2;
