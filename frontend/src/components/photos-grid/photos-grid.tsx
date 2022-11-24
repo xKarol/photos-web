@@ -13,7 +13,10 @@ const Photos = () => {
       getNextPageParam: (lastPage) => lastPage.page + 1 ?? undefined,
     }
   );
-  const { ref, inView } = useInView({ threshold: 0 });
+  const { ref, inView } = useInView({
+    threshold: 0,
+    rootMargin: "-500px 0px 0px 0px",
+  });
 
   useEffect(() => {
     if (inView) fetchNextPage();
