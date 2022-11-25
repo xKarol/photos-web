@@ -1,12 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import queryString from "query-string";
-import sharp from "sharp";
 
 import { prisma } from "../db";
 import type { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
+import { uploadPhoto } from "../services/photos";
 import { paginationParams } from "../utils/pagination-params";
-import { generateImagePlaceholder } from "../utils/placeholder";
-import { uploadFromBuffer } from "../utils/upload";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -25,17 +22,12 @@ export const Create = async (
 
     const { buffer: photoBuffer } = file;
 
-    const sharpImg = await sharp(photoBuffer).webp({ quality: 20 }).toBuffer();
-    const placeholder = await generateImagePlaceholder(photoBuffer);
+    const data = await uploadPhoto(photoBuffer);
 
-    const data = await uploadFromBuffer(sharpImg);
     const newPhoto = await prisma.photos.create({
       data: {
-        src: data.secure_url,
         alt: body.alt,
-        height: data.height,
-        width: data.width,
-        placeholder: `data:image/png;base64,${placeholder}`,
+        ...data,
       },
     });
     return res.send(newPhoto);

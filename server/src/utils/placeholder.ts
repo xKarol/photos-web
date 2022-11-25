@@ -8,7 +8,9 @@ export const generateImagePlaceholder = async (
       .resize(10, 10)
       .toBuffer((error, sharpBuffer) => {
         if (error) return reject(error);
-        resolve(Buffer.from(sharpBuffer).toString("base64"));
+        resolve(
+          `data:image/png;base64,${Buffer.from(sharpBuffer).toString("base64")}`
+        );
       });
   });
 };

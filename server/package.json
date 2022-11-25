@@ -23,6 +23,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@prisma/client": "^4.6.0",
+    "axios": "^1.2.0",
     "cloudinary": "^1.32.0",
     "concurrently": "^7.5.0",
     "cors": "^2.8.5",
