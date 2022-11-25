@@ -4,6 +4,7 @@ import sharp from "sharp";
 
 import { prisma } from "../db";
 import type { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
+import { paginationParams } from "../utils/pagination-params";
 import { generateImagePlaceholder } from "../utils/placeholder";
 import { uploadFromBuffer } from "../utils/upload";
 
@@ -49,15 +50,10 @@ export const Get = async (
   next: NextFunction
 ) => {
   try {
-    const query = req.query;
-    const { page = 0, limit = 10 }: { limit?: number; page?: number } =
-      queryString.parse(queryString.stringify(query), {
-        parseNumbers: true,
-      });
+    const { page, limit, ...pagination } = paginationParams(req.query);
 
     const data = await prisma.photos.findMany({
-      skip: page * limit,
-      take: limit,
+      ...pagination,
     });
 
     return res.send({ data, page, limit });
