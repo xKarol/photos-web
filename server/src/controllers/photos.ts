@@ -4,6 +4,7 @@ import sharp from "sharp";
 
 import { prisma } from "../db";
 import type { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
+import { generateImagePlaceholder } from "../utils/placeholder";
 import { uploadFromBuffer } from "../utils/upload";
 
 type CreatePhotoBody = {
@@ -21,13 +22,19 @@ export const Create = async (
     const body = req.body;
     if (!file?.buffer) throw new Error("Image is required.");
 
-    const sharpImg = await sharp(file?.buffer).webp({ quality: 20 }).toBuffer();
+    const { buffer: photoBuffer } = file;
+
+    const sharpImg = await sharp(photoBuffer).webp({ quality: 20 }).toBuffer();
+    const placeholder = await generateImagePlaceholder(photoBuffer);
 
     const data = await uploadFromBuffer(sharpImg);
     const newPhoto = await prisma.photos.create({
       data: {
         src: data.secure_url,
         alt: body.alt,
+        height: data.height,
+        width: data.width,
+        placeholder: `data:image/png;base64,${placeholder}`,
       },
     });
     return res.send(newPhoto);
