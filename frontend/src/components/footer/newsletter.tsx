@@ -5,7 +5,7 @@ import { newsletterSubscribe } from "../../services/newsletter";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  const { mutate, isLoading, error, isError } =
+  const { mutate, isLoading, error, isError, isSuccess } =
     useMutation(newsletterSubscribe);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,6 +39,9 @@ const Newsletter = () => {
           <span>
             {error instanceof Error ? error.message : "Unknown error"}
           </span>
+        ) : null}
+        {isSuccess ? (
+          <span>Thanks for subscribe to our newsletter!</span>
         ) : null}
       </form>
     </section>
