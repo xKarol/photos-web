@@ -16,8 +16,24 @@ export const transporterVerify = async () => {
 };
 
 export const sendEmail = async (options: SendMailOptions) => {
-  return await transporter.sendMail({
-    from: process.env.MAIL_LOGIN,
-    ...options,
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(
+      {
+        from: process.env.MAIL_LOGIN,
+        ...options,
+      },
+      (error, info) => {
+        if (error) return reject(error);
+        resolve(info);
+
+        if (process.env.NODE_ENV === "dev") {
+          console.log(
+            `Send Mail -> [${
+              info.messageId
+            }] Preview URL: ${nodemailer.getTestMessageUrl(info)}`
+          );
+        }
+      }
+    );
   });
 };
