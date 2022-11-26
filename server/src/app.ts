@@ -9,6 +9,7 @@ import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
 import routes from "./routes";
 import logger, { stream } from "./utils/logger";
+import { transporterVerify } from "./utils/mailer";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(errorHandler);
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => {
+    transporterVerify();
     logger.info(`App is running on http://localhost:${port}`);
   });
 }
