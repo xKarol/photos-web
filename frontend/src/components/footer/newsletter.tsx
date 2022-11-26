@@ -10,7 +10,9 @@ const Newsletter = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isLoading) return;
     mutate(email);
+    setEmail("");
   };
 
   return (
