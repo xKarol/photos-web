@@ -33,7 +33,11 @@ const seedPhoto = async () => {
 
 const main = async () => {
   await prisma.photos.deleteMany({});
-  await Promise.all(Array(PHOTOS_LIMIT).fill(seedPhoto()));
+  const photos = Array(PHOTOS_LIMIT).fill(seedPhoto());
+  for (const index of photos.keys()) {
+    console.log(`Seeding photos [${index + 1}/${PHOTOS_LIMIT}]`);
+    await seedPhoto();
+  }
 };
 
 main()
