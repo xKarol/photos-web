@@ -4,6 +4,7 @@ import Image from "next/image";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { PhotoType } from "../@types/photos";
+import Photo from "./photos-grid/photo";
 
 type Props = {
   isOpen: boolean;
@@ -14,7 +15,7 @@ type Props = {
 const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
   const [active, setActive] = useState(0);
   const closeModal = () => setIsOpen(false);
-  const currentPhoto = photos[active];
+  const { height, width, placeholder, alt, src } = photos[active] || {};
 
   const changePhoto = (direction: "next" | "prev") => {
     if (direction === "next") {
@@ -68,7 +69,13 @@ const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden bg-white shadow-xl transition-all">
-                <img src={currentPhoto?.src} alt={currentPhoto?.alt} />
+                <Photo
+                  src={src}
+                  alt={alt}
+                  width={width}
+                  height={height}
+                  blurDataURL={placeholder}
+                />
               </Dialog.Panel>
             </Transition.Child>
           </div>

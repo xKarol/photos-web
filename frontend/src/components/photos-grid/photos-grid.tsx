@@ -18,45 +18,31 @@ const Photos = () => {
           <div className="w-full flex flex-col space-y-10">
             {photos
               .slice(0, half)
-              .map(({ id, src, alt, width, height, placeholder }: any) => (
-                // <Link href={`/photo/${id}`} key={id}>
+              .map(({ id, src, alt, width, height, placeholder }) => (
                 <Photo
+                  key={id}
                   onClick={() => setOpen(true)}
-                  className="relative"
                   src={src}
                   alt={alt}
                   width={width}
                   height={height}
                   blurDataURL={placeholder}
-                  placeholder="blur"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
                 />
-                // </Link>
               ))}
           </div>
           <div className="w-full flex flex-col space-y-10">
             {photos
               .slice(half, photos.length)
               .map(({ id, src, alt, height, width, placeholder }: any) => (
-                // <Link href={`/photo/${id}`} key={id}>
                 <Photo
+                  key={id}
                   onClick={() => setOpen(true)}
-                  className="relative"
                   src={src}
                   alt={alt}
                   width={width}
                   height={height}
                   blurDataURL={placeholder}
-                  placeholder="blur"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
                 />
-                // </Link>
               ))}
           </div>
         </div>

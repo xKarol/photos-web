@@ -6,7 +6,15 @@ type Props = ImageProps;
 const Photo = ({ className, ...props }: Props) => {
   return (
     <figure className={className}>
-      <Image {...props} />
+      <Image
+        className="relative select-none"
+        placeholder="blur"
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+        {...props}
+      />
     </figure>
   );
 };
