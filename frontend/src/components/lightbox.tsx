@@ -72,6 +72,9 @@ const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
               </Dialog.Panel>
             </Transition.Child>
           </div>
+          <div className="fixed bottom-5 left-5 text-xs px-3 py-1 rounded-md bg-opacity-25 text-white bg-black z-10 pointer-events-none">
+            {active + 1} / {photos.length}
+          </div>
         </div>
       </Dialog>
     </Transition>
