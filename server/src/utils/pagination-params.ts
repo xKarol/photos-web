@@ -6,7 +6,7 @@ type PaginationParams = {
 };
 
 export const paginationParams = (query: PaginationParams) => {
-  const { page = 0, limit = 10 }: { limit?: number; page?: number } =
+  const { page = 1, limit = 10 }: { limit?: number; page?: number } =
     queryString.parse(queryString.stringify(query), {
       parseNumbers: true,
     });
@@ -14,7 +14,7 @@ export const paginationParams = (query: PaginationParams) => {
   return {
     page,
     limit,
-    skip: page * limit,
+    skip: (page - 1) * limit,
     take: limit,
   };
 };
