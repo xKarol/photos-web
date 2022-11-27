@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { VscClose } from "react-icons/vsc";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { PhotoType } from "../@types/photos";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  photos: PhotoType[];
 };
 
-const Lightbox = ({ isOpen, setIsOpen }: Props) => {
+const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
+  const [active, setActive] = useState(0);
   const closeModal = () => setIsOpen(false);
+  const currentPhoto = photos[active];
+
+  const changePhoto = (direction: "next" | "prev") => {
+    if (direction === "next") {
+      setActive((state) => (state >= photos.length - 1 ? 0 : state + 1));
+      return;
+    }
+    setActive((state) => (state <= 0 ? photos.length - 1 : state - 1));
+  };
 
   return (
     <Transition appear show={isOpen} as={React.Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={closeModal}>
+      <Dialog as="div" className="relative z-50" onClose={() => {}}>
         <Transition.Child
           as={React.Fragment}
           enter="ease-out duration-300"
@@ -23,15 +36,27 @@ const Lightbox = ({ isOpen, setIsOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-75" />
         </Transition.Child>
 
         <VscClose
-          className="fixed top-5 right-5 text-white cursor-pointer z-10"
+          className="fixed top-5 right-5 text-white cursor-pointer z-10 text-3xl"
           onClick={closeModal}
         />
 
         <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed left-0 h-full w-[50vw] text-3xl text-white z-10">
+            <HiChevronLeft
+              className="fixed left-5 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={() => changePhoto("prev")}
+            />
+          </div>
+          <div className="fixed right-0 h-full w-[50vw] text-3xl text-white z-10">
+            <HiChevronRight
+              className="fixed right-5 top-1/2 -translate-y-1/2 cursor-pointer"
+              onClick={() => changePhoto("next")}
+            />
+          </div>
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={React.Fragment}
@@ -42,29 +67,8 @@ const Lightbox = ({ isOpen, setIsOpen }: Props) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  Payment successful
-                </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
-                  >
-                    Got it, thanks!
-                  </button>
-                </div>
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden bg-white shadow-xl transition-all">
+                <img src={currentPhoto?.src} alt={currentPhoto?.alt} />
               </Dialog.Panel>
             </Transition.Child>
           </div>

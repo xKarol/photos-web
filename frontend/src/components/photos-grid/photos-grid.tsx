@@ -64,7 +64,7 @@ const Photos = () => {
           Load More
         </button>
       </section>
-      <Lightbox setIsOpen={setOpen} isOpen={open} />
+      <Lightbox setIsOpen={setOpen} isOpen={open} photos={photos} />
     </>
   );
 };
