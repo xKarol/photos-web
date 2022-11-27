@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { useState } from "react";
 import Photo from "./photo";
 import { usePhotos } from "../../hooks/usePhotos";
@@ -14,8 +13,8 @@ const Photos = () => {
   return (
     <>
       <section className="container mx-auto">
-        <div className="flex space-x-10">
-          <div className="w-full flex flex-col space-y-10">
+        <div className="flex space-x-20">
+          <div className="w-full flex flex-col space-y-20">
             {photos
               .slice(0, half)
               .map(({ id, src, alt, width, height, placeholder }) => (
@@ -33,7 +32,7 @@ const Photos = () => {
           <div className="w-full flex flex-col space-y-10">
             {photos
               .slice(half, photos.length)
-              .map(({ id, src, alt, height, width, placeholder }: any) => (
+              .map(({ id, src, alt, height, width, placeholder }) => (
                 <Photo
                   key={id}
                   onClick={() => setOpen(true)}
