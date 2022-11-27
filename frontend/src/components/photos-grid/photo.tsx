@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image, { ImageProps } from "next/image";
 import React from "react";
 
@@ -7,7 +8,7 @@ const Photo = ({ className, ...props }: Props) => {
   return (
     <figure className={className}>
       <Image
-        className="relative select-none"
+        className={clsx("relative select-none", className)}
         placeholder="blur"
         style={{
           width: "100%",

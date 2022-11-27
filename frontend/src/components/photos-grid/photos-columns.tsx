@@ -22,6 +22,7 @@ const PhotosColumns = ({ columns = 2, photos, ...props }: Props) => {
               .map(({ id, src, alt, height, width, placeholder }) => (
                 <Photo
                   key={id}
+                  className="cursor-pointer"
                   {...props}
                   src={src}
                   alt={alt}
