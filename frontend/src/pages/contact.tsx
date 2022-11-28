@@ -5,8 +5,20 @@ import { Footer } from "../components/footer";
 import Layout from "../components/layout";
 import InputField from "../components/input-field";
 import Submit from "../components/submit";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type FormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string;
+  message: string;
+};
 
 const Home: NextPage = () => {
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+
   return (
     <>
       <Head>
@@ -17,15 +29,35 @@ const Home: NextPage = () => {
 
       <Header />
       <Layout as="main">
-        <form className="flex flex-col space-y-5 max-w-[500px]">
+        <form
+          className="flex flex-col space-y-5 max-w-[500px]"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <h1 className="text-2xl">Contact</h1>
           <div className="flex space-x-3">
-            <InputField label="First Name" required />
-            <InputField label="Last Name" required />
+            <InputField
+              label="First Name"
+              {...register("firstName", { required: true })}
+            />
+            <InputField
+              label="Last Name"
+              {...register("lastName", { required: true })}
+            />
           </div>
-          <InputField label="Email Address" type="email" required />
-          <InputField label="Subject" required />
-          <InputField label="Message" textarea required />
+          <InputField
+            label="Email Address"
+            type="email"
+            {...register("email", { required: true })}
+          />
+          <InputField
+            label="Subject"
+            {...register("subject", { required: true })}
+          />
+          <InputField
+            label="Message"
+            textarea
+            {...register("message", { required: true })}
+          />
           <Submit className="ml-auto text-sm py-2">Submit</Submit>
         </form>
       </Layout>
