@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/header";
 import { Footer } from "../components/footer";
+import Layout from "../components/layout";
+import InputField from "../components/input-field";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +15,18 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <h1>Contact</h1>
+      <Layout as="main">
+        <form className="flex flex-col space-y-5 max-w-[500px]">
+          <h1 className="text-2xl">Contact</h1>
+          <div className="flex space-x-3">
+            <InputField label="First Name" />
+            <InputField label="Last Name" />
+          </div>
+          <InputField label="Email Address" type="email" />
+          <InputField label="Subject" />
+          <InputField label="Message" textarea />
+        </form>
+      </Layout>
       <Footer />
     </>
   );
