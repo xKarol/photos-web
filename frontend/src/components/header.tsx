@@ -1,9 +1,13 @@
 import Link from "next/link";
 import React from "react";
+import Layout from "./layout";
 
 const Header = () => {
   return (
-    <header className="container mx-auto my-20 flex justify-between">
+    <Layout
+      as="header"
+      className="my-20 flex justify-between"
+    >
       <figure>Logo</figure>
       <nav>
         <ul className="flex space-x-7">
@@ -18,7 +22,7 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-    </header>
+    </Layout>
   );
 };
 

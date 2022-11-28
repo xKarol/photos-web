@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePhotos } from "../../hooks/usePhotos";
+import Layout from "../layout";
 import Lightbox from "../lightbox";
 import PhotosColumns from "./photos-columns";
 
@@ -11,14 +12,15 @@ const Photos = () => {
 
   return (
     <>
-      <section className="container mx-auto">
+      <Layout as="section">
         <PhotosColumns onClick={() => setOpen(true)} photos={photos} />
         {hasNextPage ? (
           <button onClick={() => fetchNextPage()} ref={ref}>
             Load More
           </button>
         ) : null}
-      </section>
+      </Layout>
+
       <Lightbox setIsOpen={setOpen} isOpen={open} photos={photos} />
     </>
   );
