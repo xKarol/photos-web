@@ -4,6 +4,7 @@ import Header from "../components/header";
 import { Footer } from "../components/footer";
 import Layout from "../components/layout";
 import InputField from "../components/input-field";
+import Submit from "../components/submit";
 
 const Home: NextPage = () => {
   return (
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
           <InputField label="Email Address" type="email" />
           <InputField label="Subject" />
           <InputField label="Message" textarea />
+          <Submit className="ml-auto text-sm py-2">Submit</Submit>
         </form>
       </Layout>
       <Footer />
