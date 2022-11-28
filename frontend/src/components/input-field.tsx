@@ -9,7 +9,7 @@ type Props = {
 
 const InputField = forwardRef<HTMLInputElement, Props>(
   ({ label, type = "text", className, textarea, required, ...rest }, ref) => {
-    const inputClass = "border border-zinc-300 h-10";
+    const inputClass = "border border-zinc-300 p-2";
     return (
       <div className={clsx("flex flex-col w-full", className)}>
         <label className="text-xs mb-1">
