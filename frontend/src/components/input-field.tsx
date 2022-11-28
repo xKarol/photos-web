@@ -12,12 +12,15 @@ const InputField = ({
   type = "text",
   className,
   textarea,
+  required,
   ...rest
 }: Props) => {
   const inputClass = "border border-zinc-300 h-10";
   return (
     <div className={clsx("flex flex-col w-full", className)}>
-      <label className="text-xs mb-1">{label}</label>
+      <label className="text-xs mb-1">
+        {label} {required ? "*" : null}
+      </label>
       {textarea ? (
         <textarea className={clsx("min-h-[50px]", inputClass)} />
       ) : (
