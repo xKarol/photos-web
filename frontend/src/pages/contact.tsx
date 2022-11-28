@@ -37,25 +37,30 @@ const Home: NextPage = () => {
           <div className="flex space-x-3">
             <InputField
               label="First Name"
+              required
               {...register("firstName", { required: true })}
             />
             <InputField
               label="Last Name"
+              required
               {...register("lastName", { required: true })}
             />
           </div>
           <InputField
             label="Email Address"
             type="email"
+            required
             {...register("email", { required: true })}
           />
           <InputField
             label="Subject"
+            required
             {...register("subject", { required: true })}
           />
           <InputField
             label="Message"
             textarea
+            required
             {...register("message", { required: true })}
           />
           <Submit className="ml-auto text-sm py-2">Submit</Submit>
