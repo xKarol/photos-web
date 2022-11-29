@@ -8,6 +8,8 @@ import Submit from "../components/submit";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "../schemas/contact";
+import { useMutation } from "react-query";
+import { createContact } from "../services/contact";
 
 type FormValues = {
   firstName: string;
@@ -54,11 +56,19 @@ const Contact: NextPage = () => {
   const {
     register,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm<FormValues>({
     resolver: zodResolver(contactSchema),
   });
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const { mutateAsync, isLoading, error, isError, isSuccess } =
+    useMutation(createContact);
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    if (isLoading) return;
+    await mutateAsync(data);
+    reset();
+  };
 
   return (
     <>
@@ -71,7 +81,7 @@ const Contact: NextPage = () => {
       <Header />
       <Layout as="main">
         <form
-          className="flex flex-col space-y-[25px] max-w-[500px]"
+          className="flex flex-col space-y-[25px] max-w-[500px] relative"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl">Contact</h1>
@@ -101,6 +111,16 @@ const Contact: NextPage = () => {
             );
           })}
           <Submit className="ml-auto text-sm py-2">Submit</Submit>
+          {isError ? (
+            <span className="text-red-400 absolute text-sm bottom-0 left-0">
+              {error instanceof Error ? error.message : null}
+            </span>
+          ) : null}
+          {isSuccess ? (
+            <span className="absolute text-sm bottom-0 left-0">
+              Message has been sent.
+            </span>
+          ) : null}
         </form>
       </Layout>
       <Footer />
