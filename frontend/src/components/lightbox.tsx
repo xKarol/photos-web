@@ -68,13 +68,19 @@ const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden bg-white shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden shadow-xl transition-all">
                 <Photo
                   src={src}
                   alt={alt}
                   width={width}
                   height={height}
                   blurDataURL={placeholder}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "80vh",
+                    objectFit: "contain",
+                  }}
                 />
               </Dialog.Panel>
             </Transition.Child>
