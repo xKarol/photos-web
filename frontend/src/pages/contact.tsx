@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "../schemas/contact";
 import { useMutation } from "react-query";
 import { createContact } from "../services/contact";
+import LoadingButton from "../components/loading-button";
 
 type FormValues = {
   firstName: string;
@@ -110,7 +111,9 @@ const Contact: NextPage = () => {
               />
             );
           })}
-          <Submit className="ml-auto text-sm py-2">Submit</Submit>
+          <LoadingButton isLoading={isLoading}>
+            <Submit className="ml-auto text-sm py-2">Submit</Submit>
+          </LoadingButton>
           {isError ? (
             <span className="text-red-400 absolute text-sm bottom-0 left-0">
               {error instanceof Error ? error.message : null}

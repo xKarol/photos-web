@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import Spinner from "../spinner";
 import { newsletterSubscribe } from "../../services/newsletter";
 import Submit from "../submit";
+import LoadingButton from "../loading-button";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +26,9 @@ const Newsletter = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Submit>{isLoading ? <Spinner /> : "Submit"}</Submit>
+        <LoadingButton isLoading={isLoading}>
+          <Submit>Submit</Submit>
+        </LoadingButton>
         {isError ? (
           <span>
             {error instanceof Error ? error.message : "Unknown error"}
