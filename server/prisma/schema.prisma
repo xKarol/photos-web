@@ -18,6 +18,7 @@ model NewsletterTemplate {
   id        String   @id @default(cuid())
   subject   String
   content   String
+  delivered Boolean  @default(false)
   sendAt    DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
