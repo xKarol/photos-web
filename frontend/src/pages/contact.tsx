@@ -27,8 +27,6 @@ const Home: NextPage = () => {
   });
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
 
-  console.log(errors);
-
   return (
     <>
       <Head>
@@ -40,35 +38,40 @@ const Home: NextPage = () => {
       <Header />
       <Layout as="main">
         <form
-          className="flex flex-col space-y-5 max-w-[500px]"
+          className="flex flex-col space-y-[25px] max-w-[500px]"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl">Contact</h1>
           <div className="flex space-x-3">
             <InputField
               label="First Name"
+              error={errors["firstName"]?.message}
               required
               {...register("firstName", { required: true })}
             />
             <InputField
               label="Last Name"
+              error={errors["lastName"]?.message}
               required
               {...register("lastName", { required: true })}
             />
           </div>
           <InputField
             label="Email Address"
+            error={errors["email"]?.message}
             type="email"
             required
             {...register("email", { required: true })}
           />
           <InputField
             label="Subject"
+            error={errors["subject"]?.message}
             required
             {...register("subject", { required: true })}
           />
           <InputField
             label="Message"
+            error={errors["message"]?.message}
             textarea
             required
             {...register("message", { required: true })}
