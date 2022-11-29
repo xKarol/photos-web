@@ -32,10 +32,10 @@ export const CreateTemplate = async (
   next: NextFunction
 ) => {
   try {
-    const { sendOnDate, ...data } = req.body;
+    const { sendAt, ...data } = req.body;
     const newTemplate = await prisma.newsletterTemplate.create({
       data: {
-        sendOnDate: new Date(sendOnDate),
+        sendAt: new Date(sendAt),
         ...data,
       },
     });

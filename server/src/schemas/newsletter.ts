@@ -14,9 +14,9 @@ export const newsletterCreateTemplateSchema = z.object({
   body: z.object({
     subject: z.string({ required_error: "Subject is required." }).min(10),
     content: z.string({ required_error: "Content is required." }).min(100),
-    sendOnDate: z
+    sendAt: z
       .number({
-        required_error: "Set 'sendOnDate' field when email should be send.",
+        required_error: "Set 'sendAt' field when email should be send.",
       })
       .min(Date.now()),
   }),
