@@ -67,9 +67,11 @@ export const Delete = async (
   next: NextFunction
 ) => {
   try {
-    const data = req.params;
+    const { photoId } = req.params;
 
-    return res.send(data);
+    await prisma.image.delete({ where: { id: photoId } });
+
+    return res.send(200);
   } catch (error) {
     next(error);
   }
