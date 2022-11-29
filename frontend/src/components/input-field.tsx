@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import React, { forwardRef } from "react";
 
-type Props = {
+export type InputFieldProps = {
   label?: string;
   error?: string;
   type?: "text" | "password" | "email";
   textarea?: boolean;
 } & React.ComponentPropsWithoutRef<"input">;
 
-const InputField = forwardRef<HTMLInputElement, Props>(
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
     { label, error, type = "text", className, textarea, required, ...rest },
     ref

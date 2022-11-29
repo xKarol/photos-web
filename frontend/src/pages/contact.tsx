@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "../components/header";
 import { Footer } from "../components/footer";
 import Layout from "../components/layout";
-import InputField from "../components/input-field";
+import InputField, { InputFieldProps } from "../components/input-field";
 import Submit from "../components/submit";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,40 @@ type FormValues = {
   message: string;
 };
 
-const Home: NextPage = () => {
+type FieldProps = { name: keyof FormValues } & InputFieldProps;
+
+const fields: (FieldProps | FieldProps[])[] = [
+  [
+    {
+      name: "firstName",
+      label: "First Name",
+      required: true,
+    },
+    {
+      name: "lastName",
+      label: "Last Name",
+      required: true,
+    },
+  ],
+  {
+    name: "email",
+    label: "Email Address",
+    required: true,
+  },
+  {
+    name: "subject",
+    label: "Subject",
+    required: true,
+  },
+  {
+    name: "message",
+    label: "Message",
+    required: true,
+    textarea: true,
+  },
+];
+
+const Contact: NextPage = () => {
   const {
     register,
     formState: { errors },
@@ -42,40 +75,31 @@ const Home: NextPage = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-2xl">Contact</h1>
-          <div className="flex space-x-3">
-            <InputField
-              label="First Name"
-              error={errors["firstName"]?.message}
-              required
-              {...register("firstName", { required: true })}
-            />
-            <InputField
-              label="Last Name"
-              error={errors["lastName"]?.message}
-              required
-              {...register("lastName", { required: true })}
-            />
-          </div>
-          <InputField
-            label="Email Address"
-            error={errors["email"]?.message}
-            type="email"
-            required
-            {...register("email", { required: true })}
-          />
-          <InputField
-            label="Subject"
-            error={errors["subject"]?.message}
-            required
-            {...register("subject", { required: true })}
-          />
-          <InputField
-            label="Message"
-            error={errors["message"]?.message}
-            textarea
-            required
-            {...register("message", { required: true })}
-          />
+          {fields.map((data) => {
+            return Array.isArray(data) ? (
+              <div className="flex space-x-3">
+                {data.map(({ name, ...props }) => {
+                  return (
+                    <InputField
+                      key={name}
+                      error={errors[name]?.message}
+                      {...props}
+                      {...register(name, { required: props.required })}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <InputField
+                key={data.name}
+                label={data.label}
+                error={errors[data.name]?.message}
+                required={data.required}
+                textarea={data.textarea}
+                {...register(data.name, { required: data.required })}
+              />
+            );
+          })}
           <Submit className="ml-auto text-sm py-2">Submit</Submit>
         </form>
       </Layout>
@@ -84,4 +108,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Contact;
