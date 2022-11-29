@@ -6,13 +6,13 @@ import Submit from "../submit";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  const { mutate, isLoading, error, isError, isSuccess } =
+  const { mutateAsync, isLoading, error, isError, isSuccess } =
     useMutation(newsletterSubscribe);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
-    mutate(email);
+    await mutateAsync(email);
     setEmail("");
   };
 
