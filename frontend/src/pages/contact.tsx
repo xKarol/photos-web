@@ -6,6 +6,8 @@ import Layout from "../components/layout";
 import InputField from "../components/input-field";
 import Submit from "../components/submit";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema } from "../schemas/contact";
 
 type FormValues = {
   firstName: string;
@@ -16,8 +18,16 @@ type FormValues = {
 };
 
 const Home: NextPage = () => {
-  const { register, handleSubmit } = useForm<FormValues>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormValues>({
+    resolver: zodResolver(contactSchema),
+  });
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+
+  console.log(errors);
 
   return (
     <>
