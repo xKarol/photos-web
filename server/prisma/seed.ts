@@ -15,7 +15,7 @@ const PHOTOS_LIMIT = 25;
 
 const seedPhoto = async () => {
   const { data: buffer } = await axios.get(
-    `${faker.image.unsplash.image(1280, randomBetween(1280, 2560), "desert")}`,
+    `${faker.image.nature(1280, randomBetween(1280, 2560))}`,
     {
       responseType: "arraybuffer",
     }
@@ -23,21 +23,24 @@ const seedPhoto = async () => {
 
   const data = await uploadPhoto(buffer);
 
-  return await prisma.photos.create({
+  const photo = await prisma.photos.create({
     data: {
       ...data,
       alt: "desert",
     },
   });
+  return photo;
 };
 
 const main = async () => {
+  console.time("Seed");
   await prisma.photos.deleteMany({});
-  const photos = Array(PHOTOS_LIMIT).fill(seedPhoto());
+  const photos = Array(PHOTOS_LIMIT).fill(null);
   for (const index of photos.keys()) {
     console.log(`Seeding photos [${index + 1}/${PHOTOS_LIMIT}]`);
     await seedPhoto();
   }
+  console.timeEnd("Seed");
 };
 
 main()
