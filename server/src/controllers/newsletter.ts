@@ -1,7 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 
 import { prisma } from "../db";
-import type { NewsletterSubscribeSchema } from "../schemas/newsletter";
+import type {
+  NewsletterSubscribeSchema,
+  NewsletterCreateTemplateSchema,
+} from "../schemas/newsletter";
 import { sendEmail } from "../utils/mailer";
 
 export const Subscribe = async (
@@ -18,6 +21,26 @@ export const Subscribe = async (
       text: "Thanks for subscribe to our newsletter",
     });
     return res.send(subscriber);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const CreateTemplate = async (
+  req: Request<any, any, NewsletterCreateTemplateSchema["body"]>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { sendOnDate, ...data } = req.body;
+    const newTemplate = await prisma.newsletterTemplate.create({
+      data: {
+        sendOnDate: new Date(sendOnDate),
+        ...data,
+      },
+    });
+
+    return res.send(newTemplate);
   } catch (error) {
     next(error);
   }

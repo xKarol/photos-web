@@ -9,3 +9,19 @@ export const newsletterSubscribeSchema = z.object({
 export type NewsletterSubscribeSchema = z.infer<
   typeof newsletterSubscribeSchema
 >;
+
+export const newsletterCreateTemplateSchema = z.object({
+  body: z.object({
+    subject: z.string({ required_error: "Subject is required." }).min(10),
+    content: z.string({ required_error: "Content is required." }).min(100),
+    sendOnDate: z
+      .number({
+        required_error: "Set 'sendOnDate' field when email should be send.",
+      })
+      .min(Date.now()),
+  }),
+});
+
+export type NewsletterCreateTemplateSchema = z.infer<
+  typeof newsletterCreateTemplateSchema
+>;
