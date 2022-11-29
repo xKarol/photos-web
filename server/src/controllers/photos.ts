@@ -52,7 +52,7 @@ export const Get = async (
       prisma.image.count(),
     ]);
 
-    const hasMore = page + 1 * limit < count || photos.length;
+    const hasMore = page + 1 * limit < count && photos.length;
     const nextPage = hasMore ? page + 1 : -1;
 
     return res.send({ data: photos, nextPage, limit });
