@@ -3,9 +3,6 @@ import logger from "../utils/logger";
 import { sendEmail } from "../utils/mailer";
 
 export const sendNewsletters = async () => {
-  const subscribers = await prisma.newsletterSubscriber.findMany({
-    select: { email: true },
-  });
   const {
     subject,
     content,
@@ -22,6 +19,10 @@ export const sendNewsletters = async () => {
   })) || {};
 
   if (!subject && !content) return;
+
+  const subscribers = await prisma.newsletterSubscriber.findMany({
+    select: { email: true },
+  });
 
   await prisma.newsletterTemplate.update({
     data: { delivered: true },
