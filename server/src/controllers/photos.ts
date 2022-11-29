@@ -24,10 +24,11 @@ export const Create = async (
 
     const data = await uploadPhoto(photoBuffer);
 
-    const newPhoto = await prisma.photos.create({
+    const newPhoto = await prisma.image.create({
       data: {
         alt: body.alt,
         ...data,
+        type: "DEFAULT",
       },
     });
     return res.send(newPhoto);
@@ -45,13 +46,13 @@ export const Get = async (
     const { page, limit, ...pagination } = paginationParams(req.query);
 
     const [photos, count] = await prisma.$transaction([
-      prisma.photos.findMany({
+      prisma.image.findMany({
         ...pagination,
       }),
-      prisma.photos.count(),
+      prisma.image.count(),
     ]);
 
-    const hasMore = page + 1 * limit < count;
+    const hasMore = page + 1 * limit < count || photos.length;
     const nextPage = hasMore ? page + 1 : -1;
 
     return res.send({ data: photos, nextPage, limit });

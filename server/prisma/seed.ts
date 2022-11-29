@@ -23,10 +23,11 @@ const seedPhoto = async () => {
 
   const data = await uploadPhoto(buffer);
 
-  const photo = await prisma.photos.create({
+  const photo = await prisma.image.create({
     data: {
       ...data,
       alt: "desert",
+      type: "DEFAULT",
     },
   });
   return photo;
@@ -34,7 +35,7 @@ const seedPhoto = async () => {
 
 const main = async () => {
   console.time("Seed");
-  await prisma.photos.deleteMany({});
+  await prisma.image.deleteMany({});
   const photos = Array(PHOTOS_LIMIT).fill(null);
   for (const index of photos.keys()) {
     console.log(`Seeding photos [${index + 1}/${PHOTOS_LIMIT}]`);
