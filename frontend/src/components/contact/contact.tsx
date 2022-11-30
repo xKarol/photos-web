@@ -9,6 +9,7 @@ import { createContact } from "../../services/contact";
 import LoadingButton from "../../components/loading-button";
 import { getErrorMessage } from "../../utils/get-error-message";
 import { fields } from "./fields";
+import ContactFields from "./contact-fields";
 
 export type FormValues = {
   firstName: string;
@@ -17,7 +18,6 @@ export type FormValues = {
   subject: string;
   message: string;
 };
-
 
 const Contact = () => {
   const {
@@ -43,31 +43,8 @@ const Contact = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <h1 className="text-2xl">Contact</h1>
-      {fields.map((data) => {
-        return Array.isArray(data) ? (
-          <div className="flex space-x-3">
-            {data.map(({ name, ...props }) => {
-              return (
-                <InputField
-                  key={name}
-                  error={errors[name]?.message}
-                  {...props}
-                  {...register(name, { required: props.required })}
-                />
-              );
-            })}
-          </div>
-        ) : (
-          <InputField
-            key={data.name}
-            label={data.label}
-            error={errors[data.name]?.message}
-            required={data.required}
-            textarea={data.textarea}
-            {...register(data.name, { required: data.required })}
-          />
-        );
-      })}
+      <ContactFields fields={fields} errors={errors} register={register} />
+
       <LoadingButton isLoading={isLoading}>
         <Submit className="ml-auto text-sm py-2">Submit</Submit>
       </LoadingButton>
