@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { newsletterSubscribe } from "../../services/newsletter";
 import Submit from "../submit";
 import LoadingButton from "../loading-button";
+import { getErrorMessage } from "../../utils/get-error-message";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -29,11 +30,7 @@ const Newsletter = () => {
         <LoadingButton isLoading={isLoading}>
           <Submit>Submit</Submit>
         </LoadingButton>
-        {isError ? (
-          <span>
-            {error instanceof Error ? error.message : "Unknown error"}
-          </span>
-        ) : null}
+        {isError ? <span>{getErrorMessage(error)}</span> : null}
         {isSuccess ? (
           <span>Thanks for subscribe to our newsletter!</span>
         ) : null}

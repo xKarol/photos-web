@@ -11,6 +11,7 @@ import { contactSchema } from "../schemas/contact";
 import { useMutation } from "react-query";
 import { createContact } from "../services/contact";
 import LoadingButton from "../components/loading-button";
+import { getErrorMessage } from "../utils/get-error-message";
 
 type FormValues = {
   firstName: string;
@@ -116,7 +117,7 @@ const Contact: NextPage = () => {
           </LoadingButton>
           {isError ? (
             <span className="text-red-400 absolute text-sm bottom-0 left-0">
-              {error instanceof Error ? error.message : null}
+              {getErrorMessage(error)}
             </span>
           ) : null}
           {isSuccess ? (
