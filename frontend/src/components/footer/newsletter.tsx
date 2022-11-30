@@ -13,7 +13,7 @@ const Newsletter = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
-    await mutateAsync(email);
+    await mutateAsync(email).catch(() => null);
     setEmail("");
   };
 

@@ -32,7 +32,7 @@ const Contact = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     if (isLoading) return;
-    await mutateAsync(data);
+    await mutateAsync(data).catch(() => null);
     reset();
   };
 
