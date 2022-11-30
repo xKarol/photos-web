@@ -1,7 +1,11 @@
+import { AxiosError } from "axios";
 import { ZodError } from "zod";
 
 export const getErrorMessage = (error: unknown) => {
-  if (error instanceof ZodError) return error.errors[0].message;
+  const defaultError = "Unknown error";
+  if (error instanceof AxiosError)
+    return error.response?.data.message || defaultError;
   if (error instanceof Error) return error.message;
-  return "Unknown error";
+  if (error instanceof ZodError) return error.errors[0].message;
+  return defaultError;
 };
