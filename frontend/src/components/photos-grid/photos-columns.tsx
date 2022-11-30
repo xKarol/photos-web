@@ -4,16 +4,17 @@ import Photo from "./photo";
 
 type Props = {
   columns?: number;
-  photos: PhotoType[];
+  photos?: PhotoType[];
 } & Partial<React.ComponentProps<typeof Photo>>;
 
-const PhotosColumns = ({ columns = 2, photos, ...props }: Props) => {
+const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
+  if (!photos.length) return <span>Cannot find photos</span>;
   return (
     <div className="flex space-x-20">
       {Array(columns)
         .fill(null)
         .map((_, column) => (
-          <div className="w-full flex flex-col space-y-20">
+          <div className="w-full flex flex-col space-y-20" key={column}>
             {photos
               .slice(
                 column * (photos.length / columns),
