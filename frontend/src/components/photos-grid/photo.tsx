@@ -4,7 +4,7 @@ import React from "react";
 
 type Props = ImageProps;
 
-const Photo = ({ className, ...props }: Props) => {
+const Photo = ({ className, alt, ...props }: Props) => {
   return (
     <figure className={className}>
       <Image
@@ -14,6 +14,7 @@ const Photo = ({ className, ...props }: Props) => {
           width: "100%",
           height: "auto",
         }}
+        alt={alt}
         {...props}
       />
     </figure>

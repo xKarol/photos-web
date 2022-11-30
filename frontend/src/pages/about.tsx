@@ -3,6 +3,7 @@ import Head from "next/head";
 import Header from "../components/header";
 import { Footer } from "../components/footer";
 import Layout from "../components/layout";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +18,11 @@ const Home: NextPage = () => {
       <Layout as="main">
         <div className="flex space-x-10">
           <figure className="flex-1">
-            <img className="outline-dotted w-full h-[400px]" />
+            <Image
+              src={""}
+              alt=""
+              className="outline-dotted w-full h-[400px]"
+            />
           </figure>
           <section className="flex-1 flex flex-col">
             <h1 className="uppercase text-bold text-3xl mb-5">About</h1>
