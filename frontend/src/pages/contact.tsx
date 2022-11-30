@@ -2,76 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/header";
 import { Footer } from "../components/footer";
+import { Contact as ContactContrainer } from "../components/contact";
 import Layout from "../components/layout";
-import InputField, { InputFieldProps } from "../components/input-field";
-import Submit from "../components/submit";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { contactSchema } from "../schemas/contact";
-import { useMutation } from "react-query";
-import { createContact } from "../services/contact";
-import LoadingButton from "../components/loading-button";
-import { getErrorMessage } from "../utils/get-error-message";
-
-type FormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  subject: string;
-  message: string;
-};
-
-type FieldProps = { name: keyof FormValues } & InputFieldProps;
-
-const fields: (FieldProps | FieldProps[])[] = [
-  [
-    {
-      name: "firstName",
-      label: "First Name",
-      required: true,
-    },
-    {
-      name: "lastName",
-      label: "Last Name",
-      required: true,
-    },
-  ],
-  {
-    name: "email",
-    label: "Email Address",
-    required: true,
-  },
-  {
-    name: "subject",
-    label: "Subject",
-    required: true,
-  },
-  {
-    name: "message",
-    label: "Message",
-    required: true,
-    textarea: true,
-  },
-];
 
 const Contact: NextPage = () => {
-  const {
-    register,
-    formState: { errors },
-    reset,
-    handleSubmit,
-  } = useForm<FormValues>({
-    resolver: zodResolver(contactSchema),
-  });
-  const { mutateAsync, isLoading, error, isError, isSuccess } =
-    useMutation(createContact);
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (isLoading) return;
-    await mutateAsync(data);
-    reset();
-  };
-
   return (
     <>
       <Head>
@@ -82,50 +16,7 @@ const Contact: NextPage = () => {
 
       <Header />
       <Layout as="main">
-        <form
-          className="flex flex-col space-y-[25px] max-w-[500px] relative"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <h1 className="text-2xl">Contact</h1>
-          {fields.map((data) => {
-            return Array.isArray(data) ? (
-              <div className="flex space-x-3">
-                {data.map(({ name, ...props }) => {
-                  return (
-                    <InputField
-                      key={name}
-                      error={errors[name]?.message}
-                      {...props}
-                      {...register(name, { required: props.required })}
-                    />
-                  );
-                })}
-              </div>
-            ) : (
-              <InputField
-                key={data.name}
-                label={data.label}
-                error={errors[data.name]?.message}
-                required={data.required}
-                textarea={data.textarea}
-                {...register(data.name, { required: data.required })}
-              />
-            );
-          })}
-          <LoadingButton isLoading={isLoading}>
-            <Submit className="ml-auto text-sm py-2">Submit</Submit>
-          </LoadingButton>
-          {isError ? (
-            <span className="text-red-400 absolute text-sm bottom-0 left-0">
-              {getErrorMessage(error)}
-            </span>
-          ) : null}
-          {isSuccess ? (
-            <span className="absolute text-sm bottom-0 left-0">
-              Message has been sent.
-            </span>
-          ) : null}
-        </form>
+        <ContactContrainer />
       </Layout>
       <Footer />
     </>
