@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { PhotoType } from "../@types/photos";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+const SERVER_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type PhotosType = {
   data: PhotoType[];
