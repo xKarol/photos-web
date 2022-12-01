@@ -15,3 +15,8 @@ export const getPhotos = async (page = 1, limit = 10): Promise<PhotosType> => {
   );
   return data;
 };
+
+export const getPhoto = async (photoId: string): Promise<PhotoType> => {
+  const { data } = await axios.get(`${SERVER_URL}/photos/${photoId}`);
+  return data;
+};

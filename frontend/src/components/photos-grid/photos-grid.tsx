@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { usePhotos } from "../../hooks/usePhotos";
 import Layout from "../layout";
-import Lightbox from "../lightbox";
 import Spinner from "../spinner";
 import PhotosColumns from "./photos-columns";
 
 const Photos = () => {
   const { ref, data, fetchNextPage, hasNextPage, isFetching } = usePhotos();
-  const [open, setOpen] = useState(false);
 
   const photos = data?.pages.map(({ data }) => data).flat(1) || [];
 
   return (
     <>
       <Layout as="section" className="flex flex-col">
-        <PhotosColumns onClick={() => setOpen(true)} photos={photos} />
+        <PhotosColumns photos={photos} />
         {hasNextPage ? (
           <div className="mt-[2.5rem] mx-auto">
             {isFetching ? (
@@ -31,8 +29,6 @@ const Photos = () => {
           </div>
         ) : null}
       </Layout>
-
-      <Lightbox setIsOpen={setOpen} isOpen={open} photos={photos} />
     </>
   );
 };

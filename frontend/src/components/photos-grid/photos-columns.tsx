@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { PhotoType } from "../../@types/photos";
 import Photo from "./photo";
@@ -21,16 +22,16 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
                 column * (photos.length / columns) + photos.length / columns
               )
               .map(({ id, src, alt, height, width, placeholder }) => (
-                <Photo
-                  key={id}
-                  className="cursor-pointer"
-                  {...props}
-                  src={src}
-                  alt={alt}
-                  width={width}
-                  height={height}
-                  blurDataURL={placeholder}
-                />
+                <Link key={id} href={`/${id}`}>
+                  <Photo
+                    {...props}
+                    src={src}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    blurDataURL={placeholder}
+                  />
+                </Link>
               ))}
           </div>
         ))}
