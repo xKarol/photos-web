@@ -18,3 +18,11 @@ export const deletePhotoSchema = z.object({
 });
 
 export type DeletePhotoSchema = z.infer<typeof deletePhotoSchema>;
+
+export const getPhotoSchema = z.object({
+  params: z.object({
+    photoId: z.string({ required_error: "PhotoId is required." }),
+  }),
+});
+
+export type GetPhotoSchema = z.infer<typeof getPhotoSchema>;

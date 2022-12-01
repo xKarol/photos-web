@@ -1,7 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 
 import { prisma } from "../db";
-import type { DeletePhotoSchema, GetPhotosSchema } from "../schemas/photos";
+import type {
+  DeletePhotoSchema,
+  GetPhotosSchema,
+  GetPhotoSchema,
+} from "../schemas/photos";
 import { uploadPhoto } from "../services/photos";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -32,6 +37,23 @@ export const Create = async (
       },
     });
     return res.send(newPhoto);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetOne = async (
+  req: Request<GetPhotoSchema["params"]>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { photoId } = req.params;
+
+    const data = await prisma.image.findUnique({ where: { id: photoId } });
+    if (!data) throw createError(404, "Photo not found.");
+
+    return res.send(data);
   } catch (error) {
     next(error);
   }
