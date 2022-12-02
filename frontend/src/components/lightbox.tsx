@@ -80,7 +80,7 @@ const Lightbox = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden transition-all">
                 <Photo
                   src={src}
                   alt={alt}
