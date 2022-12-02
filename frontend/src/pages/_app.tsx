@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Quicksand } from "@next/font/google";
@@ -9,8 +9,29 @@ const openSans = Quicksand({
   weight: ["300", "400", "500"],
 });
 
+const ReactQueryDevtoolsProduction = React.lazy(() =>
+  import("react-query/devtools/development").then((d) => ({
+    default: d.ReactQueryDevtools,
+  }))
+);
+
+declare global {
+  interface Window {
+    toggleQueryDevtools: (toggle: boolean) => void;
+  }
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
+
+  const [showDevtools, setShowDevtools] = useState(false);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      window.toggleQueryDevtools = (toggle: boolean) => setShowDevtools(toggle);
+      window.toggleQueryDevtools(true);
+    }
+  }, []);
 
   return (
     <>
@@ -22,6 +43,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <Component {...pageProps} />
+          {showDevtools && (
+            <React.Suspense fallback={null}>
+              <ReactQueryDevtoolsProduction />
+            </React.Suspense>
+          )}
         </Hydrate>
       </QueryClientProvider>
     </>
