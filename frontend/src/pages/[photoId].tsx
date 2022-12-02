@@ -45,9 +45,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const PhotoPage: NextPage = () => {
   const router = useRouter();
   const photoId = router.query.photoId as string;
-  const { data } = useQuery(["photos", photoId], () => getPhoto(photoId));
+  const { data } = useQuery(["photos"], () => getPhotos());
 
-  if (!data) return <h1>No data</h1>;
+  const photos = data?.data;
+  if (!photos?.length) return <h1>No data</h1>;
   return (
     <>
       <Head>
@@ -58,7 +59,7 @@ const PhotoPage: NextPage = () => {
       <Lightbox
         setIsOpen={() => router.push("/")}
         isOpen={true}
-        photos={[data]}
+        photos={photos}
       />
     </>
   );
