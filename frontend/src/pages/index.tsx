@@ -3,6 +3,28 @@ import Head from "next/head";
 import Header from "../components/header";
 import { Footer } from "../components/footer";
 import { PhotosGrid } from "../components/photos-grid";
+import { getPhotos } from "../services/photos";
+import { dehydrate, QueryClient } from "react-query";
+import superjson from "superjson";
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchInfiniteQuery(
+    "photos",
+    ({ pageParam: page = 1 }) => getPhotos(page, 10),
+    {
+      getNextPageParam: ({ nextPage }) =>
+        nextPage === -1 ? undefined : nextPage ?? undefined,
+    }
+  );
+
+  return {
+    props: {
+      dehydratedState: superjson.serialize(dehydrate(queryClient)),
+    },
+  };
+}
 
 const Home: NextPage = () => {
   return (

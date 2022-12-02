@@ -1,7 +1,8 @@
+import { useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Quicksand } from "@next/font/google";
-import { QueryClientProvider, QueryClient } from "react-query";
+import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
 
 const openSans = Quicksand({
   subsets: ["latin"],
@@ -9,7 +10,8 @@ const openSans = Quicksand({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <>
       <style jsx global>{`
@@ -18,7 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+        </Hydrate>
       </QueryClientProvider>
     </>
   );
