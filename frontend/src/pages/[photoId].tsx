@@ -1,11 +1,28 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { PhotoType } from "../@types/photos";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import Lightbox from "../components/lightbox";
-import { getPhoto } from "../services/photos";
+import { getPhoto, getPhotos } from "../services/photos";
+import superjson from "superjson";
 
-export const getServerSideProps: GetStaticProps = async (context) => {
+export const getStaticPaths = async () => {
+  const data = await getPhotos();
+  const pages = data.data.map(({ id }) => ({
+    params: {
+      photoId: id,
+    },
+  }));
+
+  return {
+    paths: pages,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const queryClient = new QueryClient();
+
   const { params } = context;
   const { photoId } = params || {};
 
@@ -17,17 +34,20 @@ export const getServerSideProps: GetStaticProps = async (context) => {
     };
   }
 
-  const data = await getPhoto(id);
+  await queryClient.prefetchQuery(["photos", id], () => getPhoto(id));
 
   return {
     props: {
-      data: data,
+      dehydratedState: superjson.serialize(dehydrate(queryClient)),
     },
   };
 };
-
-const PhotoPage: NextPage<{ data: PhotoType }> = ({ data }) => {
+const PhotoPage: NextPage = () => {
   const router = useRouter();
+  const photoId = router.query.photoId as string;
+  const { data } = useQuery(["photos", photoId], () => getPhoto(photoId));
+
+  if (!data) return <h1>No data</h1>;
   return (
     <>
       <Head>
