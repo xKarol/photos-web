@@ -10,9 +10,17 @@ type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   photos: PhotoType[];
+  onClickNext?: (currentIndex: number) => void;
+  onClickPrev?: (currentIndex: number) => void;
 };
 
-const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
+const Lightbox = ({
+  isOpen,
+  setIsOpen,
+  photos,
+  onClickNext,
+  onClickPrev,
+}: Props) => {
   const [active, setActive] = useState(0);
   const closeModal = () => setIsOpen(false);
   const { height, width, placeholder, alt, src } = photos[active] || {};
@@ -20,9 +28,11 @@ const Lightbox = ({ isOpen, setIsOpen, photos }: Props) => {
   const changePhoto = (direction: "next" | "prev") => {
     if (direction === "next") {
       setActive((state) => (state >= photos.length - 1 ? 0 : state + 1));
+      onClickNext?.(active + 1);
       return;
     }
     setActive((state) => (state <= 0 ? photos.length - 1 : state - 1));
+    onClickPrev?.(active + 1);
   };
 
   return (
