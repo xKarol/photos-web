@@ -4,13 +4,10 @@ import Layout from "./layout";
 
 const Header = () => {
   return (
-    <Layout
-      as="header"
-      className="my-20 flex justify-between"
-    >
+    <Layout as="header" className="my-20 flex justify-between">
       <figure>Logo</figure>
       <nav>
-        <ul className="flex space-x-7">
+        <ul className="flex space-x-7 font-light tracking-wider">
           <li>
             <Link href="/">Home</Link>
           </li>

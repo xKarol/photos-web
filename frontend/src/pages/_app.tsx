@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Quicksand } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
 
-const openSans = Quicksand({
+const defaultFont = Montserrat({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["200", "300", "400", "500"],
 });
 
 const ReactQueryDevtoolsProduction = React.lazy(() =>
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <style jsx global>{`
         html {
-          font-family: ${openSans.style.fontFamily};
+          font-family: ${defaultFont.style.fontFamily};
         }
       `}</style>
       <QueryClientProvider client={queryClient}>
