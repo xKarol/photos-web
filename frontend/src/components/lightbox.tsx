@@ -8,6 +8,7 @@ import Photo from "./photos-grid/photo";
 
 type Props = {
   isOpen: boolean;
+  initialIndex?: number;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   photos: PhotoType[];
   onClickNext?: (currentIndex: number) => void;
@@ -18,10 +19,11 @@ const Lightbox = ({
   isOpen,
   setIsOpen,
   photos,
+  initialIndex = 0,
   onClickNext,
   onClickPrev,
 }: Props) => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(initialIndex || 0);
   const closeModal = () => setIsOpen(false);
   const { height, width, placeholder, alt, src } = photos[active] || {};
 

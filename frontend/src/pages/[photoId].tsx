@@ -62,6 +62,8 @@ const PhotoPage: NextPage = () => {
   };
 
   const photos = data?.pages.map(({ data }) => data).flat(1) || [];
+  const initialIndex = photos.findIndex(({ id }) => id === photoId);
+
   if (!photos?.length) return <h1>No data</h1>;
   return (
     <>
@@ -72,6 +74,7 @@ const PhotoPage: NextPage = () => {
       </Head>
       <Lightbox
         setIsOpen={() => router.push("/")}
+        initialIndex={initialIndex === -1 ? 0 : initialIndex}
         isOpen={true}
         photos={photos}
         onClickNext={handleNext}
