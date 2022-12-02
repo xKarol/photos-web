@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { useMedia } from "react-use";
 import { PhotoType } from "../../@types/photos";
 import Photo from "./photo";
 
@@ -9,10 +10,12 @@ type Props = {
 } & Partial<React.ComponentProps<typeof Photo>>;
 
 const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
+  const isMobile = useMedia("(max-width: 500px)");
+
   if (!photos.length) return <span>Cannot find photos</span>;
   return (
     <div className="flex space-x-2 sm:space-x-5 md:space-x-10 lg:space-x-20">
-      {Array(columns)
+      {Array(isMobile ? 1 : columns)
         .fill(null)
         .map((_, column) => (
           <div
