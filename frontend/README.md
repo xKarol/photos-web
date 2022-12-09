@@ -1,7 +1,7 @@
-#PHOTOS WEB FRONTEND
+# PHOTOS WEB FRONTEND
 
-###Installation
+### Installation
 `npm install`
 
-###Usage
+### Usage
 `npm run dev`
