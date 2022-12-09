@@ -10,7 +10,7 @@ type Props = {
 } & Partial<React.ComponentProps<typeof Photo>>;
 
 const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
-  const isMobile = useMedia("(max-width: 500px)");
+  const isMobile = useMedia("(max-width: 500px)", false);
 
   if (!photos.length) return <span>Cannot find photos</span>;
   return (

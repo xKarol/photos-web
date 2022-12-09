@@ -5,7 +5,7 @@ import Navbar from "./navbar";
 import { useMedia } from "react-use";
 
 const Header = () => {
-  const isMobile = useMedia("(max-width: 500px)");
+  const isMobile = useMedia("(max-width: 500px)", false);
 
   return (
     <Layout as="header" className="my-20 flex justify-between items-center">
