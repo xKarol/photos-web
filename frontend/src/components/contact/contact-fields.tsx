@@ -13,11 +13,12 @@ type Props = {
 const ContactFields = ({ fields, errors, register }: Props) => {
   return (
     <>
-      {fields.map((field) => {
+      {fields.map((field, index) => {
         const isArray = Array.isArray(field);
-        if (isArray)
+        if (isArray) {
+          const arrKey = field.map(({ name }) => (name)).join(", ");
           return (
-            <div className="flex space-x-3">
+            <div className="flex space-x-3" key={arrKey}>
               <ContactFields
                 fields={field}
                 errors={errors}
@@ -25,6 +26,7 @@ const ContactFields = ({ fields, errors, register }: Props) => {
               />
             </div>
           );
+        }
 
         const { name, ...fieldProps } = field;
         return (
