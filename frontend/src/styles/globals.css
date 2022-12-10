@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-[#F5EFE6];
+    @apply bg-primary;
   }
 }

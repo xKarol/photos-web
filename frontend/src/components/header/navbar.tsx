@@ -5,7 +5,7 @@ import { ROUTE_ABOUT, ROUTE_CONTACT, ROUTE_HOME } from "../../constants/routes";
 const Navbar = () => {
   return (
     <nav>
-      <ul className="flex space-x-7 font-light tracking-wider">
+      <ul className="flex space-x-10 font-light tracking-wider text-font uppercase text-sm">
         <li>
           <Link href={ROUTE_HOME}>Home</Link>
         </li>
