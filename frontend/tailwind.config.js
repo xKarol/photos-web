@@ -1,7 +1,15 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: ["**/*.{jsx,tsx}"],
   theme: {
+    colors: {
+      ...colors,
+      primary: "#EDE3DA",
+      secondary: "#E2CEBC",
+      font: "#3C3A36",
+    },
     extend: {
       container: {
         padding: {
