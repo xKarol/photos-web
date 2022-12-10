@@ -10,7 +10,7 @@ const Header = () => {
   const isMobile = useMedia("(max-width: 500px)", false);
 
   return (
-    <Layout as="header" className="my-20 flex justify-between items-center">
+    <Layout as="header" className="my-10 lg:my-20 flex justify-between items-center">
       <figure>Logo</figure>
       {isMobile ? <Hamburger onClick={() =>  setShowNavbar(true)}/> : <Navbar />}
       {showNavbar ? <NavbarMobile onClose={() =>  setShowNavbar(false)} /> : null}
