@@ -67,17 +67,14 @@ export const Get = async (
   try {
     const { page, limit, ...pagination } = paginationParams(req.query);
 
-    const [photos, count] = await prisma.$transaction([
-      prisma.image.findMany({
-        ...pagination,
-      }),
-      prisma.image.count(),
-    ]);
+    const photos = await prisma.image.findMany({
+      ...pagination,
+    });
 
-    const hasMore = page + 1 * limit < count && photos.length;
-    const nextPage = hasMore ? page + 1 : -1;
+    const hasMore = photos.length - 1 === limit;
+    const nextPage = hasMore ? page + 1 : undefined;
 
-    return res.send({ data: photos, nextPage, limit });
+    return res.send({ data: photos.slice(0, limit), nextPage, limit });
   } catch (error) {
     next(error);
   }

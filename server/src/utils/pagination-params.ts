@@ -15,6 +15,6 @@ export const paginationParams = (query: PaginationParams) => {
     page,
     limit,
     skip: (page - 1) * limit,
-    take: limit,
+    take: limit + 1,
   };
 };
