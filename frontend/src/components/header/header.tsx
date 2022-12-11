@@ -4,6 +4,7 @@ import Hamburger from "./hamburger";
 import Navbar from "./navbar";
 import { useMedia } from "react-use";
 import NavbarMobile from "./navbar-mobile";
+import Logo from "../logo";
 
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -11,7 +12,7 @@ const Header = () => {
 
   return (
     <Layout as="header" className="my-10 lg:my-20 flex justify-between items-center">
-      <figure>Logo</figure>
+      <Logo />
       {isMobile ? <Hamburger onClick={() =>  setShowNavbar(true)}/> : <Navbar />}
       {showNavbar ? <NavbarMobile onClose={() =>  setShowNavbar(false)} /> : null}
     </Layout>
