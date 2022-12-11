@@ -10,9 +10,11 @@ const Newsletter = () => {
   const { mutateAsync, isLoading, error, isError, isSuccess } =
     useMutation(newsletterSubscribe);
 
+  const isDisabled = !email.length || isLoading;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isLoading) return;
+    if (isDisabled) return;
     await mutateAsync(email).catch(() => null);
     setEmail("");
   };
@@ -31,7 +33,7 @@ const Newsletter = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <LoadingButton isLoading={isLoading}>
-          <Submit>Submit</Submit>
+          <Submit disabled={isDisabled}>Submit</Submit>
         </LoadingButton>
         <div className="absolute left-0 -bottom-6 text-xs">
           {isError ? (
