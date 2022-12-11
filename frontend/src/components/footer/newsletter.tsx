@@ -19,7 +19,9 @@ const Newsletter = () => {
 
   return (
     <section className="flex flex-col">
-      <h1 className="text-lg uppercase tracking-widest mb-2">Newsletter</h1>
+      <h1 className="text-font text-lg uppercase tracking-widest mb-2">
+        Newsletter
+      </h1>
       <form className="relative h-[40px] flex text-sm" onSubmit={handleSubmit}>
         <input
           type="email"
@@ -31,10 +33,16 @@ const Newsletter = () => {
         <LoadingButton isLoading={isLoading}>
           <Submit>Submit</Submit>
         </LoadingButton>
-        {isError ? <span>{getErrorMessage(error)}</span> : null}
-        {isSuccess ? (
-          <span>Thanks for subscribe to our newsletter!</span>
-        ) : null}
+        <div className="absolute left-0 -bottom-6 text-xs">
+          {isError ? (
+            <span className="text-red-500">{getErrorMessage(error)}</span>
+          ) : null}
+          {isSuccess ? (
+            <span className="text-font">
+              Thanks for subscribe to our newsletter!
+            </span>
+          ) : null}
+        </div>
       </form>
     </section>
   );
