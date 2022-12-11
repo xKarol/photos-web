@@ -18,7 +18,8 @@ const Newsletter = () => {
   };
 
   return (
-    <section>
+    <section className="flex flex-col">
+      <h1 className="text-lg uppercase tracking-widest mb-2">Newsletter</h1>
       <form className="relative h-[40px] flex text-sm" onSubmit={handleSubmit}>
         <input
           type="email"
