@@ -5,9 +5,12 @@ import Socials from "./socials";
 
 const Footer = () => {
   return (
-    <Layout as="footer" className="py-20 mt-[7.5rem] flex justify-between">
+    <Layout
+      as="footer"
+      className="py-20 mt-[7.5rem] flex flex-col md:flex-row justify-between"
+    >
       <Newsletter />
-      <Socials />
+      <Socials className="mt-10 md:mt-0" />
     </Layout>
   );
 };
