@@ -5,7 +5,7 @@ const SERVER_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type PhotosType = {
   data: PhotoType[];
-  nextPage: number;
+  nextPage: number | undefined;
   limit: number;
 };
 

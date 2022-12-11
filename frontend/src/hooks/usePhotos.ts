@@ -8,8 +8,7 @@ export const usePhotos = () => {
     "photos",
     ({ pageParam: page = 1 }) => getPhotos(page, 10),
     {
-      getNextPageParam: ({ nextPage }) =>
-        nextPage === -1 ? undefined : nextPage ?? undefined,
+      getNextPageParam: ({ nextPage }) => nextPage ?? undefined,
     }
   );
   const { ref, inView } = useInView({
