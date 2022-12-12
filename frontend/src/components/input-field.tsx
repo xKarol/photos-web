@@ -31,8 +31,9 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         )}
         {error ? (
           <span
-            className="text-red-400 text-xs absolute left-0 -bottom-5"
+            className="text-red-400 text-xs absolute left-0 top-[calc(100%_+_5px)] truncate max-w-full"
             role="alert"
+            title={error}
           >
             {error}
           </span>
