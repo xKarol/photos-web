@@ -1,8 +1,14 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Footer } from "../index";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 describe("Footer", () => {
   beforeEach(() => {
@@ -14,7 +20,9 @@ describe("Footer", () => {
   });
 
   it("should contain newsletter", () => {
-    const newsletterText = screen.getByRole("heading", { name: /Newsletter/i });
+    const newsletterText = screen.getByRole("heading", {
+      name: /Newsletter/i,
+    });
     expect(newsletterText).toBeInTheDocument();
 
     const newsletterForm = screen.getByRole("form");
