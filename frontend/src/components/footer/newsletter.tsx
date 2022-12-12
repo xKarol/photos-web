@@ -35,6 +35,7 @@ const Newsletter = () => {
           className="px-5 placeholder:text-black border border-black"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <LoadingButton isLoading={isLoading}>
           <Submit disabled={isDisabled}>Submit</Submit>
