@@ -30,7 +30,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           <input type={type} className={inputClass} {...rest} ref={ref} />
         )}
         {error ? (
-          <span className="text-red-400 text-xs absolute left-0 -bottom-5">
+          <span
+            className="text-red-400 text-xs absolute left-0 -bottom-5"
+            role="alert"
+          >
             {error}
           </span>
         ) : null}
