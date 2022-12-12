@@ -24,7 +24,11 @@ const Newsletter = () => {
       <h1 className="text-font text-lg uppercase tracking-widest mb-2">
         Newsletter
       </h1>
-      <form className="relative h-[40px] flex text-sm" onSubmit={handleSubmit}>
+      <form
+        className="relative h-[40px] flex text-sm"
+        onSubmit={handleSubmit}
+        aria-label="form"
+      >
         <input
           type="email"
           placeholder="Enter your email"
