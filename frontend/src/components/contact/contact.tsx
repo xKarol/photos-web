@@ -48,12 +48,18 @@ const Contact = () => {
         <Submit className="ml-auto text-sm py-2">Submit</Submit>
       </LoadingButton>
       {isError ? (
-        <span className="text-red-400 absolute text-sm bottom-0 left-0">
+        <span
+          role="alert"
+          className="text-red-400 absolute text-sm bottom-0 left-0"
+        >
           {getErrorMessage(error)}
         </span>
       ) : null}
       {isSuccess ? (
-        <span className="absolute text-sm bottom-0 left-0">
+        <span
+          role="alert"
+          className="absolute text-sm bottom-0 left-0 text-font"
+        >
           Message has been sent.
         </span>
       ) : null}
