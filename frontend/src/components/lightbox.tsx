@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Image from "next/image";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { PhotoType } from "../@types/photos";

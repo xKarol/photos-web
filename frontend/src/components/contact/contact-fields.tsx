@@ -13,7 +13,7 @@ type Props = {
 const ContactFields = ({ fields, errors, register }: Props) => {
   return (
     <>
-      {fields.map((field, index) => {
+      {fields.map((field) => {
         const isArray = Array.isArray(field);
         if (isArray) {
           const arrKey = field.map(({ name }) => name).join(", ");
