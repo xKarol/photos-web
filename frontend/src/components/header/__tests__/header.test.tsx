@@ -17,9 +17,9 @@ describe("Header", () => {
     const links = within(nav).getAllByRole("link");
     expect(links.length).toBeGreaterThan(0);
 
-    links.forEach((link) => {
+    for (const link of links) {
       expect(link).toHaveAttribute("href");
       expect(link).not.toBeEmptyDOMElement();
-    });
+    }
   });
 });

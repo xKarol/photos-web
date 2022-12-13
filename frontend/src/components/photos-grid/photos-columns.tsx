@@ -12,10 +12,10 @@ type Props = {
 const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
   const isMobile = useMedia("(max-width: 500px)", false);
 
-  if (!photos.length) return <span>Cannot find photos</span>;
+  if (photos.length === 0) return <span>Cannot find photos</span>;
   return (
     <div className="flex space-x-2 sm:space-x-5 md:space-x-10 lg:space-x-20">
-      {Array(isMobile ? 1 : columns)
+      {Array.from({length: isMobile ? 1 : columns})
         .fill(null)
         .map((_, column) => (
           <div

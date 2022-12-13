@@ -61,7 +61,7 @@ const PhotoPage: NextPage = () => {
     }
   };
 
-  const photos = data?.pages.map(({ data }) => data).flat(1) || [];
+  const photos = data?.pages.flatMap(({ data }) => data) || [];
   const initialIndex = photos.findIndex(({ id }) => id === photoId);
 
   if (!photos?.length) return <h1>No data</h1>;

@@ -1,5 +1,5 @@
 import React from "react";
-import { usePhotos } from "../../hooks/usePhotos";
+import { usePhotos } from "../../hooks/use-photos";
 import Layout from "../layout";
 import Spinner from "../spinner";
 import PhotosColumns from "./photos-columns";
@@ -7,7 +7,7 @@ import PhotosColumns from "./photos-columns";
 const Photos = () => {
   const { ref, data, fetchNextPage, hasNextPage, isFetching } = usePhotos();
 
-  const photos = data?.pages.map(({ data }) => data).flat(1) || [];
+  const photos = data?.pages.flatMap(({ data }) => data) || [];
 
   return (
     <>

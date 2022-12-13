@@ -13,7 +13,7 @@ const LoadingButton = ({
 }: Props) => {
   if (React.isValidElement(children)) {
     return React.cloneElement(children, children.props, [
-      !isLoading ? children.props.children : LoadingComponent || <Spinner />,
+      isLoading ? LoadingComponent || <Spinner /> : children.props.children,
     ]);
   }
   return <>{children}</>;

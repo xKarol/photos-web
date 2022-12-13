@@ -10,7 +10,7 @@ const Newsletter = () => {
   const { mutateAsync, isLoading, error, isError, isSuccess } =
     useMutation(newsletterSubscribe);
 
-  const isDisabled = !email.length || isLoading;
+  const isDisabled = email.length === 0 || isLoading;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

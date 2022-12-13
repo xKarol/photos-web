@@ -55,9 +55,9 @@ describe("Contact", () => {
   });
 
   it("inputs should be empty on initial load", async () => {
-    inputElements.forEach((inputElement) => {
+    for (const inputElement of inputElements) {
       expect(inputElement).toHaveValue("");
-    });
+    }
   });
 
   it("errors should be shown when inputs are empty after submit", async () => {
@@ -90,9 +90,9 @@ describe("Contact", () => {
 
     await user.click(submitElement);
 
-    inputElements.forEach((input) => {
+    for (const input of inputElements) {
       expect(input).toHaveValue("");
-    });
+    }
   });
 
   it.skip("should display error message", async () => {

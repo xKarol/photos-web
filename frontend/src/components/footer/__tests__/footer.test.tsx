@@ -33,9 +33,9 @@ describe("Footer", () => {
     const socials = screen.getAllByRole("link");
     expect(socials.length).toBeGreaterThan(0);
 
-    socials.forEach((social) => {
+    for (const social of socials) {
       expect(social).toHaveAttribute("href");
       expect(social).not.toBeEmptyDOMElement();
-    });
+    }
   });
 });
