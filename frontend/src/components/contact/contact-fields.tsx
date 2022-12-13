@@ -16,9 +16,12 @@ const ContactFields = ({ fields, errors, register }: Props) => {
       {fields.map((field, index) => {
         const isArray = Array.isArray(field);
         if (isArray) {
-          const arrKey = field.map(({ name }) => (name)).join(", ");
+          const arrKey = field.map(({ name }) => name).join(", ");
           return (
-            <div className="flex space-x-3" key={arrKey}>
+            <div
+              className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-3"
+              key={arrKey}
+            >
               <ContactFields
                 fields={field}
                 errors={errors}
