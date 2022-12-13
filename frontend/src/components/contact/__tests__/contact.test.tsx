@@ -1,16 +1,20 @@
-import {
-  findByRole,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Contact } from "../index";
 import { faker } from "@faker-js/faker";
-import { setTimeout } from "timers/promises";
+import { server } from "../../../__mocks__/server";
+import { rest } from "msw";
+
+const generateFakeFormData = () => {
+  return [
+    faker.name.firstName(),
+    faker.name.lastName(),
+    faker.internet.email(),
+    faker.lorem.words(10),
+    faker.lorem.words(30),
+  ];
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -74,15 +78,9 @@ describe("Contact", () => {
     expect(errors.length).toBe(inputElements.length - 1);
   });
 
-  it.only("should reset form after OK response ", async () => {
+  it("should reset form after OK response ", async () => {
     const user = userEvent.setup();
-    const inputsData = [
-      faker.name.firstName(),
-      faker.name.lastName(),
-      faker.internet.email(),
-      faker.lorem.words(10),
-      faker.lorem.words(30),
-    ];
+    const inputsData = generateFakeFormData();
 
     for await (const [index, value] of inputsData.entries()) {
       const input = inputElements[index];
@@ -95,5 +93,38 @@ describe("Contact", () => {
     inputElements.forEach((input) => {
       expect(input).toHaveValue("");
     });
+  });
+
+  it.skip("should display error message", async () => {
+    // TODO FIX mocking api
+    cleanup();
+    server.use(
+      rest.post("/contact", (_req, res, ctx) => {
+        return res(ctx.status(400));
+      })
+    );
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Contact />
+      </QueryClientProvider>
+    );
+
+    const user = userEvent.setup();
+    const inputsData = generateFakeFormData();
+
+    const submitElement = screen.getByRole("button", { name: /Submit/i });
+    const inputElements = screen.getAllByRole("textbox");
+
+    for await (const [index, value] of inputsData.entries()) {
+      const input = inputElements[index];
+      await user.type(input, value);
+    }
+    await user.click(submitElement);
+
+    const infoElement = await screen.findByRole("alert", {
+      name: /Unknown error/i,
+    });
+    expect(infoElement).toBeInTheDocument();
   });
 });
