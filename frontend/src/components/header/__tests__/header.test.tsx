@@ -1,17 +1,19 @@
 import { render, screen, within } from "@testing-library/react";
 import { Header } from "../index";
 
-describe("Header", () => {
-  beforeEach(() => {
-    render(<Header />);
-  });
+const setup = () => render(<Header />);
 
+describe("Header", () => {
   it("should contain logo", () => {
+    setup();
+
     const logo = screen.getByRole("figure");
     expect(logo).toBeInTheDocument();
   });
 
   it("should contain navbar links", () => {
+    setup();
+
     const nav = screen.getByRole("navigation");
     expect(nav).not.toBeEmptyDOMElement();
     const links = within(nav).getAllByRole("link");

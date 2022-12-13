@@ -1,10 +1,20 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Contact } from "../index";
 import { faker } from "@faker-js/faker";
 import { server } from "../../../__mocks__/server";
 import { rest } from "msw";
+
+const setup = () =>
+  render(
+    <QueryClientProvider client={queryClient}>
+      <Contact />
+    </QueryClientProvider>
+  );
+
+const getSubmitElement = () => screen.getByRole("button", { name: /Submit/i });
+const getInputElements = () => screen.getAllByRole("textbox");
 
 const generateFakeFormData = () => {
   return [
@@ -27,90 +37,94 @@ const queryClient = new QueryClient({
 jest.mock("axios");
 
 describe("Contact", () => {
-  let submitElement: HTMLElement;
-  let inputElements: HTMLElement[];
-
-  beforeEach(() => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Contact />
-      </QueryClientProvider>
-    );
-    submitElement = screen.getByRole("button", { name: /Submit/i });
-    inputElements = screen.getAllByRole("textbox");
-  });
-
   it("should contain heading", () => {
+    setup();
     const heading = screen.getByRole("heading", { name: /Contact/i });
     expect(heading).toBeVisible();
   });
 
   it("submit should be visible", () => {
+    setup();
+    const submitElement = getSubmitElement();
     expect(submitElement).toBeVisible();
   });
 
   it("errors should not be visible on initial load", () => {
+    setup();
     const errors = screen.queryAllByRole("alert");
     expect(errors.length).toBe(0);
   });
 
   it("inputs should be empty on initial load", async () => {
+    setup();
+    const inputElements = getInputElements();
     for (const inputElement of inputElements) {
       expect(inputElement).toHaveValue("");
     }
   });
 
   it("errors should be shown when inputs are empty after submit", async () => {
-    const user = userEvent.setup();
+    setup();
 
-    await user.click(submitElement);
+    const { click } = userEvent.setup();
+
+    const submitElement = getSubmitElement();
+    await click(submitElement);
+
+    const inputElements = getInputElements();
     const errors = await screen.findAllByRole("alert");
     expect(errors.length).toBe(inputElements.length);
   });
 
   it("one error should be hidden after passing valid input value", async () => {
-    const user = userEvent.setup();
+    setup();
 
-    await user.type(inputElements[0], faker.name.firstName());
-    await user.click(submitElement);
+    const { type, click } = userEvent.setup();
+
+    const inputElements = getInputElements();
+    await type(inputElements[0], faker.name.firstName());
+
+    const submitElement = getSubmitElement();
+    await click(submitElement);
 
     const errors = await screen.findAllByRole("alert");
     expect(errors.length).toBe(inputElements.length - 1);
   });
 
-  it("should reset form after OK response ", async () => {
-    const user = userEvent.setup();
+  it("should reset form after OK response", async () => {
+    setup();
+
+    const { type, click } = userEvent.setup();
     const inputsData = generateFakeFormData();
+    const inputElements = getInputElements();
 
     for await (const [index, value] of inputsData.entries()) {
       const input = inputElements[index];
-      await user.type(input, value);
+      await type(input, value);
       expect(input).toHaveValue(value);
     }
 
-    await user.click(submitElement);
+    const submitElement = getSubmitElement();
+    await click(submitElement);
 
     for (const input of inputElements) {
       expect(input).toHaveValue("");
     }
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   it.skip("should display error message", async () => {
     // TODO FIX mocking api
-    cleanup();
+
     server.use(
       rest.post("/contact", (_req, res, ctx) => {
         return res(ctx.status(400));
       })
     );
 
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Contact />
-      </QueryClientProvider>
-    );
+    setup();
 
-    const user = userEvent.setup();
+    const { type, click } = userEvent.setup();
     const inputsData = generateFakeFormData();
 
     const submitElement = screen.getByRole("button", { name: /Submit/i });
@@ -118,9 +132,9 @@ describe("Contact", () => {
 
     for await (const [index, value] of inputsData.entries()) {
       const input = inputElements[index];
-      await user.type(input, value);
+      await type(input, value);
     }
-    await user.click(submitElement);
+    await click(submitElement);
 
     const infoElement = await screen.findByRole("alert", {
       name: /Unknown error/i,

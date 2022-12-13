@@ -2,6 +2,13 @@ import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Footer } from "../index";
 
+const setup = () =>
+  render(
+    <QueryClientProvider client={queryClient}>
+      <Footer />
+    </QueryClientProvider>
+  );
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -11,15 +18,9 @@ const queryClient = new QueryClient({
 });
 
 describe("Footer", () => {
-  beforeEach(() => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Footer />
-      </QueryClientProvider>
-    );
-  });
-
   it("should contain newsletter", () => {
+    setup();
+
     const newsletterText = screen.getByRole("heading", {
       name: /Newsletter/i,
     });
@@ -30,6 +31,8 @@ describe("Footer", () => {
   });
 
   it("should contain socials links", () => {
+    setup();
+
     const socials = screen.getAllByRole("link");
     expect(socials.length).toBeGreaterThan(0);
 
