@@ -14,7 +14,7 @@
         "**/__tests__/**/*.[jt]s?(x)",
         "**/?(*.)+(spec|test).[jt]s?(x)"
       ],
-      "plugins": ["jest"],
+      "plugins": ["jest", "jest-dom"],
       "extends": ["plugin:jest/recommended", "plugin:testing-library/react"],
       "rules": {
         "jest/no-mocks-import": "off"
