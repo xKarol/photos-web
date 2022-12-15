@@ -1,8 +1,15 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { server } from "./src/__mocks__/server";
-import { QueryCache } from "react-query";
+import { QueryCache, setLogger } from "react-query";
+
 const queryCache = new QueryCache();
+
+setLogger({
+  log: console.log,
+  warn: console.warn,
+  error: () => {},
+});
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
