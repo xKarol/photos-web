@@ -25,8 +25,6 @@ const getButtonElement = () =>
     name: /Submit/i,
   });
 
-jest.mock("axios");
-
 describe("Newsletter", () => {
   it("button should be disabled when input is empty", () => {
     setup();
@@ -77,16 +75,16 @@ describe("Newsletter", () => {
     expect(infoElement).toBeVisible();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip("should display error message", async () => {
-    setup();
+  it("should display error message", async () => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-    //TODO fix this test
     server.use(
-      rest.post("/newsletter/subscribe", (_req, res, ctx) => {
+      rest.post(`${BACKEND_URL}/newsletter/subscribe`, (_req, res, ctx) => {
         return res(ctx.status(400));
       })
     );
+
+    setup();
 
     const inputElement = getInputElement();
 
@@ -97,9 +95,7 @@ describe("Newsletter", () => {
     expect(buttonElement).not.toBeDisabled();
     fireEvent.click(buttonElement);
 
-    const infoElement = await screen.findByText(
-      /Thanks for subscribe to our newsletter!/i
-    );
-    expect(infoElement).not.toBeVisible();
+    const infoElement = await screen.findByText(/Unknown error/i);
+    expect(infoElement).toBeInTheDocument();
   });
 });
