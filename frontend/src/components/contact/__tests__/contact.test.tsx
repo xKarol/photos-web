@@ -137,4 +137,24 @@ describe("Contact", () => {
     expect(infoElement).toBeInTheDocument();
     expect(infoElement).toHaveTextContent(/Unknown error/i);
   });
+
+  it("should display OK message", async () => {
+    setup();
+
+    const { type, click } = userEvent.setup();
+    const inputsData = generateFakeFormData();
+
+    const submitElement = screen.getByRole("button", { name: /Submit/i });
+    const inputElements = screen.getAllByRole("textbox");
+
+    for await (const [index, value] of inputsData.entries()) {
+      const input = inputElements[index];
+      await type(input, value);
+    }
+    await click(submitElement);
+
+    const infoElement = await screen.findByRole("alert");
+    expect(infoElement).toBeInTheDocument();
+    expect(infoElement).toHaveTextContent(/Message has been sent./i);
+  });
 });
