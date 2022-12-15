@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider, setLogger } from "react-query";
 import { Contact } from "../index";
 import { faker } from "@faker-js/faker";
 import { server } from "../../../__mocks__/server";
@@ -26,6 +26,12 @@ const generateFakeFormData = () => {
   ];
 };
 
+setLogger({
+  log: console.log,
+  warn: console.warn,
+  error: () => {},
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -33,8 +39,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-jest.mock("axios");
 
 describe("Contact", () => {
   it("should contain heading", () => {
@@ -112,13 +116,12 @@ describe("Contact", () => {
     }
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip("should display error message", async () => {
-    // TODO FIX mocking api
+  it("should display error message", async () => {
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     server.use(
-      rest.post("/contact", (_req, res, ctx) => {
-        return res(ctx.status(400));
+      rest.post(`${BACKEND_URL}/contact`, (_req, res, ctx) => {
+        return res(ctx.status(400), ctx.json({}));
       })
     );
 
@@ -136,9 +139,8 @@ describe("Contact", () => {
     }
     await click(submitElement);
 
-    const infoElement = await screen.findByRole("alert", {
-      name: /Unknown error/i,
-    });
+    const infoElement = await screen.findByRole("alert");
     expect(infoElement).toBeInTheDocument();
+    expect(infoElement).toHaveTextContent(/Unknown error/i);
   });
 });

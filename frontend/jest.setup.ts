@@ -4,13 +4,6 @@ import { server } from "./src/__mocks__/server";
 import { QueryCache } from "react-query";
 const queryCache = new QueryCache();
 
-beforeAll(() => server.listen());
-afterEach(() => {
-  server.resetHandlers();
-  queryCache.clear();
-});
-afterAll(() => server.close());
-
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
@@ -24,3 +17,10 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn(),
   })),
 });
+
+beforeAll(() => server.listen({ onUnhandledRequest: "warn" }));
+afterEach(() => {
+  server.resetHandlers();
+  queryCache.clear();
+});
+afterAll(() => server.close());
