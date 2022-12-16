@@ -48,26 +48,35 @@ const Lightbox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-75" />
+          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-75" aria-label="dialog overlay"/>
         </Transition.Child>
 
-        <VscClose
+        <button
           className="fixed top-5 right-5 text-white cursor-pointer z-10 text-3xl"
           onClick={closeModal}
-        />
+          aria-label="close button"
+        >
+          <VscClose />
+        </button>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="fixed left-0 h-full w-[50vw] text-3xl text-white z-10">
-            <HiChevronLeft
+            <button
               className="fixed left-5 top-1/2 -translate-y-1/2 cursor-pointer"
               onClick={() => changePhoto("prev")}
-            />
+              aria-label="previous photo"
+            >
+              <HiChevronLeft />
+            </button>
           </div>
           <div className="fixed right-0 h-full w-[50vw] text-3xl text-white z-10">
-            <HiChevronRight
+            <button
               className="fixed right-5 top-1/2 -translate-y-1/2 cursor-pointer"
               onClick={() => changePhoto("next")}
-            />
+              aria-label="next photo"
+            >
+              <HiChevronRight />
+            </button>
           </div>
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
