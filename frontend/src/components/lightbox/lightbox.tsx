@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { PhotoType } from "../@types/photos";
-import Photo from "./photos-grid/photo";
+import { PhotoType } from "../../@types/photos";
+import Photo from "../photos-grid/photo";
 
 type Props = {
   isOpen: boolean;
