@@ -58,24 +58,15 @@ const setup = ({
       />
     );
   };
-  render(<Wrapper />);
 
-  const elements = {
-    closeButton: screen.getByLabelText("close"),
-    dialogElement: screen.getByRole("dialog"),
-    overlayElement: screen.getByLabelText("dialog overlay"),
-    nextButton: screen.queryByLabelText("next photo"),
-    previousButton: screen.queryByLabelText("previous photo"),
-    imageElement: screen.getByRole("img"),
-  };
-
-  return { elements };
+  return render(<Wrapper />);
 };
 
 describe("Lightbox", () => {
   it("close button should be visible", () => {
-    const { elements } = setup({});
-    expect(elements.closeButton).toBeInTheDocument();
+    setup();
+    const closeButton = screen.getByLabelText("close");
+    expect(closeButton).toBeInTheDocument();
   });
 
   it("dialog should not be visible when property isOpen = false", () => {
@@ -85,75 +76,87 @@ describe("Lightbox", () => {
   });
 
   it("next button should not be visible when current index is last", () => {
-    const { elements } = setup({ initialIndex: photos.length - 1 });
+    setup({ initialIndex: photos.length - 1 });
 
-    expect(elements.nextButton).not.toBeInTheDocument();
+    const nextButton = screen.queryByLabelText("next photo");
+    expect(nextButton).not.toBeInTheDocument();
   });
 
   it("prev button should not be visible when current index is first", () => {
-    const { elements } = setup();
+    setup();
 
-    expect(elements.previousButton).not.toBeInTheDocument();
+    const prevButton = screen.queryByLabelText("previous photo");
+    expect(prevButton).not.toBeInTheDocument();
   });
 
   it("next and prev buttons should not be visible when photos length = 0", () => {
-    const { elements } = setup();
+    setup();
 
-    expect(elements.nextButton).not.toBeInTheDocument();
-    expect(elements.previousButton).not.toBeInTheDocument();
+    const nextButton = screen.queryByLabelText("next photo");
+    expect(nextButton).not.toBeInTheDocument();
+
+    const prevButton = screen.queryByLabelText("previous photo");
+    expect(prevButton).not.toBeInTheDocument();
   });
 
   it("dialog should close when user click to close button", async () => {
-    const { elements } = setup();
+    setup();
 
-    expect(elements.dialogElement).toBeInTheDocument();
+    const dialogElement = screen.getByRole("dialog");
+    expect(dialogElement).toBeInTheDocument();
 
     const { click } = userEvent.setup();
-    await click(elements.closeButton);
+    const closeButton = screen.getByLabelText("close");
+    await click(closeButton);
 
-    expect(elements.dialogElement).not.toBeInTheDocument();
+    expect(dialogElement).not.toBeInTheDocument();
   });
 
   it("dialog should not close when user click to dialog overlay", async () => {
-    const { elements } = setup();
+    setup();
 
-    expect(elements.dialogElement).toBeInTheDocument();
+    const dialogElement = screen.getByRole("dialog");
+    expect(dialogElement).toBeInTheDocument();
 
-    expect(elements.overlayElement).toBeInTheDocument();
+    const overlayElement = screen.getByLabelText("dialog overlay");
+    expect(overlayElement).toBeInTheDocument();
 
     const { click } = userEvent.setup();
-    await click(elements.overlayElement);
+    await click(overlayElement);
 
-    expect(elements.dialogElement).toBeInTheDocument();
+    expect(dialogElement).toBeInTheDocument();
   });
 
   it("image should change when user click next button", async () => {
-    const { elements } = setup({ photos });
+    setup({ photos });
 
-    expect(elements.imageElement).toBeInTheDocument();
-    const initialImage = elements.imageElement.getAttribute("src");
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toBeInTheDocument();
+
+    const initialImage = imageElement.getAttribute("src");
 
     const nextButton = screen.getByLabelText("next photo");
 
     const { click } = userEvent.setup();
     await click(nextButton);
 
-    expect(initialImage).not.toBe(elements.imageElement.getAttribute("src"));
+    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
   });
 
   it("image should change when user click prev button", async () => {
-    const { elements } = setup({ photos, initialIndex: photos.length - 1 });
+    setup({ photos, initialIndex: photos.length - 1 });
 
-    expect(elements.imageElement).toBeInTheDocument();
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toBeInTheDocument();
 
-    const initialImage = elements.imageElement.getAttribute("src");
+    const initialImage = imageElement.getAttribute("src");
 
     const prevButton = screen.getByLabelText("previous photo");
 
     const { click } = userEvent.setup();
     await click(prevButton);
 
-    expect(initialImage).not.toBe(elements.imageElement.getAttribute("src"));
+    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
   });
 
   it("initialIndex prop should work", async () => {
@@ -162,26 +165,27 @@ describe("Lightbox", () => {
       return index;
     };
     const index = initialIndex(1);
-    const { elements } = setup({ photos, initialIndex: index });
+    setup({ photos, initialIndex: index });
 
-    const initialImage = elements.imageElement.getAttribute("src");
+    const imageElement = screen.getByRole("img");
+    const initialImage = imageElement.getAttribute("src");
 
     expect(initialImage).toBe(photos[index].src);
   });
 
   it("should display valid images when clicking buttons multiple times", async () => {
     const initialIndex = 0;
-    const { elements } = setup({ photos, initialIndex });
-
+    setup({ photos, initialIndex });
+    const imageElement = screen.getByRole("img");
     const { click } = userEvent.setup();
     const nextButton = screen.getByLabelText("next photo");
 
     const compareImage = async (nextIndex: number) => {
-      const initialImage = elements.imageElement.getAttribute("src");
+      const initialImage = imageElement.getAttribute("src");
 
       await click(nextButton);
 
-      const currentImage = elements.imageElement.getAttribute("src");
+      const currentImage = imageElement.getAttribute("src");
       expect(initialImage).not.toBe(currentImage);
       expect(currentImage).toBe(photos[nextIndex].src);
     };
