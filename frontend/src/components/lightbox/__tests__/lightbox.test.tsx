@@ -4,6 +4,14 @@ import { Lightbox } from "../index";
 import "../../../__mocks__/intersection-observer";
 import { useState } from "react";
 
+jest.mock("next/image", () => ({
+  __esModule: true,
+  default: (props: React.HTMLAttributes<HTMLImageElement>) => {
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    return <img {...props} />;
+  },
+}));
+
 const photos = [
   {
     src: "http://test.com",
@@ -16,7 +24,7 @@ const photos = [
     placeholder: "placeholder",
   },
   {
-    src: "http://test.com",
+    src: "http://test3.com",
     alt: "",
     createdAt: "",
     updatedAt: "",
@@ -119,7 +127,73 @@ describe("Lightbox", () => {
     expect(dialogElement).toBeInTheDocument();
   });
 
-  // 7. image should change when user click next button
-  // 8. image should change when user click prev button
-  // 9. initialIndex prop should work
+  it("image should change when user click next button", async () => {
+    setup({ photos });
+
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toBeInTheDocument();
+
+    const initialImage = imageElement.getAttribute("src");
+
+    const nextButton = screen.getByLabelText("next photo");
+
+    const { click } = userEvent.setup();
+    await click(nextButton);
+
+    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
+  });
+
+  it("image should change when user click prev button", async () => {
+    setup({ photos, initialIndex: photos.length - 1 });
+
+    const imageElement = screen.getByRole("img");
+    expect(imageElement).toBeInTheDocument();
+
+    const initialImage = imageElement.getAttribute("src");
+
+    const prevButton = screen.getByLabelText("previous photo");
+
+    const { click } = userEvent.setup();
+    await click(prevButton);
+
+    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
+  });
+
+  it("initialIndex prop should work", async () => {
+    const initialIndex = (index: number) => {
+      if (!photos[index]) throw new Error("Invalid photo index");
+      return index;
+    };
+    const index = initialIndex(1);
+    setup({ photos, initialIndex: index });
+
+    const imageElement = screen.getByRole("img");
+    const initialImage = imageElement.getAttribute("src");
+
+    expect(initialImage).toBe(photos[index].src);
+  });
+
+  it("should display valid images when clicking buttons multiple times", async () => {
+    const initialIndex = 0;
+    setup({ photos, initialIndex });
+    const imageElement = screen.getByRole("img");
+    const { click } = userEvent.setup();
+    const nextButton = screen.getByLabelText("next photo");
+
+    const compareImage = async (nextIndex: number) => {
+      const initialImage = imageElement.getAttribute("src");
+
+      await click(nextButton);
+
+      const currentImage = imageElement.getAttribute("src");
+      expect(initialImage).not.toBe(currentImage);
+      expect(currentImage).toBe(photos[nextIndex].src);
+    };
+
+    for (const [index] of photos.entries()) {
+      const nextIndex = index + 1;
+      if (!photos[nextIndex]) break;
+      await compareImage(nextIndex);
+    }
+  });
 });
