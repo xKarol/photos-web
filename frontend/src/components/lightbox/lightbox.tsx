@@ -25,6 +25,9 @@ const Lightbox = ({
   const [active, setActive] = useState(initialIndex || 0);
   const closeModal = () => setIsOpen(false);
   const { height, width, placeholder, alt, src } = photos[active] || {};
+  const isEmpty = photos.length === 0;
+  const isFirst = isEmpty || active === 0;
+  const isLast = isEmpty || active === photos.length - 1;
 
   const changePhoto = (direction: "next" | "prev") => {
     if (direction === "next") {
@@ -48,35 +51,42 @@ const Lightbox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-75" aria-label="dialog overlay"/>
+          <Dialog.Overlay
+            className="fixed inset-0 bg-black bg-opacity-75"
+            aria-label="dialog overlay"
+          />
         </Transition.Child>
 
         <button
           className="fixed top-5 right-5 text-white cursor-pointer z-10 text-3xl"
           onClick={closeModal}
-          aria-label="close button"
+          aria-label="close"
         >
           <VscClose />
         </button>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="fixed left-0 h-full w-[50vw] text-3xl text-white z-10">
-            <button
-              className="fixed left-5 top-1/2 -translate-y-1/2 cursor-pointer"
-              onClick={() => changePhoto("prev")}
-              aria-label="previous photo"
-            >
-              <HiChevronLeft />
-            </button>
+            {!isFirst && (
+              <button
+                className="fixed left-5 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={() => changePhoto("prev")}
+                aria-label="previous photo"
+              >
+                <HiChevronLeft />
+              </button>
+            )}
           </div>
           <div className="fixed right-0 h-full w-[50vw] text-3xl text-white z-10">
-            <button
-              className="fixed right-5 top-1/2 -translate-y-1/2 cursor-pointer"
-              onClick={() => changePhoto("next")}
-              aria-label="next photo"
-            >
-              <HiChevronRight />
-            </button>
+            {!isLast && (
+              <button
+                className="fixed right-5 top-1/2 -translate-y-1/2 cursor-pointer"
+                onClick={() => changePhoto("next")}
+                aria-label="next photo"
+              >
+                <HiChevronRight />
+              </button>
+            )}
           </div>
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -89,19 +99,21 @@ const Lightbox = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden transition-all">
-                <Photo
-                  src={src}
-                  alt={alt}
-                  width={width}
-                  height={height}
-                  blurDataURL={placeholder}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    maxHeight: "80vh",
-                    objectFit: "contain",
-                  }}
-                />
+                {!isEmpty && (
+                  <Photo
+                    src={src}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    blurDataURL={placeholder}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      maxHeight: "80vh",
+                      objectFit: "contain",
+                    }}
+                  />
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>

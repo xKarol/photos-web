@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Lightbox } from "../index";
-
-const setIsOpen = jest.fn();
+import "../../../__mocks__/intersection-observer";
+import { useState } from "react";
 
 const photos = [
   {
@@ -27,40 +27,63 @@ const photos = [
   },
 ];
 
+type LightboxProps = React.ComponentProps<typeof Lightbox>;
+type Setup = { show?: boolean } & Partial<
+  Omit<LightboxProps, "isOpen" | "setIsOpen">
+>;
+
+const setup = ({
+  show = true,
+  photos = [],
+  initialIndex = 0,
+  ...props
+}: Setup = {}) => {
+  const Wrapper = () => {
+    const [isOpen, setIsOpen] = useState(show);
+    return (
+      <Lightbox
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        photos={photos}
+        initialIndex={initialIndex}
+        {...props}
+      />
+    );
+  };
+
+  return render(<Wrapper />);
+};
+
 describe("Lightbox", () => {
   it("close button should be visible", () => {
-    render(<Lightbox isOpen={true} setIsOpen={setIsOpen} photos={photos} />);
-    const closeButton = screen.getByLabelText("close button");
+    setup();
+    const closeButton = screen.getByLabelText("close");
     expect(closeButton).toBeInTheDocument();
   });
 
   it("dialog should not be visible when property isOpen = false", () => {
-    render(<Lightbox isOpen={false} setIsOpen={setIsOpen} photos={photos} />);
+    setup({ show: false });
     const dialogElement = screen.queryByRole("dialog");
     expect(dialogElement).not.toBeInTheDocument();
   });
 
   it("next button should not be visible when current index is last", () => {
-    render(
-      <Lightbox
-        isOpen={true}
-        setIsOpen={setIsOpen}
-        photos={photos}
-        initialIndex={photos.length - 1}
-      />
-    );
+    setup({ initialIndex: photos.length - 1 });
+
     const nextButton = screen.queryByLabelText("next photo");
     expect(nextButton).not.toBeInTheDocument();
   });
 
   it("prev button should not be visible when current index is first", () => {
-    render(<Lightbox isOpen={true} setIsOpen={setIsOpen} photos={photos} />);
+    setup();
+
     const prevButton = screen.queryByLabelText("previous photo");
     expect(prevButton).not.toBeInTheDocument();
   });
 
   it("next and prev buttons should not be visible when photos length = 0", () => {
-    render(<Lightbox isOpen={true} setIsOpen={setIsOpen} photos={[]} />);
+    setup();
+
     const nextButton = screen.queryByLabelText("next photo");
     expect(nextButton).not.toBeInTheDocument();
 
@@ -69,19 +92,21 @@ describe("Lightbox", () => {
   });
 
   it("dialog should close when user click to close button", async () => {
-    render(<Lightbox isOpen={true} setIsOpen={setIsOpen} photos={[]}/>);
+    setup();
+
     const dialogElement = screen.getByRole("dialog");
     expect(dialogElement).toBeInTheDocument();
 
     const { click } = userEvent.setup();
-    const closeButton = screen.getByLabelText("close button");
+    const closeButton = screen.getByLabelText("close");
     await click(closeButton);
 
     expect(dialogElement).not.toBeInTheDocument();
   });
 
   it("dialog should not close when user click to dialog overlay", async () => {
-    render(<Lightbox isOpen={true} setIsOpen={setIsOpen} photos={[]}/>);
+    setup();
+
     const dialogElement = screen.getByRole("dialog");
     expect(dialogElement).toBeInTheDocument();
 
