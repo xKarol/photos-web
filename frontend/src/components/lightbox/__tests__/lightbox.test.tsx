@@ -196,4 +196,59 @@ describe("Lightbox", () => {
       await compareImage(nextIndex);
     }
   });
+
+  it("onClickNext function should be called after click next button", async () => {
+    const onClickNext = jest.fn();
+    setup({ photos, onClickNext: onClickNext });
+
+    const nextButton = screen.getByLabelText("next photo");
+
+    const { click } = userEvent.setup();
+    await click(nextButton);
+
+    expect(onClickNext).toHaveBeenCalledTimes(1);
+  });
+
+  it("onClickPrev function should be called after click prev button", async () => {
+    const onClickPrev = jest.fn();
+    setup({ photos, initialIndex: 1, onClickPrev: onClickPrev });
+
+    const prevButton = screen.getByLabelText("previous photo");
+
+    const { click } = userEvent.setup();
+    await click(prevButton);
+
+    expect(onClickPrev).toHaveBeenCalledTimes(1);
+  });
+
+  it("onClickPrev function should not be called after click next button", async () => {
+    const onClickNext = jest.fn();
+    const onClickPrev = jest.fn();
+    setup({ photos, onClickNext: onClickNext, onClickPrev: onClickPrev });
+
+    const nextButton = screen.getByLabelText("next photo");
+
+    const { click } = userEvent.setup();
+    await click(nextButton);
+
+    expect(onClickPrev).not.toHaveBeenCalled();
+  });
+
+  it("onClickNext function should not be called after click prev button", async () => {
+    const onClickNext = jest.fn();
+    const onClickPrev = jest.fn();
+    setup({
+      photos,
+      initialIndex: 1,
+      onClickNext: onClickNext,
+      onClickPrev: onClickPrev,
+    });
+
+    const prevButton = screen.getByLabelText("previous photo");
+
+    const { click } = userEvent.setup();
+    await click(prevButton);
+
+    expect(onClickNext).not.toHaveBeenCalled();
+  });
 });
