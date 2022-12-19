@@ -49,14 +49,12 @@ const PhotoPage: NextPage = () => {
     "photos",
     ({ pageParam: page = 1 }) => getPhotos(page, 10),
     {
-      getNextPageParam: ({ nextPage }) =>
-        nextPage === -1 ? undefined : nextPage ?? undefined,
+      getNextPageParam: ({ nextPage }) => nextPage ?? undefined,
     }
   );
 
   const handleNext = (currentIndex: number) => {
     if (currentIndex === photos.length - 3) {
-      console.log(currentIndex);
       fetchNextPage();
     }
   };
