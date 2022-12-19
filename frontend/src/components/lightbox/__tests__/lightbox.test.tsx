@@ -6,9 +6,9 @@ import { useState } from "react";
 
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: (props: React.HTMLAttributes<HTMLImageElement>) => {
+  default: ({ src, alt }: any) => {
     // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-    return <img {...props} />;
+    return <img src={src} alt={alt} />;
   },
 }));
 
