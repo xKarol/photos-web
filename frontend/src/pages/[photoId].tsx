@@ -71,7 +71,7 @@ const PhotoPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Lightbox
-        setIsOpen={() => router.push("/")}
+        setIsOpen={() => router.back()}
         initialIndex={initialIndex === -1 ? 0 : initialIndex}
         isOpen={true}
         photos={photos}
