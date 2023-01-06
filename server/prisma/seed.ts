@@ -1,47 +1,39 @@
 import { faker } from "@faker-js/faker";
-import axios from "axios";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
 import { uploadPhoto } from "../src/services/photos";
 
+import { randomBetween, getBufferFromUrl, createPhoto } from "./seed.utils";
+
 cloudinaryConfig();
 
-const randomBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+const MAX_PHOTOS = 25;
 
-const PHOTOS_LIMIT = 25;
-
-const seedPhoto = async () => {
-  const { data: buffer } = await axios.get(
-    `${faker.image.nature(1280, randomBetween(1280, 2560))}`,
-    {
-      responseType: "arraybuffer",
-    }
+const getRandomPhoto = async () => {
+  const buffer = await getBufferFromUrl(
+    faker.image.nature(1280, randomBetween(1280, 2560))
   );
-
-  const data = await uploadPhoto(buffer);
-
-  const photo = await prisma.image.create({
-    data: {
-      ...data,
-      alt: "desert",
-      type: "DEFAULT",
-    },
-  });
-  return photo;
+  return buffer;
 };
 
 const main = async () => {
-  console.time("Seed");
   await prisma.image.deleteMany({});
-  const photos = Array(PHOTOS_LIMIT).fill(null);
-  for (const index of photos.keys()) {
-    console.log(`Seeding photos [${index + 1}/${PHOTOS_LIMIT}]`);
-    await seedPhoto();
-  }
-  console.timeEnd("Seed");
+  console.time("Created photos in");
+  await Promise.all(
+    Array.from({ length: MAX_PHOTOS }, async () => {
+      const randomPhotoBuffer = await getRandomPhoto();
+      const data = await uploadPhoto(randomPhotoBuffer);
+
+      const photo = await prisma.image.create({
+        data: {
+          ...createPhoto(data),
+        },
+      });
+      return photo;
+    })
+  );
+  console.timeEnd("Created photos in");
 };
 
 main()
