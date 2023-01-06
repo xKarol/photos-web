@@ -4,7 +4,13 @@ import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
 import { uploadPhoto } from "../src/services/photos";
 
-import { randomBetween, getBufferFromUrl, createPhoto } from "./seed.utils";
+import {
+  randomBetween,
+  getBufferFromUrl,
+  createPhoto,
+  createPortfolioPhotos,
+  getRandomPortfolioPhotos,
+} from "./seed.utils";
 
 cloudinaryConfig();
 
@@ -20,7 +26,7 @@ const getRandomPhoto = async () => {
 const main = async () => {
   await prisma.image.deleteMany({});
   console.time("Created photos in");
-  await Promise.all(
+  const photos = await Promise.all(
     Array.from({ length: MAX_PHOTOS }, async () => {
       const randomPhotoBuffer = await getRandomPhoto();
       const data = await uploadPhoto(randomPhotoBuffer);
@@ -34,6 +40,22 @@ const main = async () => {
     })
   );
   console.timeEnd("Created photos in");
+
+  await prisma.portfolioPhotos.deleteMany({});
+  const MAX_PORTFOLIOS = randomBetween(4,8);
+  console.time("Created portfolio images in");
+  await Promise.all(
+    Array.from({ length: MAX_PORTFOLIOS }, async () => {
+      const portfolio = await prisma.portfolioPhotos.create({
+        data: {
+          ...createPortfolioPhotos(),
+          images: { connect: [...getRandomPortfolioPhotos(photos)] },
+        },
+      });
+      return portfolio;
+    })
+  );
+  console.timeEnd("Created portfolio images in");
 };
 
 main()

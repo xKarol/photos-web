@@ -28,16 +28,25 @@ enum ImageType {
   DEFAULT
 }
 
+model PortfolioPhotos {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  images    Image[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Image {
-  id          String    @id @default(cuid())
-  src         String    @unique
-  alt         String?
-  height      Int
-  width       Int
-  placeholder String
-  type        ImageType @default(DEFAULT)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id              String            @id @default(cuid())
+  src             String            @unique
+  alt             String?
+  height          Int
+  width           Int
+  placeholder     String
+  type            ImageType         @default(DEFAULT)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PortfolioPhotos PortfolioPhotos[]
 }
 
 model Contact {
