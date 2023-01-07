@@ -4,10 +4,12 @@ import notFoundRoutes from "./404";
 import contactRoutes from "./contact";
 import newsletterRoutes from "./newsletter";
 import photoRoutes from "./photos";
+import portfoliosRoutes from "./portfolios";
 
 const router = express.Router();
 
 router.use(photoRoutes);
+router.use(portfoliosRoutes);
 router.use(newsletterRoutes);
 router.use(contactRoutes);
 router.use(notFoundRoutes);

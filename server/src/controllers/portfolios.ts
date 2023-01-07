@@ -62,6 +62,9 @@ export const Get = async (
 
     const portfolios = await prisma.portfolioPhotos.findMany({
       ...pagination,
+      include: {
+        images: true,
+      },
     });
 
     const nextPage = getPaginationNextPage(portfolios, limit, page);
