@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { stringAsNumber } from ".";
+import { paginationSchema } from "./pagination";
 
 export const createPortfolioSchema = z.object({
   body: z.object({
@@ -11,10 +11,7 @@ export const createPortfolioSchema = z.object({
 export type CreatePortfolioSchema = z.infer<typeof createPortfolioSchema>;
 
 export const getPortfoliosSchema = z.object({
-  query: z.object({
-    page: stringAsNumber().optional(),
-    limit: stringAsNumber().optional(),
-  }),
+  query: paginationSchema(),
 });
 
 export type GetPortfoliosSchema = z.infer<typeof getPortfoliosSchema>;

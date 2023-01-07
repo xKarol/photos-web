@@ -1,12 +1,9 @@
 import { z } from "zod";
 
-import { stringAsNumber } from ".";
+import { paginationSchema } from "./pagination";
 
 export const getPhotosSchema = z.object({
-  query: z.object({
-    page: stringAsNumber().optional(),
-    limit: stringAsNumber().optional(),
-  }),
+  query: paginationSchema(),
 });
 
 export type GetPhotosSchema = z.infer<typeof getPhotosSchema>;

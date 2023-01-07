@@ -2,7 +2,13 @@ import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
 import { prisma } from "../db";
-import type { CreatePortfolioSchema, DeletePortfolioSchema, GetPortfolioSchema, GetPortfoliosSchema } from "../schemas/portfolios";
+import type {
+  CreatePortfolioSchema,
+  DeletePortfolioSchema,
+  GetPortfolioSchema,
+  GetPortfoliosSchema,
+} from "../schemas/portfolios";
+import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
 const transformImages = (images: string[]) => images.map((id) => ({ id }));
@@ -35,7 +41,9 @@ export const GetOne = async (
   try {
     const { portfolioId } = req.params;
 
-    const data = await prisma.portfolioPhotos.findUnique({ where: { id: portfolioId } });
+    const data = await prisma.portfolioPhotos.findUnique({
+      where: { id: portfolioId },
+    });
     if (!data) throw createError(404, "Photo not found.");
 
     return res.send(data);
@@ -56,8 +64,7 @@ export const Get = async (
       ...pagination,
     });
 
-    const hasMore = portfolios.length - 1 === limit;
-    const nextPage = hasMore ? page + 1 : undefined;
+    const nextPage = getPaginationNextPage(portfolios, limit, page);
 
     return res.send({ data: portfolios.slice(0, limit), nextPage, limit });
   } catch (error) {

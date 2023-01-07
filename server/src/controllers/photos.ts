@@ -8,6 +8,7 @@ import type {
   GetPhotoSchema,
 } from "../schemas/photos";
 import { uploadPhoto } from "../services/photos";
+import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
 type CreatePhotoBody = {
@@ -71,8 +72,7 @@ export const Get = async (
       ...pagination,
     });
 
-    const hasMore = photos.length - 1 === limit;
-    const nextPage = hasMore ? page + 1 : undefined;
+    const nextPage = getPaginationNextPage(photos, limit, page);
 
     return res.send({ data: photos.slice(0, limit), nextPage, limit });
   } catch (error) {
