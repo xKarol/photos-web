@@ -1,8 +1,8 @@
 import express from "express";
 
 import notFoundRoutes from "./404";
-import contactRoutes from "./contact";
 import aboutRoutes from "./about";
+import contactRoutes from "./contact";
 import newsletterRoutes from "./newsletter";
 import photoRoutes from "./photos";
 import portfoliosRoutes from "./portfolios";

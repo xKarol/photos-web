@@ -29,14 +29,6 @@ enum ImageType {
   ABOUT
 }
 
-model PortfolioPhotos {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  images    Image[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Image {
   id              String            @id @default(cuid())
   src             String            @unique
@@ -44,10 +36,24 @@ model Image {
   height          Int
   width           Int
   placeholder     String
-  type            ImageType         @default(DEFAULT)
+  type            ImageType?        @default(DEFAULT)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   PortfolioPhotos PortfolioPhotos[]
+  Photos          Photos[]
+}
+
+model Photos {
+  imageId String @unique
+  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
+}
+
+model PortfolioPhotos {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  images    Image[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Contact {

@@ -1,3 +1,4 @@
+import { Image } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
@@ -18,7 +19,7 @@ type CreatePhotoBody = {
 
 export const Create = async (
   req: Request<any, any, CreatePhotoBody>,
-  res: Response,
+  res: Response<Image>,
   next: NextFunction
 ) => {
   try {
@@ -30,14 +31,19 @@ export const Create = async (
 
     const data = await uploadPhoto(photoBuffer);
 
-    const newPhoto = await prisma.image.create({
+    const newPhoto = await prisma.photos.create({
       data: {
-        alt: body.alt,
-        ...data,
-        type: "DEFAULT",
+        image: {
+          create: {
+            alt: body.alt,
+            ...data,
+          },
+        },
       },
+      include: { image: true },
     });
-    return res.send(newPhoto);
+
+    return res.send(newPhoto.image);
   } catch (error) {
     next(error);
   }
@@ -45,16 +51,19 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<GetPhotoSchema["params"]>,
-  res: Response,
+  res: Response<Image>,
   next: NextFunction
 ) => {
   try {
     const { photoId } = req.params;
 
-    const data = await prisma.image.findUnique({ where: { id: photoId } });
+    const data = await prisma.photos.findUnique({
+      where: { imageId: photoId },
+      include: { image: true },
+    });
     if (!data) throw createError(404, "Photo not found.");
 
-    return res.send(data);
+    return res.send(data.image);
   } catch (error) {
     next(error);
   }
@@ -62,19 +71,20 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<any, any, any, GetPhotosSchema["query"]>,
-  res: Response,
+  res: Response<{ data: Image[]; nextPage: number | undefined; limit: number }>,
   next: NextFunction
 ) => {
   try {
     const { page, limit, ...pagination } = paginationParams(req.query);
 
-    const photos = await prisma.image.findMany({
+    const photos = await prisma.photos.findMany({
       ...pagination,
+      include: { image: true },
     });
 
     const nextPage = getPaginationNextPage(photos, limit, page);
-
-    return res.send({ data: photos.slice(0, limit), nextPage, limit });
+    const data = photos.slice(0, limit).map(({ image }) => image);
+    return res.send({ data, nextPage, limit });
   } catch (error) {
     next(error);
   }
@@ -88,7 +98,7 @@ export const Delete = async (
   try {
     const { photoId } = req.params;
 
-    await prisma.image.delete({ where: { id: photoId } });
+    await prisma.photos.delete({ where: { imageId: photoId } });
 
     return res.send(200);
   } catch (error) {

@@ -1,4 +1,4 @@
-import { ImageType } from "@prisma/client";
+import { Image, ImageType } from "@prisma/client";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
@@ -15,26 +15,54 @@ import {
 
 cloudinaryConfig();
 
-const MAX_PHOTOS = 25;
+const MAX_MAIN_PHOTOS = 25;
+const MAX_IMAGES = 100;
 
 const main = async () => {
-  await prisma.image.deleteMany({});
-  console.time("Created photos in");
+  const images = await seedImages();
+  const photos = await seedMainPhotos();
+  await seedAboutPhoto();
+  images.push(...photos.map(({ image }) => image));
+  await seedPortfolios(images);
+};
+
+main()
+  .then(async () => {
+    return await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
+
+async function seedMainPhotos() {
+  await prisma.photos.deleteMany({});
+  console.time("Created main photos in");
   const photos = await Promise.all(
-    Array.from({ length: MAX_PHOTOS }, async () => {
+    Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
       const randomPhotoBuffer = await getRandomPhoto();
       const data = await uploadPhoto(randomPhotoBuffer);
 
-      const photo = await prisma.image.create({
+      const photo = await prisma.photos.create({
         data: {
-          ...createPhoto(data),
+          image: {
+            create: {
+              ...createPhoto(data),
+            },
+          },
         },
+        include: { image: true },
       });
       return photo;
     })
   );
-  console.timeEnd("Created photos in");
+  console.timeEnd("Created main photos in");
+  return photos;
+}
 
+async function seedAboutPhoto() {
+  await prisma.image.deleteMany({ where: { type: "ABOUT" } });
   console.time("Created about photo in");
   const randomPhotoBuffer = await getRandomPeoplePhoto();
   const data = await uploadPhoto(randomPhotoBuffer);
@@ -46,7 +74,29 @@ const main = async () => {
     },
   });
   console.timeEnd("Created about photo in");
+}
 
+async function seedImages() {
+  await prisma.image.deleteMany({});
+  console.time("Created images in");
+  const images = await Promise.all(
+    Array.from({ length: MAX_IMAGES }, async () => {
+      const randomPhotoBuffer = await getRandomPhoto();
+      const data = await uploadPhoto(randomPhotoBuffer);
+
+      const photo = await prisma.image.create({
+        data: {
+          ...createPhoto(data),
+        },
+      });
+      return photo;
+    })
+  );
+  console.timeEnd("Created images in");
+  return images;
+}
+
+async function seedPortfolios(photos: Image[]) {
   await prisma.portfolioPhotos.deleteMany({});
   const MAX_PORTFOLIOS = randomBetween(4, 8);
   console.time("Created portfolio images in");
@@ -62,14 +112,4 @@ const main = async () => {
     })
   );
   console.timeEnd("Created portfolio images in");
-};
-
-main()
-  .then(async () => {
-    return await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+}

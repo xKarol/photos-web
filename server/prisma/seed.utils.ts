@@ -1,15 +1,14 @@
 import { faker } from "@faker-js/faker";
-import type { Image, PortfolioPhotos } from "@prisma/client";
+import { type Image, PortfolioPhotos } from "@prisma/client";
 import axios from "axios";
 
 import type { uploadPhoto } from "../src/services/photos";
 
 export const createPhoto = (
   photoData: Awaited<ReturnType<typeof uploadPhoto>>
-): Omit<Image, "id" | "createdAt" | "updatedAt"> => {
+): Omit<Image, "id" | "createdAt" | "updatedAt" | "type"> => {
   return {
     alt: faker.lorem.words(2),
-    type: "DEFAULT",
     ...photoData,
   };
 };
