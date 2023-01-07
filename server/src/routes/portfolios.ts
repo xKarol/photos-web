@@ -24,7 +24,7 @@ router.post(
 );
 
 router.get(
-  "/portfolios/:id",
+  "/portfolios/:portfolioId",
   validateSchema(getPortfolioSchema),
   portfoliosController.GetOne
 );

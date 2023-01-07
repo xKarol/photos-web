@@ -43,6 +43,7 @@ export const GetOne = async (
 
     const data = await prisma.portfolioPhotos.findUnique({
       where: { id: portfolioId },
+      include: { images: true },
     });
     if (!data) throw createError(404, "Photo not found.");
 
