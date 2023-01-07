@@ -4,8 +4,11 @@ import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import Layout from "../components/layout";
 import Image from "next/image";
+import { useQuery } from "react-query";
+import { getAboutImage } from "../services/about";
 
 const Home: NextPage = () => {
+  const { data: image, isLoading } = useQuery("about", getAboutImage);
   return (
     <>
       <Head>
@@ -18,11 +21,18 @@ const Home: NextPage = () => {
       <Layout as="main">
         <div className="flex space-x-10">
           <figure className="flex-1">
-            <Image
-              src={""}
-              alt=""
-              className="outline-dotted w-full h-[400px]"
-            />
+            {isLoading ? null : (
+              <Image
+                src={image?.src || ""}
+                alt={image?.alt || ""}
+                placeholder="blur"
+                blurDataURL={image?.placeholder}
+                width={image?.width}
+                height={image?.height}
+                style={{ objectFit: "cover" }}
+                className="outline-dotted w-full max-h-[600px]"
+              />
+            )}
           </figure>
           <section className="flex-1 flex flex-col">
             <h1 className="uppercase text-bold text-3xl mb-5">About</h1>
