@@ -6,6 +6,7 @@ import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { getPortfolio } from "../../services/portfolios";
+import Photo from "../../components/photos-grid/photo";
 
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const PortfolioIndexPage: NextPage = () => {
   const { data, error, isLoading } = useQuery(["portfolio", portfolioId], () =>
     getPortfolio(portfolioId)
   );
+  const { name, images = [] } = data || {};
   return (
     <>
       <Head>
@@ -23,10 +25,22 @@ const PortfolioIndexPage: NextPage = () => {
       <Header />
       <Layout>
         <>
-          <h1>Portfolio {portfolioId}</h1>
-          Loading: {isLoading}
-          Error: {JSON.stringify(error)}
-          {JSON.stringify(data)}
+          <h1>Portfolio {name}</h1>
+          <span>Loading: {isLoading}</span>
+          <span>Error: {JSON.stringify(error)}</span>
+          <section className="flex flex-col gap-10">
+            {images.map((image) => (
+              <Photo
+                key={image.id}
+                alt={image.alt}
+                src={image.src}
+                height={image.height}
+                width={image.width}
+                blurDataURL={image.placeholder}
+                style={{ width: "100%", maxHeight: "1200px", objectFit:"cover" }}
+              />
+            ))}
+          </section>
         </>
       </Layout>
       <Footer />
