@@ -60,6 +60,7 @@ const PortfolioPage: NextPage = () => {
                 <Image
                   alt={thumbnail.alt}
                   src={thumbnail.src}
+                  placeholder="blur"
                   blurDataURL={thumbnail.placeholder}
                   style={{ objectFit: "cover" }}
                   fill
