@@ -19,7 +19,7 @@ export const createPortfolioPhotos = (): Omit<
   "id" | "createdAt" | "updatedAt"
 > => {
   return {
-    name: faker.lorem.sentence(2),
+    name: faker.lorem.words(randomBetween(1, 2)),
   };
 };
 
@@ -27,9 +27,9 @@ const randomArrayItem = <T>(items: T[]) => {
   return items[Math.floor(Math.random() * items.length)];
 };
 
-export const randomBetween = (min: number, max: number) => {
+export function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-};
+}
 
 export const getRandomPortfolioPhotos = (
   photos: Image[]
@@ -40,7 +40,6 @@ export const getRandomPortfolioPhotos = (
   );
   return randomPhotos.map((photo) => ({ id: photo.id }));
 };
-
 
 export const getBufferFromUrl = async (url: string) => {
   const { data: buffer } = await axios.get(url, {
