@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
+import { Header } from "../../components/header";
+import { Footer } from "../../components/footer";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
 import superjson from "superjson";
-import { getPortfolios } from "../services/portfolios";
-import Layout from "../components/layout";
+import { getPortfolios } from "../../services/portfolios";
+import Layout from "../../components/layout";
 import Image from "next/image";
 import Link from "next/link";
-import { ROUTE_PORTFOLIO } from "../constants/routes";
+import { ROUTE_PORTFOLIO } from "../../constants/routes";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();

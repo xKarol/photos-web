@@ -16,7 +16,7 @@ export const getPortfolios = async (page = 1, limit = 10): Promise<PortfolioType
   return data;
 };
 
-export const getPortfolio = async (photoId: string): Promise<Portfolio> => {
-  const { data } = await axios.get(`${SERVER_URL}/portfolios/${photoId}`);
+export const getPortfolio = async (portfolioId: string): Promise<Portfolio> => {
+  const { data } = await axios.get(`${SERVER_URL}/portfolios/${portfolioId}`);
   return data;
 };
