@@ -47,3 +47,15 @@ export const getBufferFromUrl = async (url: string) => {
   });
   return buffer;
 };
+
+export async function getRandomPhoto() {
+  const buffer = await getBufferFromUrl(
+    faker.image.nature(1280, randomBetween(1280, 2560))
+  );
+  return buffer;
+}
+
+export async function getRandomPeoplePhoto() {
+  const buffer = await getBufferFromUrl(faker.image.people(640, 1280));
+  return buffer;
+}

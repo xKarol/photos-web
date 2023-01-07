@@ -26,6 +26,7 @@ model NewsletterTemplate {
 
 enum ImageType {
   DEFAULT
+  ABOUT
 }
 
 model PortfolioPhotos {

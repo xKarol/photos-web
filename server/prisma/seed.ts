@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { ImageType } from "@prisma/client";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
@@ -6,22 +6,16 @@ import { uploadPhoto } from "../src/services/photos";
 
 import {
   randomBetween,
-  getBufferFromUrl,
   createPhoto,
   createPortfolioPhotos,
   getRandomPortfolioPhotos,
+  getRandomPhoto,
+  getRandomPeoplePhoto,
 } from "./seed.utils";
 
 cloudinaryConfig();
 
 const MAX_PHOTOS = 25;
-
-const getRandomPhoto = async () => {
-  const buffer = await getBufferFromUrl(
-    faker.image.nature(1280, randomBetween(1280, 2560))
-  );
-  return buffer;
-};
 
 const main = async () => {
   await prisma.image.deleteMany({});
@@ -41,8 +35,20 @@ const main = async () => {
   );
   console.timeEnd("Created photos in");
 
+  console.time("Created about photo in");
+  const randomPhotoBuffer = await getRandomPeoplePhoto();
+  const data = await uploadPhoto(randomPhotoBuffer);
+
+  await prisma.image.create({
+    data: {
+      ...createPhoto(data),
+      type: ImageType.ABOUT,
+    },
+  });
+  console.timeEnd("Created about photo in");
+
   await prisma.portfolioPhotos.deleteMany({});
-  const MAX_PORTFOLIOS = randomBetween(4,8);
+  const MAX_PORTFOLIOS = randomBetween(4, 8);
   console.time("Created portfolio images in");
   await Promise.all(
     Array.from({ length: MAX_PORTFOLIOS }, async () => {
