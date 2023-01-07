@@ -5,6 +5,10 @@ import { Footer } from "../components/footer";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
 import superjson from "superjson";
 import { getPortfolios } from "../services/portfolios";
+import Layout from "../components/layout";
+import Image from "next/image";
+import Link from "next/link";
+import { ROUTE_PORTFOLIO } from "../constants/routes";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -25,7 +29,7 @@ export async function getStaticProps() {
 }
 
 const PortfolioPage: NextPage = () => {
-  const { fetchNextPage, data } = useInfiniteQuery(
+  const { fetchNextPage, data, hasNextPage } = useInfiniteQuery(
     "portfolio",
     ({ pageParam: page = 1 }) => getPortfolios(page, 10),
     {
@@ -42,9 +46,35 @@ const PortfolioPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      Portfolio
-      {JSON.stringify(portfolios)}
-      <button onClick={() => fetchNextPage()}>More...</button>
+      <Layout>
+        <h1>Portfolios</h1>
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {portfolios.map(({ id, name, images }) => {
+            const thumbnail = images[0];
+            return (
+              <Link
+                className="relative w-full h-[450px] md:h-[250px]"
+                key={id}
+                href={`${ROUTE_PORTFOLIO}/${id}`}
+              >
+                <Image
+                  alt={thumbnail.alt}
+                  src={thumbnail.src}
+                  blurDataURL={thumbnail.placeholder}
+                  style={{ objectFit: "cover" }}
+                  fill
+                />
+                <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-2xl font-semibold tracking-widest text-center bg-white px-5 py-2">
+                  {name}
+                </h1>
+              </Link>
+            );
+          })}
+        </section>
+        {hasNextPage ? (
+          <button onClick={() => fetchNextPage()}>Load More</button>
+        ) : null}
+      </Layout>
       <Footer />
     </>
   );

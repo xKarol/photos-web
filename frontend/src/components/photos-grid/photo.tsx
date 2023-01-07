@@ -4,8 +4,9 @@ import React from "react";
 
 type Props = ImageProps;
 
-const Photo = ({ className, alt, ...props }: Props) => {
+const Photo = ({ className, alt, children, ...props }: Props) => {
   return (
+    // TODO fix className
     <figure className={className}>
       <Image
         className={clsx("relative select-none", className)}
@@ -17,6 +18,7 @@ const Photo = ({ className, alt, ...props }: Props) => {
         alt={alt}
         {...props}
       />
+      {children}
     </figure>
   );
 };

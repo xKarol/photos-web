@@ -15,7 +15,7 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
   if (photos.length === 0) return <span>Cannot find photos</span>;
   return (
     <div className="flex space-x-2 sm:space-x-5 md:space-x-10 lg:space-x-20">
-      {Array.from({length: isMobile ? 1 : columns})
+      {Array.from({ length: isMobile ? 1 : columns })
         .fill(null)
         .map((_, column) => (
           <div
