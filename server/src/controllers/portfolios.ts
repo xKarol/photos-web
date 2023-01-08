@@ -1,3 +1,4 @@
+import { Image } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
@@ -8,6 +9,7 @@ import type {
   GetPortfolioSchema,
   GetPortfoliosSchema,
 } from "../schemas/portfolios";
+import { getImageById } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -70,7 +72,7 @@ export const Get = async (
 
     const nextPage = getPaginationNextPage(portfolios, limit, page);
 
-    return res.send({ data: portfolios.slice(0, limit), nextPage, limit });
+    return res.send({ data: data.slice(0, limit), nextPage, limit });
   } catch (error) {
     next(error);
   }

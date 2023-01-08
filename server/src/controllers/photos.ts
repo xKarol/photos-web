@@ -8,7 +8,7 @@ import type {
   GetPhotosSchema,
   GetPhotoSchema,
 } from "../schemas/photos";
-import { uploadPhoto } from "../services/photos";
+import { getImageById, uploadPhoto } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -29,14 +29,15 @@ export const Create = async (
 
     const { buffer: photoBuffer } = file;
 
-    const data = await uploadPhoto(photoBuffer);
+    const { placeholder, public_id } = await uploadPhoto(photoBuffer);
 
     const newPhoto = await prisma.photos.create({
       data: {
         image: {
           create: {
+            id: public_id,
             alt: body.alt,
-            ...data,
+            placeholder,
           },
         },
       },
@@ -82,9 +83,16 @@ export const Get = async (
       include: { image: true },
     });
 
+    const data: (Image & { width: number; height: number })[] = [];
+    for await (const photo of photos) {
+      if (!photo.image) throw createError(404, "Cannot find image");
+
+      const { width, height } = await getImageById(photo.image.id);
+      data.push({ ...photo.image, width, height });
+    }
+
     const nextPage = getPaginationNextPage(photos, limit, page);
-    const data = photos.slice(0, limit).map(({ image }) => image);
-    return res.send({ data, nextPage, limit });
+    return res.send({ data: data.slice(0, limit), nextPage, limit });
   } catch (error) {
     next(error);
   }

@@ -2,7 +2,7 @@ import { ImageType } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 
 import { prisma } from "../db";
-import { uploadPhoto } from "../services/photos";
+import { uploadPhoto } from "../services/cloudinary";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -26,7 +26,8 @@ export const UploadImage = async (
     const photo = await prisma.image.create({
       data: {
         alt: body.alt,
-        ...data,
+        id: data.public_id,
+        placeholder: data.placeholder,
         type: ImageType.ABOUT,
       },
     });
