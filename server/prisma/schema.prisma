@@ -30,11 +30,8 @@ enum ImageType {
 }
 
 model Image {
-  id              String            @id @default(cuid())
-  src             String            @unique
+  id              String            @id @unique
   alt             String?
-  height          Int
-  width           Int
   placeholder     String
   type            ImageType?        @default(DEFAULT)
   createdAt       DateTime          @default(now())

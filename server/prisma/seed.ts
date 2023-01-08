@@ -2,7 +2,7 @@ import { Image, ImageType } from "@prisma/client";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
-import { uploadPhoto } from "../src/services/photos";
+import { uploadPhoto } from "../src/services/cloudinary";
 
 import {
   randomBetween,
@@ -48,7 +48,9 @@ async function seedMainPhotos() {
         data: {
           image: {
             create: {
-              ...createPhoto(data),
+              id: data.public_id,
+              placeholder: data.placeholder,
+              ...createPhoto(),
             },
           },
         },
@@ -69,7 +71,9 @@ async function seedAboutPhoto() {
 
   await prisma.image.create({
     data: {
-      ...createPhoto(data),
+      id: data.public_id,
+      placeholder: data.placeholder,
+      ...createPhoto(),
       type: ImageType.ABOUT,
     },
   });
@@ -86,7 +90,9 @@ async function seedImages() {
 
       const photo = await prisma.image.create({
         data: {
-          ...createPhoto(data),
+          id: data.public_id,
+          placeholder: data.placeholder,
+          ...createPhoto(),
         },
       });
       return photo;

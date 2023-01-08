@@ -1,15 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { type Image, PortfolioPhotos } from "@prisma/client";
-import axios from "axios";
 
-import type { uploadPhoto } from "../src/services/photos";
+import { getBufferFromUrl } from "../src/utils/misc";
 
-export const createPhoto = (
-  photoData: Awaited<ReturnType<typeof uploadPhoto>>
-): Omit<Image, "id" | "createdAt" | "updatedAt" | "type"> => {
+export const createPhoto = (): Pick<Image, "alt"> => {
   return {
     alt: faker.lorem.words(2),
-    ...photoData,
   };
 };
 
@@ -38,13 +34,6 @@ export const getRandomPortfolioPhotos = (
     randomArrayItem(photos)
   );
   return randomPhotos.map((photo) => ({ id: photo.id }));
-};
-
-export const getBufferFromUrl = async (url: string) => {
-  const { data: buffer } = await axios.get(url, {
-    responseType: "arraybuffer",
-  });
-  return buffer;
 };
 
 export async function getRandomPhoto() {
