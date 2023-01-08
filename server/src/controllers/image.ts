@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
 
-import { GetImageSchema } from "../schemas/image";
+import { GetImageSchema } from "../schemas/images";
 import { getImageById } from "../services/cloudinary";
 import { getBufferFromUrl } from "../utils/misc";
 
@@ -18,7 +18,6 @@ export const GetOne = async (
     res.set("Content-Type", mimeType);
     return res.send(buffer);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

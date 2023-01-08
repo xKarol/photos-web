@@ -3,7 +3,7 @@ import express from "express";
 import { cloudinaryConfig } from "../config/cloudinary";
 import * as imageController from "../controllers/image";
 import { validateSchema } from "../middlewares/validate-schema";
-import { getImageSchema } from "../schemas/image";
+import { getImageSchema } from "../schemas/images";
 
 const router = express.Router();
 
