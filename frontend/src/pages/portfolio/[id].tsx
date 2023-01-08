@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { getPortfolio } from "../../services/portfolios";
 import Photo from "../../components/photos-grid/photo";
+import { getImageUrl } from "../../utils/misc";
 
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const PortfolioIndexPage: NextPage = () => {
               <Photo
                 key={image.id}
                 alt={image.alt}
-                src={image.src}
+                src={getImageUrl(image.id)}
                 height={image.height}
                 width={image.width}
                 blurDataURL={image.placeholder}

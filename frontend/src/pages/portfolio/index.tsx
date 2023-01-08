@@ -9,6 +9,7 @@ import Layout from "../../components/layout";
 import Image from "next/image";
 import Link from "next/link";
 import { ROUTE_PORTFOLIO } from "../../constants/routes";
+import { getImageUrl } from "../../utils/misc";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -59,7 +60,7 @@ const PortfolioPage: NextPage = () => {
               >
                 <Image
                   alt={thumbnail.alt}
-                  src={thumbnail.src}
+                  src={getImageUrl(thumbnail.id)}
                   placeholder="blur"
                   blurDataURL={thumbnail.placeholder}
                   style={{ objectFit: "cover" }}

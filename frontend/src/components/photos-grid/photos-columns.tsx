@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { useMedia } from "react-use";
 import { PhotoType } from "../../@types/photos";
+import { getImageUrl } from "../../utils/misc";
 import Photo from "./photo";
 
 type Props = {
@@ -27,11 +28,11 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
                 column * (photos.length / columns),
                 column * (photos.length / columns) + photos.length / columns
               )
-              .map(({ id, src, alt, height, width, placeholder }) => (
+              .map(({ id, alt, height, width, placeholder }) => (
                 <Link key={id} href={`/${id}`}>
                   <Photo
                     {...props}
-                    src={src}
+                    src={getImageUrl(id)}
                     alt={alt}
                     width={width}
                     height={height}

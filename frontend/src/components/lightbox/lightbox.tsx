@@ -4,6 +4,7 @@ import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { PhotoType } from "../../@types/photos";
 import Photo from "../photos-grid/photo";
+import { getImageUrl } from "../../utils/misc";
 
 type Props = {
   isOpen: boolean;
@@ -24,7 +25,7 @@ const Lightbox = ({
 }: Props) => {
   const [active, setActive] = useState(initialIndex || 0);
   const closeModal = () => setIsOpen(false);
-  const { height, width, placeholder, alt, src } = photos[active] || {};
+  const { height, width, placeholder, alt, id } = photos[active] || {};
   const isEmpty = photos.length === 0;
   const isFirst = isEmpty || active === 0;
   const isLast = isEmpty || active === photos.length - 1;
@@ -101,7 +102,7 @@ const Lightbox = ({
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden transition-all">
                 {!isEmpty && (
                   <Photo
-                    src={src}
+                    src={getImageUrl(id)}
                     alt={alt}
                     width={width}
                     height={height}

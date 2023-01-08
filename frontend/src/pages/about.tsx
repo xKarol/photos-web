@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import Image from "next/image";
 import { useQuery } from "react-query";
 import { getAboutImage } from "../services/about";
+import { getImageUrl } from "../utils/misc";
 
 const Home: NextPage = () => {
   const { data: image, isLoading } = useQuery("about", getAboutImage);
@@ -23,7 +24,7 @@ const Home: NextPage = () => {
           <figure className="flex-1">
             {isLoading ? null : (
               <Image
-                src={image?.src || ""}
+                src={getImageUrl(image?.id || "")}
                 alt={image?.alt || ""}
                 placeholder="blur"
                 blurDataURL={image?.placeholder}
