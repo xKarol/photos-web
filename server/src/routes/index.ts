@@ -3,12 +3,14 @@ import express from "express";
 import notFoundRoutes from "./404";
 import aboutRoutes from "./about";
 import contactRoutes from "./contact";
+import imageRoutes from "./images";
 import newsletterRoutes from "./newsletter";
 import photoRoutes from "./photos";
 import portfoliosRoutes from "./portfolios";
 
 const router = express.Router();
 
+router.use(imageRoutes);
 router.use(photoRoutes);
 router.use(portfoliosRoutes);
 router.use(aboutRoutes);
