@@ -8,7 +8,7 @@ import type {
   GetPhotosSchema,
   GetPhotoSchema,
 } from "../schemas/photos";
-import { uploadPhoto } from "../services/cloudinary";
+import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -103,6 +103,7 @@ export const Delete = async (
   try {
     const { photoId } = req.params;
 
+    await deleteCloudinaryImageById(photoId);
     await prisma.photos.delete({ where: { imageId: photoId } });
 
     return res.send(200);

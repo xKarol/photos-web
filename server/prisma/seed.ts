@@ -1,4 +1,5 @@
 import { Image, ImageType } from "@prisma/client";
+import { v2 as cloudinary } from "cloudinary";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/db";
@@ -19,6 +20,7 @@ const MAX_MAIN_PHOTOS = 25;
 const MAX_IMAGES = 100;
 
 const main = async () => {
+  await deleteAllCloudinaryImages();
   const images = await seedImages();
   const photos = await seedMainPhotos();
   await seedAboutPhoto();
@@ -115,4 +117,10 @@ async function seedPortfolios(photos: Image[]) {
     })
   );
   console.timeEnd("Created portfolio images in");
+}
+
+async function deleteAllCloudinaryImages() {
+  console.time("Deleted all cloudinary images in");
+  await cloudinary.api.delete_all_resources({ all: true });
+  console.timeEnd("Deleted all cloudinary images in");
 }

@@ -8,6 +8,7 @@ import type {
   GetPortfolioSchema,
   GetPortfoliosSchema,
 } from "../schemas/portfolios";
+import { deleteManyCloudinaryImages } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -84,6 +85,12 @@ export const Delete = async (
   try {
     const { portfolioId } = req.params;
 
+    const portfolio = await prisma.portfolioPhotos.findUniqueOrThrow({
+      where: { id: portfolioId },
+      include: { images: true },
+    });
+    const ids = portfolio.images.map(({ id }) => id);
+    await deleteManyCloudinaryImages(ids);
     await prisma.portfolioPhotos.delete({ where: { id: portfolioId } });
 
     return res.send(200);

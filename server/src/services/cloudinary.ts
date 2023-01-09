@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
 
 import { cloudinaryConfig } from "../config/cloudinary";
@@ -34,4 +35,14 @@ export const uploadPhoto = async (
     placeholder,
     mimeType: format,
   };
+};
+
+export const deleteCloudinaryImageById = async (imageId: string) => {
+  const res = await cloudinary.uploader.destroy(imageId);
+  return res;
+};
+
+export const deleteManyCloudinaryImages = async (imageIds: string[]) => {
+  const res = await cloudinary.api.delete_resources(imageIds);
+  return res;
 };
