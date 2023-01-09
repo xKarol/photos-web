@@ -7,6 +7,8 @@ import {
   createPortfolioSchema,
   getPortfolioSchema,
   deletePortfolioSchema,
+  updatePortfolioNameSchema,
+  updatePortfolioImagesSchema,
 } from "../schemas/portfolios";
 
 const router = express.Router();
@@ -33,6 +35,20 @@ router.delete(
   "/portfolios/:id",
   validateSchema(deletePortfolioSchema),
   portfoliosController.Delete
+);
+
+// Portfolio images
+
+router.put(
+  "/portfolios/:id/images",
+  validateSchema(updatePortfolioImagesSchema),
+  portfoliosController.UpdateImages
+);
+
+router.put(
+  "/portfolios/:id/name",
+  validateSchema(updatePortfolioNameSchema),
+  portfoliosController.UpdateName
 );
 
 export default router;

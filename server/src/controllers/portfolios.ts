@@ -7,6 +7,8 @@ import type {
   DeletePortfolioSchema,
   GetPortfolioSchema,
   GetPortfoliosSchema,
+  UpdatePortfolioNameSchema,
+  UpdatePortfolioImagesSchema,
 } from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
@@ -94,6 +96,60 @@ export const Delete = async (
     await prisma.portfolioPhotos.delete({ where: { id: portfolioId } });
 
     return res.send(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const UpdateName = async (
+  req: Request<
+    UpdatePortfolioNameSchema["params"],
+    any,
+    UpdatePortfolioNameSchema["body"]
+  >,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { portfolioId } = req.params;
+    const { name } = req.body;
+
+    const portfolio = await prisma.portfolioPhotos.update({
+      where: { id: portfolioId },
+      data: {
+        name: name,
+      },
+    });
+
+    return res.send(portfolio);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const UpdateImages = async (
+  req: Request<
+    UpdatePortfolioImagesSchema["params"],
+    any,
+    UpdatePortfolioImagesSchema["body"]
+  >,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { portfolioId } = req.params;
+    const { images } = req.body;
+
+    const ids = images.map((id) => ({ id }));
+    const portfolio = await prisma.portfolioPhotos.update({
+      where: { id: portfolioId },
+      data: {
+        images: { set: ids },
+      },
+      include: { images: true },
+    });
+
+    return res.send(portfolio);
   } catch (error) {
     next(error);
   }
