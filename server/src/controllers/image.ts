@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
 
+import { prisma } from "../db";
 import { GetImageSchema } from "../schemas/images";
-import { getImageById } from "../services/cloudinary";
 import { getBufferFromUrl } from "../utils/misc";
 
 export const GetOne = async (
@@ -12,9 +12,9 @@ export const GetOne = async (
 ) => {
   try {
     const { id } = req.params;
-    const image = await getImageById(id);
-    const buffer = await getBufferFromUrl(image.url);
-    const mimeType = mime.lookup(image.format) || "image/webp";
+    const image = await prisma?.image.findUniqueOrThrow({ where: { id: id } });
+    const buffer = await getBufferFromUrl(image.src);
+    const mimeType = mime.lookup(image.mimeType) || "image/webp";
     res.set("Content-Type", mimeType);
     return res.send(buffer);
   } catch (error) {

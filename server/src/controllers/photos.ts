@@ -1,4 +1,4 @@
-import { Image } from "@prisma/client";
+import type { Image } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
@@ -8,7 +8,7 @@ import type {
   GetPhotosSchema,
   GetPhotoSchema,
 } from "../schemas/photos";
-import { getImageById, uploadPhoto } from "../services/cloudinary";
+import { uploadPhoto } from "../services/cloudinary";
 import { getPaginationNextPage } from "../utils/misc";
 import { paginationParams } from "../utils/pagination-params";
 
@@ -29,15 +29,14 @@ export const Create = async (
 
     const { buffer: photoBuffer } = file;
 
-    const { placeholder, public_id } = await uploadPhoto(photoBuffer);
+    const data = await uploadPhoto(photoBuffer);
 
     const newPhoto = await prisma.photos.create({
       data: {
         image: {
           create: {
-            id: public_id,
+            ...data,
             alt: body.alt,
-            placeholder,
           },
         },
       },
@@ -72,7 +71,11 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<any, any, any, GetPhotosSchema["query"]>,
-  res: Response<{ data: Image[]; nextPage: number | undefined; limit: number }>,
+  res: Response<{
+    data: Image[];
+    nextPage: number | undefined;
+    limit: number;
+  }>,
   next: NextFunction
 ) => {
   try {
@@ -83,13 +86,7 @@ export const Get = async (
       include: { image: true },
     });
 
-    const data: (Image & { width: number; height: number })[] = [];
-    for await (const photo of photos) {
-      if (!photo.image) throw createError(404, "Cannot find image");
-
-      const { width, height } = await getImageById(photo.image.id);
-      data.push({ ...photo.image, width, height });
-    }
+    const data = photos.map(({ image }) => image);
 
     const nextPage = getPaginationNextPage(photos, limit, page);
     return res.send({ data: data.slice(0, limit), nextPage, limit });

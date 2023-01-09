@@ -48,8 +48,7 @@ async function seedMainPhotos() {
         data: {
           image: {
             create: {
-              id: data.public_id,
-              placeholder: data.placeholder,
+              ...data,
               ...createPhoto(),
             },
           },
@@ -71,8 +70,7 @@ async function seedAboutPhoto() {
 
   await prisma.image.create({
     data: {
-      id: data.public_id,
-      placeholder: data.placeholder,
+      ...data,
       ...createPhoto(),
       type: ImageType.ABOUT,
     },
@@ -90,8 +88,7 @@ async function seedImages() {
 
       const photo = await prisma.image.create({
         data: {
-          id: data.public_id,
-          placeholder: data.placeholder,
+          ...data,
           ...createPhoto(),
         },
       });
