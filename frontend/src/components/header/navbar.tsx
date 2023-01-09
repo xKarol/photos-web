@@ -6,8 +6,8 @@ const Navbar = () => {
   return (
     <nav>
       <ul className="flex space-x-5 font-light tracking-wider text-font uppercase text-sm">
-        {navbarItems.map(({ id, href, text }) => (
-          <li key={id}>
+        {navbarItems.map(({ href, text }) => (
+          <li key={text}>
             <Link
               href={href}
               className="hover:bg-secondary px-3 py-2 rounded-sm transition-colors"

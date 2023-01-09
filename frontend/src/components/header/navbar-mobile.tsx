@@ -12,8 +12,8 @@ const NavbarMobile = ({ onClose }: Props) => {
     <div className="fixed top-0 left-0 right-0 bottom-0 bg-white flex justify-center z-10">
       <nav className="mt-20">
         <ul className="flex flex-col space-y-5 text-xl font-light [&_>*]:uppercase text-font tracking-wider items-center">
-          {navbarItems.map(({ id, href, text }) => (
-            <li key={id}>
+          {navbarItems.map(({ href, text }) => (
+            <li key={text}>
               <Link href={href}>{text}</Link>
             </li>
           ))}
