@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { type Image, PortfolioPhotos } from "@prisma/client";
+import { type Image, type Portfolios } from "@prisma/client";
+import slugify from "slugify";
 
 import { getBufferFromUrl } from "../src/utils/misc";
 
@@ -9,12 +10,12 @@ export const createPhoto = (): Pick<Image, "alt"> => {
   };
 };
 
-export const createPortfolioPhotos = (): Omit<
-  PortfolioPhotos,
-  "id" | "createdAt" | "updatedAt"
-> => {
+export const createPortfolio = (
+  uniqueName: string
+): Omit<Portfolios, "id" | "createdAt" | "updatedAt"> => {
   return {
-    name: faker.lorem.words(randomBetween(1, 2)),
+    name: uniqueName,
+    slug: slugify(uniqueName, { lower: true }),
   };
 };
 

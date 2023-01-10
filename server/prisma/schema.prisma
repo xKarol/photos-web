@@ -30,18 +30,18 @@ enum ImageType {
 }
 
 model Image {
-  id              String            @id @unique
-  src             String            @unique
-  alt             String?
-  mimeType        String
-  height          Int
-  width           Int
-  placeholder     String
-  type            ImageType?        @default(DEFAULT)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  PortfolioPhotos PortfolioPhotos[]
-  Photos          Photos[]
+  id          String       @id @unique
+  src         String       @unique
+  alt         String?
+  mimeType    String
+  height      Int
+  width       Int
+  placeholder String
+  type        ImageType?   @default(DEFAULT)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  Portfolios  Portfolios[]
+  Photos      Photos[]
 }
 
 model Photos {
@@ -49,8 +49,9 @@ model Photos {
   image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
 }
 
-model PortfolioPhotos {
+model Portfolios {
   id        String   @id @default(cuid())
+  slug      String   @unique
   name      String   @unique
   images    Image[]
   createdAt DateTime @default(now())

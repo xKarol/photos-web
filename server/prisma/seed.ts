@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { Image, ImageType } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -8,7 +9,7 @@ import { uploadPhoto } from "../src/services/cloudinary";
 import {
   randomBetween,
   createPhoto,
-  createPortfolioPhotos,
+  createPortfolio,
   getRandomPortfolioPhotos,
   getRandomPhoto,
   getRandomPeoplePhoto,
@@ -102,14 +103,18 @@ async function seedImages() {
 }
 
 async function seedPortfolios(photos: Image[]) {
-  await prisma.portfolioPhotos.deleteMany({});
+  await prisma.portfolios.deleteMany({});
   const MAX_PORTFOLIOS = randomBetween(4, 8);
   console.time("Created portfolio images in");
+  const uniqueNames = faker.helpers.uniqueArray(
+    () => faker.lorem.words(randomBetween(1, 2)),
+    MAX_PORTFOLIOS
+  );
   await Promise.all(
-    Array.from({ length: MAX_PORTFOLIOS }, async () => {
-      const portfolio = await prisma.portfolioPhotos.create({
+    Array.from({ length: MAX_PORTFOLIOS }, async (_, index) => {
+      const portfolio = await prisma.portfolios.create({
         data: {
-          ...createPortfolioPhotos(),
+          ...createPortfolio(uniqueNames[index]),
           images: { connect: [...getRandomPortfolioPhotos(photos)] },
         },
       });

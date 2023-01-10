@@ -39,6 +39,7 @@
     "query-string": "^7.1.1",
     "readable-stream": "^4.2.0",
     "sharp": "^0.31.2",
+    "slugify": "^1.6.5",
     "winston": "^3.8.2",
     "zod": "^3.19.1"
   },

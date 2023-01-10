@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
+import slugify from "slugify";
 
 import { prisma } from "../db";
 import type {
@@ -24,8 +25,11 @@ export const Create = async (
   try {
     const { name, images } = req.body;
 
-    const newPortfolio = await prisma.portfolioPhotos.create({
+    const slug = slugify(name, { lower: true });
+
+    const newPortfolio = await prisma.portfolios.create({
       data: {
+        slug,
         name,
         images: { connect: transformImages(images) },
       },
@@ -44,7 +48,7 @@ export const GetOne = async (
   try {
     const { portfolioId } = req.params;
 
-    const data = await prisma.portfolioPhotos.findUnique({
+    const data = await prisma.portfolios.findUnique({
       where: { id: portfolioId },
       include: { images: true },
     });
@@ -64,7 +68,7 @@ export const Get = async (
   try {
     const { page, limit, ...pagination } = paginationParams(req.query);
 
-    const portfolios = await prisma.portfolioPhotos.findMany({
+    const portfolios = await prisma.portfolios.findMany({
       ...pagination,
       include: {
         images: true,
@@ -87,13 +91,13 @@ export const Delete = async (
   try {
     const { portfolioId } = req.params;
 
-    const portfolio = await prisma.portfolioPhotos.findUniqueOrThrow({
+    const portfolio = await prisma.portfolios.findUniqueOrThrow({
       where: { id: portfolioId },
       include: { images: true },
     });
     const ids = portfolio.images.map(({ id }) => id);
     await deleteManyCloudinaryImages(ids);
-    await prisma.portfolioPhotos.delete({ where: { id: portfolioId } });
+    await prisma.portfolios.delete({ where: { id: portfolioId } });
 
     return res.send(200);
   } catch (error) {
@@ -114,7 +118,7 @@ export const UpdateName = async (
     const { portfolioId } = req.params;
     const { name } = req.body;
 
-    const portfolio = await prisma.portfolioPhotos.update({
+    const portfolio = await prisma.portfolios.update({
       where: { id: portfolioId },
       data: {
         name: name,
@@ -141,7 +145,7 @@ export const UpdateImages = async (
     const { images } = req.body;
 
     const ids = images.map((id) => ({ id }));
-    const portfolio = await prisma.portfolioPhotos.update({
+    const portfolio = await prisma.portfolios.update({
       where: { id: portfolioId },
       data: {
         images: { set: ids },
