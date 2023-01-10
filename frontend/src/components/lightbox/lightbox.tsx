@@ -7,24 +7,26 @@ import Photo from "../photos-grid/photo";
 import { getImageUrl } from "../../utils/misc";
 
 type Props = {
-  isOpen: boolean;
+  isOpen?: boolean;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   initialIndex?: number;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   photos: PhotoType[];
   onClickNext?: (currentIndex: number) => void;
   onClickPrev?: (currentIndex: number) => void;
+  onClose?: () => void;
 };
 
 const Lightbox = ({
-  isOpen,
+  isOpen = true,
   setIsOpen,
   photos,
   initialIndex = 0,
+  onClose,
   onClickNext,
   onClickPrev,
 }: Props) => {
   const [active, setActive] = useState(initialIndex || 0);
-  const closeModal = () => setIsOpen(false);
+
   const { height, width, placeholder, alt, id } = photos[active] || {};
   const isEmpty = photos.length === 0;
   const isFirst = isEmpty || active === 0;
@@ -38,6 +40,11 @@ const Lightbox = ({
     }
     setActive((state) => (state <= 0 ? photos.length - 1 : state - 1));
     onClickPrev?.(active + 1);
+  };
+
+  const handleClose = () => {
+    setIsOpen?.(false);
+    onClose?.();
   };
 
   return (
@@ -60,7 +67,7 @@ const Lightbox = ({
 
         <button
           className="fixed top-5 right-5 text-white cursor-pointer z-10 text-3xl"
-          onClick={closeModal}
+          onClick={handleClose}
           aria-label="close"
         >
           <VscClose />
