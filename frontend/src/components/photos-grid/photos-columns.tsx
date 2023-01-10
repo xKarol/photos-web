@@ -29,7 +29,7 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
                 column * (photos.length / columns) + photos.length / columns
               )
               .map(({ id, alt, height, width, placeholder }) => (
-                <Link key={id} href={`/${id}`}>
+                <Link key={id} href={`/${encodeURIComponent(id)}`}>
                   <Photo
                     {...props}
                     src={getImageUrl(id)}
