@@ -1,13 +1,14 @@
 import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
-import Layout from "../../components/layout";
+import { Header } from "../../../components/header";
+import { Footer } from "../../../components/footer";
+import Layout from "../../../components/layout";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import { getPortfolio, getPortfolios } from "../../services/portfolios";
-import Photo from "../../components/photos-grid/photo";
-import { getImageUrl } from "../../utils/misc";
+import { getPortfolio, getPortfolios } from "../../../services/portfolios";
+import Photo from "../../../components/photos-grid/photo";
+import { getImageUrl } from "../../../utils/misc";
+import Link from "next/link";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios(1, 20);
@@ -54,19 +55,25 @@ const PortfolioIndexPage: NextPage = () => {
           <span>Error: {JSON.stringify(error)}</span>
           <section className="flex flex-col gap-10">
             {images.map((image) => (
-              <Photo
+              <Link
                 key={image.id}
-                alt={image.alt}
-                src={getImageUrl(image.id)}
-                height={image.height}
-                width={image.width}
-                blurDataURL={image.placeholder}
-                style={{
-                  width: "100%",
-                  maxHeight: "1200px",
-                  objectFit: "cover",
-                }}
-              />
+                href={`/portfolio/${portfolioId}/${encodeURIComponent(
+                  image.id
+                )}`}
+              >
+                <Photo
+                  alt={image.alt}
+                  src={getImageUrl(image.id)}
+                  height={image.height}
+                  width={image.width}
+                  blurDataURL={image.placeholder}
+                  style={{
+                    width: "100%",
+                    maxHeight: "1200px",
+                    objectFit: "cover",
+                  }}
+                />
+              </Link>
             ))}
           </section>
         </>
