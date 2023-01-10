@@ -3,7 +3,6 @@ import Head from "next/head";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
-import superjson from "superjson";
 import { getPortfolios } from "../../services/portfolios";
 import Layout from "../../components/layout";
 import Image from "next/image";
@@ -24,7 +23,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      dehydratedState: superjson.serialize(dehydrate(queryClient)),
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
 }

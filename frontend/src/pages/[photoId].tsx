@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
 import { Lightbox } from "../components/lightbox";
 import { getPhoto, getPhotos } from "../services/photos";
-import superjson from "superjson";
 
 export const getStaticPaths = async () => {
   const data = await getPhotos();
@@ -38,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      dehydratedState: superjson.serialize(dehydrate(queryClient)),
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
 };

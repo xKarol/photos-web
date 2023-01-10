@@ -5,7 +5,6 @@ import { Footer } from "../components/footer";
 import { PhotosGrid } from "../components/photos-grid";
 import { getPhotos } from "../services/photos";
 import { dehydrate, QueryClient } from "react-query";
-import superjson from "superjson";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -20,7 +19,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      dehydratedState: superjson.serialize(dehydrate(queryClient)),
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
 }
