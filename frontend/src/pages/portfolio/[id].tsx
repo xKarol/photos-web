@@ -1,13 +1,36 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import Head from "next/head";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
 import Layout from "../../components/layout";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import { getPortfolio } from "../../services/portfolios";
+import { dehydrate, QueryClient, useQuery } from "react-query";
+import { getPortfolio, getPortfolios } from "../../services/portfolios";
 import Photo from "../../components/photos-grid/photo";
 import { getImageUrl } from "../../utils/misc";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await getPortfolios(1, 20);
+  const paths = data.map((path) => ({ params: { id: path.id } }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const queryClient = new QueryClient();
+  const portfolioId = ctx.params?.id as string;
+  await queryClient.prefetchQuery(["portfolio", portfolioId], () =>
+    getPortfolio(portfolioId)
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
@@ -38,7 +61,11 @@ const PortfolioIndexPage: NextPage = () => {
                 height={image.height}
                 width={image.width}
                 blurDataURL={image.placeholder}
-                style={{ width: "100%", maxHeight: "1200px", objectFit:"cover" }}
+                style={{
+                  width: "100%",
+                  maxHeight: "1200px",
+                  objectFit: "cover",
+                }}
               />
             ))}
           </section>
