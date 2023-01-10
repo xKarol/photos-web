@@ -5,7 +5,13 @@ module.exports = {
   content: ["**/*.{jsx,tsx}"],
   theme: {
     colors: {
-      ...colors,
+      black: colors.black,
+      white: colors.white,
+      gray: colors.slate,
+      green: colors.emerald,
+      purple: colors.violet,
+      yellow: colors.amber,
+      pink: colors.fuchsia,
       primary: "#EDE3DA",
       secondary: "#E2CEBC",
       font: "#3C3A36",
