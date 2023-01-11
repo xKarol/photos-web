@@ -13,7 +13,7 @@ export async function getStaticProps() {
     "photos",
     ({ pageParam: page = 1 }) => getPhotos(page, 10),
     {
-      getNextPageParam: ({ nextPage }) => nextPage ?? undefined,
+      getNextPageParam: ({ nextPage }) => nextPage,
     }
   );
 

@@ -15,7 +15,10 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
 
   if (photos.length === 0) return <span>Cannot find photos</span>;
   return (
-    <div className="flex space-x-2 sm:space-x-5 md:space-x-10 lg:space-x-20">
+    <div
+      className="flex space-x-2 sm:space-x-5 md:space-x-10 lg:space-x-20"
+      {...props}
+    >
       {Array.from({ length: isMobile ? 1 : columns })
         .fill(null)
         .map((_, column) => (
@@ -31,7 +34,6 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
               .map(({ id, alt, height, width, placeholder }) => (
                 <Link key={id} href={`/${encodeURIComponent(id)}`}>
                   <Photo
-                    {...props}
                     src={getImageUrl(id)}
                     alt={alt}
                     width={width}
