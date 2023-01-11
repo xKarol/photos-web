@@ -12,8 +12,7 @@ import type {
   UpdatePortfolioImagesSchema,
 } from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";
-import { getPaginationNextPage } from "../utils/misc";
-import { paginationParams } from "../utils/pagination-params";
+import { paginationParams, getPaginationNextPage } from "../utils/misc";
 
 const transformImages = (images: string[]) => images.map((id) => ({ id }));
 

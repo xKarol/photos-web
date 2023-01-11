@@ -9,8 +9,7 @@ import type {
   GetPhotoSchema,
 } from "../schemas/photos";
 import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
-import { getPaginationNextPage } from "../utils/misc";
-import { paginationParams } from "../utils/pagination-params";
+import { paginationParams, getPaginationNextPage } from "../utils/misc";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
