@@ -12,6 +12,7 @@ module.exports = {
       purple: colors.violet,
       yellow: colors.amber,
       pink: colors.fuchsia,
+      red: colors.red,
       primary: "#EDE3DA",
       secondary: "#E2CEBC",
       font: "#3C3A36",
