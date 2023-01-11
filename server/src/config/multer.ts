@@ -1,6 +1,6 @@
 import multer from "multer";
 
-import { getFileExtension } from "../utils/file";
+import { getFileExtension } from "../utils/misc";
 
 const storage = multer.memoryStorage();
 

@@ -31,3 +31,7 @@ export async function getBufferFromUrl(url: string) {
   });
   return buffer;
 }
+
+export function getFileExtension(fileName: string) {
+  return fileName.split(".").pop();
+}
