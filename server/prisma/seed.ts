@@ -45,7 +45,7 @@ async function seedMainPhotos() {
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
       const randomPhotoBuffer = await getRandomPhoto();
-      const data = await uploadPhoto(randomPhotoBuffer);
+      const data = await uploadPhoto(randomPhotoBuffer, "photos");
 
       const photo = await prisma.photos.create({
         data: {

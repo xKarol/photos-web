@@ -28,7 +28,7 @@ export const Create = async (
 
     const { buffer: photoBuffer } = file;
 
-    const data = await uploadPhoto(photoBuffer);
+    const data = await uploadPhoto(photoBuffer, "photos");
 
     const newPhoto = await prisma.photos.create({
       data: {

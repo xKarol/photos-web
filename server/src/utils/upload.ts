@@ -4,13 +4,12 @@ import type { UploadApiResponse } from "cloudinary";
 import { bufferToStream } from "./buffer";
 
 export const uploadFromBuffer = (
-  buffer: Buffer
+  buffer: Buffer,
+  folder = "images"
 ): Promise<UploadApiResponse> => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: "photos",
-      },
+      { folder },
       (error, result) => {
         if (result) return resolve(result);
         reject(error);

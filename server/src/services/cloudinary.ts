@@ -8,7 +8,8 @@ import { uploadFromBuffer } from "../utils/upload";
 cloudinaryConfig();
 
 export const uploadPhoto = async (
-  buffer: Buffer
+  buffer: Buffer,
+  folder = "images"
 ): Promise<{
   id: string;
   src: string;
@@ -24,7 +25,8 @@ export const uploadPhoto = async (
   const placeholder = await generateImagePlaceholder(buffer);
 
   const { public_id, url, width, height, format } = await uploadFromBuffer(
-    sharpImg
+    sharpImg,
+    folder
   );
 
   return {
