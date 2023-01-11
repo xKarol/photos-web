@@ -17,7 +17,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     return (
       <div className={clsx("flex flex-col w-full relative", className)}>
         <label className="text-xs mb-1">
-          {label} {required ? "*" : null}
+          {label} {required ? <span className="text-red-500">*</span> : null}
         </label>
         {textarea ? (
           <textarea
