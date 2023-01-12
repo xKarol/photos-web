@@ -1,18 +1,18 @@
 import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
-import Layout from "../../components/layout";
+import { Header } from "../components/header";
+import { Footer } from "../components/footer";
+import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import { getPortfolio, getPortfolios } from "../../services/portfolios";
-import Photo from "../../components/photos-grid/photo";
-import { getImageUrl } from "../../utils/misc";
-import { Lightbox } from "../../components/lightbox";
+import { getPortfolio, getPortfolios } from "../services/portfolios";
+import Photo from "../components/photos-grid/photo";
+import { getImageUrl } from "../utils/misc";
+import { Lightbox } from "../components/lightbox";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await getPortfolios(1, 20);
-  const paths = data.map((path) => ({ params: { id: path.id } }));
+  const { data } = await getPortfolios();
+  const paths = data.map((path) => ({ params: { portfolioSlug: path.slug } }));
   return {
     paths,
     fallback: false,
@@ -21,9 +21,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const queryClient = new QueryClient();
-  const portfolioId = ctx.params?.id as string;
-  await queryClient.prefetchQuery(["portfolio", portfolioId], () =>
-    getPortfolio(portfolioId)
+  const slug = ctx.params?.portfolioSlug as string;
+  await queryClient.prefetchQuery(["portfolio", slug], () =>
+    getPortfolio(slug)
   );
 
   return {
@@ -35,9 +35,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
-  const portfolioId = router.query.id as string;
-  const { data, error, isLoading } = useQuery(["portfolio", portfolioId], () =>
-    getPortfolio(portfolioId)
+  const slug = router.query.portfolioSlug as string;
+  const { data, error, isLoading } = useQuery(["portfolio", slug], () =>
+    getPortfolio(slug)
   );
   const selected = Number(router.query.selected);
   const { name, images = [] } = data || {};

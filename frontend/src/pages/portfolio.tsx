@@ -1,21 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../../components/header";
-import { Footer } from "../../components/footer";
+import { Header } from "../components/header";
+import { Footer } from "../components/footer";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
-import { getPortfolios } from "../../services/portfolios";
-import Layout from "../../components/layout";
+import { getPortfolios } from "../services/portfolios";
+import Layout from "../components/layout";
 import Image from "next/image";
 import Link from "next/link";
-import { ROUTE_PORTFOLIO } from "../../constants/routes";
-import { getImageUrl } from "../../utils/misc";
+import { getImageUrl } from "../utils/misc";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery(
     "portfolio",
-    ({ pageParam: page = 1 }) => getPortfolios(page, 10),
+    ({ pageParam: page = 1 }) => getPortfolios(page),
     {
       getNextPageParam: ({ nextPage }) => nextPage,
     }
@@ -31,13 +30,12 @@ export async function getStaticProps() {
 const PortfolioPage: NextPage = () => {
   const { fetchNextPage, data, hasNextPage } = useInfiniteQuery(
     "portfolio",
-    ({ pageParam: page = 1 }) => getPortfolios(page, 10),
+    ({ pageParam: page = 1 }) => getPortfolios(page),
     {
       getNextPageParam: ({ nextPage }) => nextPage,
     }
   );
   const portfolios = data?.pages.flatMap(({ data }) => data) || [];
-
   return (
     <>
       <Head>
@@ -49,13 +47,13 @@ const PortfolioPage: NextPage = () => {
       <Layout>
         <h1>Portfolios</h1>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {portfolios.map(({ id, name, images }) => {
+          {portfolios.map(({ id, slug, name, images }) => {
             const thumbnail = images[0];
             return (
               <Link
                 className="relative w-full h-[450px] md:h-[250px]"
                 key={id}
-                href={`${ROUTE_PORTFOLIO}/${id}`}
+                href={`/${slug}`}
               >
                 <Image
                   alt={thumbnail.alt}

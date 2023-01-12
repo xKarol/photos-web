@@ -2,8 +2,8 @@ import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
-import { Lightbox } from "../components/lightbox";
-import { getPhoto, getPhotos } from "../services/photos";
+import { Lightbox } from "../../components/lightbox";
+import { getPhoto, getPhotos } from "../../services/photos";
 
 export const getStaticPaths = async () => {
   const data = await getPhotos();
