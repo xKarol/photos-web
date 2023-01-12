@@ -16,30 +16,28 @@ export const getPortfoliosSchema = z.object({
 
 export type GetPortfoliosSchema = z.infer<typeof getPortfoliosSchema>;
 
-const requiredIdSchema = z.string({
-  required_error: "portfolioId is required.",
+const requiredSlugSchema = z.string({
+  required_error: "Portfolio slug is required.",
 });
 
+const requiredSlug = {
+  slug: requiredSlugSchema,
+}
+
 export const deletePortfolioSchema = z.object({
-  params: z.object({
-    portfolioId: requiredIdSchema,
-  }),
+  params: z.object(requiredSlug),
 });
 
 export type DeletePortfolioSchema = z.infer<typeof deletePortfolioSchema>;
 
 export const getPortfolioSchema = z.object({
-  params: z.object({
-    portfolioId: requiredIdSchema,
-  }),
+  params: z.object(requiredSlug),
 });
 
 export type GetPortfolioSchema = z.infer<typeof getPortfolioSchema>;
 
 export const updatePortfolioNameSchema = z.object({
-  params: z.object({
-    portfolioId: requiredIdSchema,
-  }),
+  params: z.object(requiredSlug),
   body: z.object({
     name: z.string({ required_error: "Name is required." }).min(3),
   }),
@@ -50,9 +48,7 @@ export type UpdatePortfolioNameSchema = z.infer<
 >;
 
 export const updatePortfolioImagesSchema = z.object({
-  params: z.object({
-    portfolioId: requiredIdSchema,
-  }),
+  params: z.object(requiredSlug),
   body: z.object({
     images: z.array(z.string()),
   }),

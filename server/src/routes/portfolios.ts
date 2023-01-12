@@ -26,13 +26,13 @@ router.post(
 );
 
 router.get(
-  "/portfolios/:portfolioId",
+  "/portfolios/:slug",
   validateSchema(getPortfolioSchema),
   portfoliosController.GetOne
 );
 
 router.delete(
-  "/portfolios/:id",
+  "/portfolios/:slug",
   validateSchema(deletePortfolioSchema),
   portfoliosController.Delete
 );
@@ -40,13 +40,13 @@ router.delete(
 // Portfolio images
 
 router.put(
-  "/portfolios/:id/images",
+  "/portfolios/:slug/images",
   validateSchema(updatePortfolioImagesSchema),
   portfoliosController.UpdateImages
 );
 
 router.put(
-  "/portfolios/:id/name",
+  "/portfolios/:slug/name",
   validateSchema(updatePortfolioNameSchema),
   portfoliosController.UpdateName
 );

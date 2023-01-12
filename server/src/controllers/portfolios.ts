@@ -45,10 +45,10 @@ export const GetOne = async (
   next: NextFunction
 ) => {
   try {
-    const { portfolioId } = req.params;
+    const { slug } = req.params;
 
     const data = await prisma.portfolios.findUnique({
-      where: { id: portfolioId },
+      where: { slug: slug },
       include: { images: true },
     });
     if (!data) throw createError(404, "Photo not found.");
@@ -88,15 +88,15 @@ export const Delete = async (
   next: NextFunction
 ) => {
   try {
-    const { portfolioId } = req.params;
+    const { slug } = req.params;
 
     const portfolio = await prisma.portfolios.findUniqueOrThrow({
-      where: { id: portfolioId },
+      where: { slug: slug },
       include: { images: true },
     });
     const ids = portfolio.images.map(({ id }) => id);
     await deleteManyCloudinaryImages(ids);
-    await prisma.portfolios.delete({ where: { id: portfolioId } });
+    await prisma.portfolios.delete({ where: { slug: slug } });
 
     return res.send(200);
   } catch (error) {
@@ -114,11 +114,11 @@ export const UpdateName = async (
   next: NextFunction
 ) => {
   try {
-    const { portfolioId } = req.params;
+    const { slug } = req.params;
     const { name } = req.body;
 
     const portfolio = await prisma.portfolios.update({
-      where: { id: portfolioId },
+      where: { slug: slug },
       data: {
         name: name,
       },
@@ -140,12 +140,12 @@ export const UpdateImages = async (
   next: NextFunction
 ) => {
   try {
-    const { portfolioId } = req.params;
+    const { slug } = req.params;
     const { images } = req.body;
 
     const ids = images.map((id) => ({ id }));
     const portfolio = await prisma.portfolios.update({
-      where: { id: portfolioId },
+      where: { slug: slug },
       data: {
         images: { set: ids },
       },
