@@ -1,7 +1,7 @@
 import React from "react";
-import Layout from "../layout";
-import Newsletter from "./newsletter";
-import Socials from "./socials";
+import Layout from "../../components/layout";
+import Newsletter from "./components/newsletter";
+import Socials from "./components/socials";
 
 const Footer = () => {
   return (

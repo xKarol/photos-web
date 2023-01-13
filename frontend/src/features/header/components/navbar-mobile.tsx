@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { HiX } from "react-icons/hi";
-import { navbarItems } from "./navbar-items";
+import { navbarItems } from "../navbar-items";
 
 type Props = {
   onClose: () => void;

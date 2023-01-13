@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
-import { getPhotos } from "../services/photos";
+import { getPhotos } from "../../../services/photos";
 
 export const usePhotos = () => {
   const { fetchNextPage, ...response } = useInfiniteQuery(

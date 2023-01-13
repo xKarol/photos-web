@@ -1,4 +1,4 @@
-import type { InputFieldProps } from "../input-field";
+import type { InputFieldProps } from "../../components/input-field";
 import type { FormValues } from "./contact";
 
 type FieldProps = { name: keyof FormValues } & InputFieldProps;

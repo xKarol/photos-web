@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { server } from "../../../__mocks__/server";
-import Newsletter from "../newsletter";
+import Newsletter from "../components/newsletter";
 
 const queryClient = new QueryClient({
   defaultOptions: {

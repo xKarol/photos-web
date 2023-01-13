@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { PhotoType } from "../../@types/photos";
-import Photo from "../photos-grid/photo";
+import Photo from "../../features/photos/components/photo";
 import { getImageUrl } from "../../utils/misc";
 import clsx from "clsx";
 

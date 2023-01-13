@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
-import { dehydrate, QueryClient, useInfiniteQuery } from "react-query";
+import { Header } from "../features/header";
+import { Footer } from "../features/footer";
+import { dehydrate, QueryClient } from "react-query";
 import { getPortfolios } from "../services/portfolios";
 import Layout from "../components/layout";
-import Image from "next/image";
-import Link from "next/link";
-import { getImageUrl } from "../utils/misc";
+import { Portfolios } from "../features/portfolios";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -28,14 +26,6 @@ export async function getStaticProps() {
 }
 
 const PortfolioPage: NextPage = () => {
-  const { fetchNextPage, data, hasNextPage } = useInfiniteQuery(
-    "portfolio",
-    ({ pageParam: page = 1 }) => getPortfolios(page),
-    {
-      getNextPageParam: ({ nextPage }) => nextPage,
-    }
-  );
-  const portfolios = data?.pages.flatMap(({ data }) => data) || [];
   return (
     <>
       <Head>
@@ -46,33 +36,7 @@ const PortfolioPage: NextPage = () => {
       <Header />
       <Layout>
         <h1>Portfolios</h1>
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {portfolios.map(({ id, slug, name, images }) => {
-            const thumbnail = images[0];
-            return (
-              <Link
-                className="relative w-full h-[450px] md:h-[250px]"
-                key={id}
-                href={`/${slug}`}
-              >
-                <Image
-                  alt={thumbnail.alt}
-                  src={getImageUrl(thumbnail.id)}
-                  placeholder="blur"
-                  blurDataURL={thumbnail.placeholder}
-                  style={{ objectFit: "cover" }}
-                  fill
-                />
-                <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-2xl font-semibold tracking-widest text-center bg-white px-5 py-2">
-                  {name}
-                </h1>
-              </Link>
-            );
-          })}
-        </section>
-        {hasNextPage ? (
-          <button onClick={() => fetchNextPage()}>Load More</button>
-        ) : null}
+        <Portfolios />
       </Layout>
       <Footer />
     </>

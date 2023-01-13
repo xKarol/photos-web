@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
-import { Contact as ContactContrainer } from "../components/contact";
+import { Header } from "../features/header";
+import { Footer } from "../features/footer";
+import { Contact as ContactContrainer } from "../features/contact";
 import Layout from "../components/layout";
 
 const Contact: NextPage = () => {

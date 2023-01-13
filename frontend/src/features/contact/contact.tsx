@@ -1,5 +1,5 @@
 import React from "react";
-import Submit from "../submit";
+import Submit from "../../components/submit";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "../../schemas/contact";
@@ -8,7 +8,7 @@ import { createContact } from "../../services/contact";
 import LoadingButton from "../../components/loading-button";
 import { getErrorMessage } from "../../utils/get-error-message";
 import { fields } from "./fields";
-import ContactFields from "./contact-fields";
+import ContactFields from "./components/contact-fields";
 
 export type FormValues = {
   firstName: string;

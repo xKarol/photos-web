@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
-import { PhotosGrid } from "../components/photos-grid";
+import { Header } from "../features/header";
+import { Footer } from "../features/footer";
+import { Photos } from "../features/photos";
 import { getPhotos } from "../services/photos";
 import { dehydrate, QueryClient } from "react-query";
+import Layout from "../components/layout";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -34,7 +35,9 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <PhotosGrid />
+      <Layout>
+        <Photos />
+      </Layout>
       <Footer />
     </>
   );

@@ -1,12 +1,12 @@
 import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import Head from "next/head";
-import { Header } from "../components/header";
-import { Footer } from "../components/footer";
+import { Header } from "../features/header";
+import { Footer } from "../features/footer";
 import Layout from "../components/layout";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { getPortfolio, getPortfolios } from "../services/portfolios";
-import Photo from "../components/photos-grid/photo";
+import Photo from "../features/photos/components/photo";
 import { getImageUrl } from "../utils/misc";
 import { Lightbox } from "../components/lightbox";
 

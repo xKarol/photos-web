@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import { useMedia } from "react-use";
-import { PhotoType } from "../../@types/photos";
-import { getImageUrl } from "../../utils/misc";
+import { PhotoType } from "../../../@types/photos";
+import { getImageUrl } from "../../../utils/misc";
 import Photo from "./photo";
 
 type Props = {

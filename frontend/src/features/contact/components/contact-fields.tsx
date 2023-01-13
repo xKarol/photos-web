@@ -1,7 +1,7 @@
 import React from "react";
-import InputField from "../input-field";
-import { fields } from "./fields";
-import type { FormValues } from "./contact";
+import InputField from "../../../components/input-field";
+import { fields } from "../fields";
+import type { FormValues } from "../contact";
 import type { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 
 type Props = {

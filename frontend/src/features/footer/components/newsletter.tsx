@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
-import { newsletterSubscribe } from "../../services/newsletter";
-import Submit from "../submit";
-import LoadingButton from "../loading-button";
-import { getErrorMessage } from "../../utils/get-error-message";
+import { newsletterSubscribe } from "../../../services/newsletter";
+import Submit from "../../../components/submit";
+import LoadingButton from "../../../components/loading-button";
+import { getErrorMessage } from "../../../utils/get-error-message";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
