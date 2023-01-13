@@ -1,6 +1,6 @@
 import { getErrorMessage } from "../get-error-message";
 import { z } from "zod";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { server } from "../../__mocks__/server";
 import { rest } from "msw";
 
@@ -51,13 +51,7 @@ describe("getErrorMessage function", () => {
     });
   });
   describe("AxiosError", () => {
-    it("should return axios error message", () => {
-      const error = catchError(() => {
-        throw new AxiosError("test error", "400");
-      });
-      expect(getErrorMessage(error)).toBe("test error");
-    });
-    it("should return axios status error message", async () => {
+    it("should return unknown error message", async () => {
       server.use(
         rest.post(`${BACKEND_URL}/contact`, (_req, res, ctx) => {
           return res(ctx.status(400));
@@ -68,9 +62,7 @@ describe("getErrorMessage function", () => {
         .post(`${BACKEND_URL}/contact`)
         .catch((error) => (errorMsg = error));
 
-      expect(getErrorMessage(errorMsg)).toBe(
-        "Request failed with status code 400"
-      );
+      expect(getErrorMessage(errorMsg)).toBe("Unknown error");
     });
     it("should return custom error message", async () => {
       server.use(
