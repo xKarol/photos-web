@@ -15,7 +15,7 @@ const LoadingButton = ({
   ...rest
 }: Props) => {
   return (
-    <button className={clsx("relative", className)} {...rest}>
+    <button className={clsx("relative", className)} disabled={isLoading} {...rest}>
       <span style={{ visibility: isLoading ? "hidden" : "visible" }}>
         {children}
       </span>
