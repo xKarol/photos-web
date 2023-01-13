@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { newsletterSubscribe } from "../../../services/newsletter";
-import Submit from "../../../components/submit";
 import LoadingButton from "../../../components/loading-button";
 import { getErrorMessage } from "../../../utils/get-error-message";
 
@@ -37,8 +36,12 @@ const Newsletter = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <LoadingButton isLoading={isLoading}>
-          <Submit disabled={isDisabled}>Submit</Submit>
+        <LoadingButton
+          isLoading={isLoading}
+          disabled={isDisabled}
+          className="btn"
+        >
+          Submit
         </LoadingButton>
         <div className="absolute left-0 -bottom-6 text-xs">
           {isError ? (

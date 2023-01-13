@@ -1,22 +1,32 @@
-import React from "react";
+import clsx from "clsx";
+import React, { cloneElement } from "react";
 import Spinner from "./spinner";
 
 type Props = {
   isLoading?: boolean;
   LoadingComponent?: JSX.Element;
-} & Required<React.PropsWithChildren>;
-// TODO change children type to only one component (no numbers, strings, etc.)
+} & React.ComponentPropsWithoutRef<"button">;
+
 const LoadingButton = ({
   children,
-  LoadingComponent,
+  className,
+  LoadingComponent = <Spinner />,
   isLoading = false,
+  ...rest
 }: Props) => {
-  if (React.isValidElement(children)) {
-    return React.cloneElement(children, children.props, [
-      isLoading ? LoadingComponent || <Spinner /> : children.props.children,
-    ]);
-  }
-  return <>{children}</>;
+  return (
+    <button className={clsx("relative", className)} {...rest}>
+      <span style={{ visibility: isLoading ? "hidden" : "visible" }}>
+        {children}
+      </span>
+      {isLoading
+        ? cloneElement(LoadingComponent, {
+            className:
+              "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+          })
+        : null}
+    </button>
+  );
 };
 
 export default LoadingButton;

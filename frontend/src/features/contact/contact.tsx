@@ -1,5 +1,4 @@
 import React from "react";
-import Submit from "../../components/submit";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "../../schemas/contact";
@@ -44,8 +43,8 @@ const Contact = () => {
       <h1 className="text-2xl">Contact</h1>
       <ContactFields fields={fields} errors={errors} register={register} />
 
-      <LoadingButton isLoading={isLoading}>
-        <Submit className="ml-auto text-sm py-2">Submit</Submit>
+      <LoadingButton isLoading={isLoading} className="btn ml-auto text-sm py-2">
+        Submit
       </LoadingButton>
       {isError ? (
         <span
