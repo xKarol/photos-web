@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { useMutation } from "react-query";
-import { newsletterSubscribe } from "../../../services/newsletter";
+import React from "react";
 import LoadingButton from "../../../components/loading-button";
 import { getErrorMessage } from "../../../utils/get-error-message";
+import Alert from "../../../components/alert";
+import useNewsletter from "../hooks/use-newsletter";
 
 const Newsletter = () => {
-  const [email, setEmail] = useState("");
-  const { mutateAsync, isLoading, error, isError, isSuccess } =
-    useMutation(newsletterSubscribe);
-
-  const isDisabled = email.length === 0 || isLoading;
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isDisabled) return;
-    await mutateAsync(email).catch(() => null);
-    setEmail("");
-  };
+  const {
+    handleSubmit,
+    email,
+    setEmail,
+    isError,
+    isSuccess,
+    isLoading,
+    error,
+  } = useNewsletter();
 
   return (
     <section className="flex flex-col">
@@ -36,21 +33,15 @@ const Newsletter = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <LoadingButton
-          isLoading={isLoading}
-          disabled={isDisabled}
-          className="btn"
-        >
+        <LoadingButton isLoading={isLoading} className="btn">
           Submit
         </LoadingButton>
         <div className="absolute left-0 -bottom-6 text-xs">
           {isError ? (
-            <span className="text-red-500">{getErrorMessage(error)}</span>
+            <Alert variant="error">{getErrorMessage(error)}</Alert>
           ) : null}
           {isSuccess ? (
-            <span className="text-font">
-              Thanks for subscribe to our newsletter!
-            </span>
+            <Alert>Thanks for subscribe to our newsletter!</Alert>
           ) : null}
         </div>
       </form>

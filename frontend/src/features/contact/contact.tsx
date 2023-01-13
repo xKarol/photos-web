@@ -3,7 +3,7 @@ import LoadingButton from "../../components/loading-button";
 import { getErrorMessage } from "../../utils/get-error-message";
 import { fields } from "./fields";
 import ContactFields from "./components/contact-fields";
-import Alert from "./components/alert";
+import Alert from "../../components/alert";
 import useContact from "./hooks/use-contact";
 
 const Contact = () => {
@@ -29,8 +29,16 @@ const Contact = () => {
         Submit
       </LoadingButton>
 
-      {isError ? <Alert variant="error">{getErrorMessage(error)}</Alert> : null}
-      {isSuccess ? <Alert>Message has been sent.</Alert> : null}
+      {isError ? (
+        <Alert variant="error" className="absolute bottom-0 left-0">
+          {getErrorMessage(error)}
+        </Alert>
+      ) : null}
+      {isSuccess ? (
+        <Alert className="absolute bottom-0 left-0">
+          Message has been sent.
+        </Alert>
+      ) : null}
     </form>
   );
 };
