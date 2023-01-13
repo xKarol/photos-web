@@ -98,4 +98,5 @@ describe("Newsletter", () => {
     const infoElement = await screen.findByText(/Unknown error/i);
     expect(infoElement).toBeInTheDocument();
   });
+  // TODO add more tests (button should be disabled when loading state is active etc)
 });
