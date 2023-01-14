@@ -1,4 +1,5 @@
-import { prisma } from "../db";
+import { prisma } from "database";
+
 import logger from "../utils/logger";
 import { sendEmail } from "../utils/mailer";
 

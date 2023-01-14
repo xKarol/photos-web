@@ -22,7 +22,7 @@ const requiredSlugSchema = z.string({
 
 const requiredSlug = {
   slug: requiredSlugSchema,
-}
+};
 
 export const deletePortfolioSchema = z.object({
   params: z.object(requiredSlug),

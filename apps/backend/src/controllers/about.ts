@@ -1,7 +1,6 @@
-import { ImageType } from "@prisma/client";
+import { ImageType, prisma } from "database";
 import type { NextFunction, Request, Response } from "express";
 
-import { prisma } from "../db";
 import { uploadPhoto } from "../services/cloudinary";
 
 type CreatePhotoBody = {

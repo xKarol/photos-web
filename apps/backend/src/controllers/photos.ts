@@ -1,8 +1,7 @@
-import type { Image } from "@prisma/client";
+import { prisma, type Image } from "database";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
-import { prisma } from "../db";
 import type {
   DeletePhotoSchema,
   GetPhotosSchema,

@@ -1,7 +1,7 @@
+import { prisma } from "database";
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
 
-import { prisma } from "../db";
 import { GetImageSchema } from "../schemas/images";
 import { getBufferFromUrl } from "../utils/misc";
 

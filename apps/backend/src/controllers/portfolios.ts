@@ -1,8 +1,8 @@
+import { prisma } from "database";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import slugify from "slugify";
 
-import { prisma } from "../db";
 import type {
   CreatePortfolioSchema,
   DeletePortfolioSchema,
