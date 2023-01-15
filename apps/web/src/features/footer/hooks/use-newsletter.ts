@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { newsletterSubscribe } from "../../../services/newsletter";
-import { newsletterSchema } from "../schemas/newsletter";
+import { newsletter as Schema } from "schemas";
 
 const useNewsletter = () => {
   const [email, setEmail] = useState("");
@@ -18,9 +18,9 @@ const useNewsletter = () => {
     e.preventDefault();
     try {
       if (isLoading) return;
-      setError(undefined);
-      await newsletterSchema.parseAsync({ email });
-      await mutateAsync(email);
+      setError(null);
+      await Schema.subscribeNewsletter.parseAsync({ email });
+      await mutateAsync({ email });
       setEmail("");
     } catch (error) {
       setError(error);

@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactSchema } from "../../../schemas/contact";
+import { contact as Schema } from "schemas";
 import { useMutation } from "react-query";
 import { createContact } from "../../../services/contact";
 import type { FormValues } from "../types";
@@ -12,7 +12,7 @@ const useContact = () => {
     reset,
     handleSubmit: handleFormSubmit,
   } = useForm<FormValues>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(Schema.createContact),
   });
   const { mutateAsync, isLoading, error, isError, isSuccess } =
     useMutation(createContact);

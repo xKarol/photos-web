@@ -28,6 +28,7 @@
     "react-query": "^3.39.2",
     "react-spinners": "^0.13.6",
     "react-use": "^17.4.0",
+    "schemas": "*",
     "zod": "^3.19.1"
   },
   "devDependencies": {
@@ -55,9 +56,9 @@
     "msw": "^0.49.1",
     "postcss": "^8.4.19",
     "prettier": "^2.8.1",
-    "types": "file:../../packages/types",
     "tailwindcss": "^3.2.4",
     "ts-node": "^10.9.1",
+    "types": "file:../../packages/types",
     "typescript": "4.9.3"
   }
 }
