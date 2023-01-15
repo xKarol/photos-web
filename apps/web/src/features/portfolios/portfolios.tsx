@@ -16,7 +16,7 @@ const Portfolios = () => {
               <ImageCaption
                 className=" w-full h-[450px] md:h-[250px]"
                 caption={name}
-                alt={thumbnail.alt}
+                alt={thumbnail.alt || name}
                 src={getImageUrl(thumbnail.id)}
                 blurDataURL={thumbnail.placeholder}
               />

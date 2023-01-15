@@ -1,13 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import { useMedia } from "react-use";
-import { PhotoType } from "../../../@types/photos";
+import type { Image } from "types";
 import { getImageUrl } from "../../../utils/misc";
 import Photo from "./photo";
 
 type Props = {
   columns?: number;
-  photos?: PhotoType[];
+  photos?: Image[];
 } & Partial<React.ComponentProps<typeof Photo>>;
 
 const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
@@ -35,7 +35,7 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
                 <Link key={id} href={`/photo/${encodeURIComponent(id)}`}>
                   <Photo
                     src={getImageUrl(id)}
-                    alt={alt}
+                    alt={alt || ""} //TODO fix alt optional type
                     width={width}
                     height={height}
                     blurDataURL={placeholder}

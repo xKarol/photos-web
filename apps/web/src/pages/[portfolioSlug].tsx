@@ -41,6 +41,7 @@ const PortfolioIndexPage: NextPage = () => {
   );
   const selected = Number(router.query.selected);
   const { name, images = [] } = data || {};
+  // TODO why name can be undefined?
   return (
     <>
       <Head>
@@ -58,7 +59,7 @@ const PortfolioIndexPage: NextPage = () => {
           {images.map((image, index) => (
             <Photo
               key={image.id}
-              alt={image.alt}
+              alt={image.alt || "portfolio"}
               src={getImageUrl(image.id)}
               height={image.height}
               width={image.width}

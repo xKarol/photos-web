@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { Lightbox } from "../index";
 import "../../../__mocks__/intersection-observer";
 import { useState } from "react";
+import { API } from "types";
 
 jest.mock("next/image", () => ({
   __esModule: true,
@@ -10,14 +11,16 @@ jest.mock("next/image", () => ({
     // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
     return <img src={src} alt={alt} />;
   },
-}));
+})); //TODO move this mock to mocks folder
 
-const photos = [
+const photos: API["Photos"]["GetOne"][] = [
   {
     src: "http://test.com",
     alt: "",
-    createdAt: "",
-    updatedAt: "",
+    type: "DEFAULT",
+    mimeType: "image/webp",
+    createdAt: new Date(),
+    updatedAt: new Date(),
     height: 200,
     width: 300,
     id: "32435",
@@ -26,8 +29,10 @@ const photos = [
   {
     src: "http://test3.com",
     alt: "",
-    createdAt: "",
-    updatedAt: "",
+    type: "DEFAULT",
+    mimeType: "image/webp",
+    createdAt: new Date(),
+    updatedAt: new Date(),
     height: 200,
     width: 300,
     id: "32436",

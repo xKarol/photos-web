@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
-import { PhotoType } from "../../@types/photos";
-import Photo from "../../features/photos/components/photo";
+import type { Image } from "types";
+import Photo from "../../features/photos/components/photo";//TODO export this component to /components dir
 import { getImageUrl } from "../../utils/misc";
 import clsx from "clsx";
 
@@ -11,7 +11,7 @@ type Props = {
   isOpen?: boolean;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   initialIndex?: number;
-  photos: PhotoType[];
+  photos: Image[];
   onClickNext?: (currentIndex: number) => void;
   onClickPrev?: (currentIndex: number) => void;
   onClose?: () => void;
@@ -98,7 +98,7 @@ const Lightbox = ({
             {!isEmpty && (
               <Photo
                 src={getImageUrl(id)}
-                alt={alt}
+                alt={alt || ""}//TODO change alt optional type
                 width={width}
                 height={height}
                 blurDataURL={placeholder}
