@@ -14,8 +14,8 @@
     "type-check": "concurrently \"npm run type-check --workspace=apps/backend\" \"npm run type-check --workspace=apps/web\""
   },
   "workspaces": [
-    "apps/backend",
-    "apps/web"
+    "apps/*",
+    "packages/*"
   ],
   "repository": {
     "type": "git",

@@ -1,0 +1,47 @@
+import type {
+  Contact,
+  Image,
+  NewsletterSubscriber,
+  NewsletterTemplate,
+  Portfolios,
+} from "backend/node_modules/.prisma/client";
+
+type Pagination<T> = {
+  data: T;
+  nextPage: number | undefined;
+  limit: number;
+};
+
+export * from "backend/node_modules/.prisma/client";
+
+export type API = {
+  About: {
+    Upload: Image;
+    Get: Image;
+  };
+  Contact: {
+    Create: Contact;
+    Delete: Record<string, any>;
+  };
+  Image: {
+    GetOne: ArrayBuffer;
+  };
+  Newsletter: {
+    Subscribe: NewsletterSubscriber;
+    CreateTemplate: NewsletterTemplate;
+  };
+  Photos: {
+    Create: Image;
+    GetOne: Image;
+    Get: Pagination<Image[]>;
+    Delete: Record<string, any>;
+  };
+  Portfolios: {
+    Create: Image;
+    GetOne: Portfolios & { images: Image[] };
+    Get: Pagination<(Portfolios & { images: Image[] })[]>;
+    Delete: Record<string, any>;
+    UpdateName: Portfolios;
+    UpdateImages: Portfolios & { images: Image[] };
+  };
+};
