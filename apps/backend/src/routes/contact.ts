@@ -2,19 +2,19 @@ import express from "express";
 
 import * as contactController from "../controllers/contact";
 import { validateSchema } from "../middlewares/validate-schema";
-import { contactCreateSchema, contactDeleteSchema } from "../schemas/contact";
+import * as Schema from "../schemas/contact";
 
 const router = express.Router();
 
 router.post(
   "/contact",
-  validateSchema(contactCreateSchema),
+  validateSchema(Schema.createContact),
   contactController.Create
 );
 
 router.delete(
   "/contact/:contactId",
-  validateSchema(contactDeleteSchema),
+  validateSchema(Schema.deleteContact),
   contactController.Delete
 );
 

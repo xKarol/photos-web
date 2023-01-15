@@ -1,21 +1,14 @@
+import { contact as Schema } from "schemas";
 import { z } from "zod";
 
-export const contactCreateSchema = z.object({
-  body: z.object({
-    firstName: z.string({ required_error: "First Name is required." }).min(2),
-    lastName: z.string({ required_error: "Last Name is required." }).min(2),
-    email: z.string({ required_error: "Email is required." }).email(),
-    subject: z.string({ required_error: "Subject is required." }).min(3),
-    message: z.string({ required_error: "Message is required." }).min(25),
-  }),
+export const createContact = z.object({
+  body: Schema.createContact,
 });
 
-export type ContactCreateSchema = z.infer<typeof contactCreateSchema>;
+export type CreateContact = z.infer<typeof createContact>;
 
-export const contactDeleteSchema = z.object({
-  params: z.object({
-    contactId: z.string({ required_error: "contactId is required." }),
-  }),
+export const deleteContact = z.object({
+  params: Schema.deleteContact,
 });
 
-export type ContactDeleteSchema = z.infer<typeof contactDeleteSchema>;
+export type DeleteContact = z.infer<typeof deleteContact>;

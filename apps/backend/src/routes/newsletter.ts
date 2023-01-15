@@ -2,22 +2,19 @@ import express from "express";
 
 import * as newsletterController from "../controllers/newsletter";
 import { validateSchema } from "../middlewares/validate-schema";
-import {
-  newsletterCreateTemplateSchema,
-  newsletterSubscribeSchema,
-} from "../schemas/newsletter";
+import * as Schema from "../schemas/newsletter";
 
 const router = express.Router();
 
 router.post(
   "/newsletter/subscribe",
-  validateSchema(newsletterSubscribeSchema),
+  validateSchema(Schema.subscribeNewsletter),
   newsletterController.Subscribe
 );
 
 router.post(
   "/newsletter/template",
-  validateSchema(newsletterCreateTemplateSchema),
+  validateSchema(Schema.createNewsletterTemplate),
   newsletterController.CreateTemplate
 );
 

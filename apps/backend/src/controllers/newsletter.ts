@@ -2,14 +2,11 @@ import type { NextFunction, Request, Response } from "express";
 import type { API } from "types";
 
 import { prisma } from "../db";
-import type {
-  NewsletterSubscribeSchema,
-  NewsletterCreateTemplateSchema,
-} from "../schemas/newsletter";
+import type * as Schema from "../schemas/newsletter";
 import { sendEmail } from "../utils/mailer";
 
 export const Subscribe = async (
-  req: Request<any, any, NewsletterSubscribeSchema["body"]>,
+  req: Request<any, any, Schema.SubscribeNewsletter["body"]>,
   res: Response<API["Newsletter"]["Subscribe"]>,
   next: NextFunction
 ) => {
@@ -28,7 +25,7 @@ export const Subscribe = async (
 };
 
 export const CreateTemplate = async (
-  req: Request<any, any, NewsletterCreateTemplateSchema["body"]>,
+  req: Request<any, any, Schema.CreateNewsletterTemplate["body"]>,
   res: Response<API["Newsletter"]["CreateTemplate"]>,
   next: NextFunction
 ) => {

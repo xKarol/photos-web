@@ -4,21 +4,14 @@ import slugify from "slugify";
 import type { API } from "types";
 
 import { prisma } from "../db";
-import type {
-  CreatePortfolioSchema,
-  DeletePortfolioSchema,
-  GetPortfolioSchema,
-  GetPortfoliosSchema,
-  UpdatePortfolioNameSchema,
-  UpdatePortfolioImagesSchema,
-} from "../schemas/portfolios";
+import type * as Schema from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";
 import { paginationParams, getPaginationNextPage } from "../utils/misc";
 
 const transformImages = (images: string[]) => images.map((id) => ({ id }));
 
 export const Create = async (
-  req: Request<any, any, CreatePortfolioSchema["body"]>,
+  req: Request<any, any, Schema.CreatePortfolio["body"]>,
   res: Response<API["Portfolios"]["Create"]>,
   next: NextFunction
 ) => {
@@ -33,7 +26,7 @@ export const Create = async (
         name,
         images: { connect: transformImages(images) },
       },
-    })) as API["Portfolios"]["Create"];//TODO why prisma return wrong types? 
+    })) as API["Portfolios"]["Create"]; //TODO why prisma return wrong types?
 
     if (!newPortfolio?.images) throw new Error("Something went wrong"); //TODO use tinyvariant package
 
@@ -44,7 +37,7 @@ export const Create = async (
 };
 
 export const GetOne = async (
-  req: Request<GetPortfolioSchema["params"]>,
+  req: Request<Schema.GetPortfolio["params"]>,
   res: Response<API["Portfolios"]["GetOne"]>,
   next: NextFunction
 ) => {
@@ -64,7 +57,7 @@ export const GetOne = async (
 };
 
 export const Get = async (
-  req: Request<any, any, any, GetPortfoliosSchema["query"]>,
+  req: Request<any, any, any, Schema.GetPortfolios["query"]>,
   res: Response<API["Portfolios"]["Get"]>,
   next: NextFunction
 ) => {
@@ -87,7 +80,7 @@ export const Get = async (
 };
 
 export const Delete = async (
-  req: Request<DeletePortfolioSchema["params"]>,
+  req: Request<Schema.DeletePortfolio["params"]>,
   res: Response<API["Portfolios"]["Delete"]>,
   next: NextFunction
 ) => {
@@ -110,9 +103,9 @@ export const Delete = async (
 
 export const UpdateName = async (
   req: Request<
-    UpdatePortfolioNameSchema["params"],
+    Schema.UpdatePortfolioName["params"],
     any,
-    UpdatePortfolioNameSchema["body"]
+    Schema.UpdatePortfolioName["body"]
   >,
   res: Response<API["Portfolios"]["UpdateName"]>,
   next: NextFunction
@@ -136,9 +129,9 @@ export const UpdateName = async (
 
 export const UpdateImages = async (
   req: Request<
-    UpdatePortfolioImagesSchema["params"],
+    Schema.UpdatePortfolioImages["params"],
     any,
-    UpdatePortfolioImagesSchema["body"]
+    Schema.UpdatePortfolioImages["body"]
   >,
   res: Response<API["Portfolios"]["UpdateImages"]>,
   next: NextFunction

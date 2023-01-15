@@ -2,38 +2,31 @@ import express from "express";
 
 import * as portfoliosController from "../controllers/portfolios";
 import { validateSchema } from "../middlewares/validate-schema";
-import {
-  getPortfoliosSchema,
-  createPortfolioSchema,
-  getPortfolioSchema,
-  deletePortfolioSchema,
-  updatePortfolioNameSchema,
-  updatePortfolioImagesSchema,
-} from "../schemas/portfolios";
+import * as Schema from "../schemas/portfolios";
 
 const router = express.Router();
 
 router.get(
   "/portfolios",
-  validateSchema(getPortfoliosSchema),
+  validateSchema(Schema.getPortfolios),
   portfoliosController.Get
 );
 
 router.post(
   "/portfolios",
-  validateSchema(createPortfolioSchema),
+  validateSchema(Schema.createPortfolio),
   portfoliosController.Create
 );
 
 router.get(
   "/portfolios/:slug",
-  validateSchema(getPortfolioSchema),
+  validateSchema(Schema.getPortfolio),
   portfoliosController.GetOne
 );
 
 router.delete(
   "/portfolios/:slug",
-  validateSchema(deletePortfolioSchema),
+  validateSchema(Schema.deletePortfolio),
   portfoliosController.Delete
 );
 
@@ -41,13 +34,13 @@ router.delete(
 
 router.put(
   "/portfolios/:slug/images",
-  validateSchema(updatePortfolioImagesSchema),
+  validateSchema(Schema.updatePortfolioImages),
   portfoliosController.UpdateImages
 );
 
 router.put(
   "/portfolios/:slug/name",
-  validateSchema(updatePortfolioNameSchema),
+  validateSchema(Schema.updatePortfolioNameSchema),
   portfoliosController.UpdateName
 );
 

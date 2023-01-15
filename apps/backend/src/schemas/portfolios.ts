@@ -1,59 +1,41 @@
+import { portfolio as Schema } from "schemas";
 import { z } from "zod";
 
 import { paginationSchema } from "./pagination";
 
-export const createPortfolioSchema = z.object({
-  body: z.object({
-    name: z.string().min(3),
-    images: z.array(z.string()),
-  }),
+export const createPortfolio = z.object({
+  body: Schema.createPortfolio,
 });
-export type CreatePortfolioSchema = z.infer<typeof createPortfolioSchema>;
+export type CreatePortfolio = z.infer<typeof createPortfolio>;
 
-export const getPortfoliosSchema = z.object({
+export const getPortfolios = z.object({
   query: paginationSchema(),
 });
 
-export type GetPortfoliosSchema = z.infer<typeof getPortfoliosSchema>;
+export type GetPortfolios = z.infer<typeof getPortfolios>;
 
-const requiredSlugSchema = z.string({
-  required_error: "Portfolio slug is required.",
+export const deletePortfolio = z.object({
+  params: Schema.requiredPortfolioSlug,
 });
 
-const requiredSlug = {
-  slug: requiredSlugSchema,
-};
+export type DeletePortfolio = z.infer<typeof deletePortfolio>;
 
-export const deletePortfolioSchema = z.object({
-  params: z.object(requiredSlug),
+export const getPortfolio = z.object({
+  params: Schema.requiredPortfolioSlug,
 });
 
-export type DeletePortfolioSchema = z.infer<typeof deletePortfolioSchema>;
-
-export const getPortfolioSchema = z.object({
-  params: z.object(requiredSlug),
-});
-
-export type GetPortfolioSchema = z.infer<typeof getPortfolioSchema>;
+export type GetPortfolio = z.infer<typeof getPortfolio>;
 
 export const updatePortfolioNameSchema = z.object({
-  params: z.object(requiredSlug),
-  body: z.object({
-    name: z.string({ required_error: "Name is required." }).min(3),
-  }),
+  params: Schema.requiredPortfolioSlug,
+  body: Schema.updatePortfolioName,
 });
 
-export type UpdatePortfolioNameSchema = z.infer<
-  typeof updatePortfolioNameSchema
->;
+export type UpdatePortfolioName = z.infer<typeof updatePortfolioNameSchema>;
 
-export const updatePortfolioImagesSchema = z.object({
-  params: z.object(requiredSlug),
-  body: z.object({
-    images: z.array(z.string()),
-  }),
+export const updatePortfolioImages = z.object({
+  params: Schema.requiredPortfolioSlug,
+  body: Schema.updatePortfolioImages,
 });
 
-export type UpdatePortfolioImagesSchema = z.infer<
-  typeof updatePortfolioImagesSchema
->;
+export type UpdatePortfolioImages = z.infer<typeof updatePortfolioImages>;
