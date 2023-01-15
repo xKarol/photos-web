@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import { GetImageSchema } from "../schemas/images";
@@ -7,7 +8,7 @@ import { getBufferFromUrl } from "../utils/misc";
 
 export const GetOne = async (
   req: Request<GetImageSchema["params"]>,
-  res: Response,
+  res: Response<API["Image"]["GetOne"]>,
   next: NextFunction
 ) => {
   try {

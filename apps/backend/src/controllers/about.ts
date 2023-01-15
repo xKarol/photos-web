@@ -1,5 +1,6 @@
 import { ImageType } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import { uploadPhoto } from "../services/cloudinary";
@@ -11,7 +12,7 @@ type CreatePhotoBody = {
 
 export const UploadImage = async (
   req: Request<any, any, CreatePhotoBody>,
-  res: Response,
+  res: Response<API["About"]["Upload"]>,
   next: NextFunction
 ) => {
   try {
@@ -38,7 +39,7 @@ export const UploadImage = async (
 
 export const GetImage = async (
   req: Request,
-  res: Response,
+  res: Response<API["About"]["Get"]>,
   next: NextFunction
 ) => {
   try {

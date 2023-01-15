@@ -1,6 +1,6 @@
-import type { Image } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import type {
@@ -18,7 +18,7 @@ type CreatePhotoBody = {
 
 export const Create = async (
   req: Request<any, any, CreatePhotoBody>,
-  res: Response<Image>,
+  res: Response<API["Photos"]["Create"]>,
   next: NextFunction
 ) => {
   try {
@@ -50,7 +50,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<GetPhotoSchema["params"]>,
-  res: Response<Image>,
+  res: Response<API["Photos"]["GetOne"]>,
   next: NextFunction
 ) => {
   try {
@@ -70,11 +70,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<any, any, any, GetPhotosSchema["query"]>,
-  res: Response<{
-    data: Image[];
-    nextPage: number | undefined;
-    limit: number;
-  }>,
+  res: Response<API["Photos"]["Get"]>,
   next: NextFunction
 ) => {
   try {
@@ -96,7 +92,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<DeletePhotoSchema["params"]>,
-  res: Response,
+  res: Response<API["Photos"]["Delete"]>,
   next: NextFunction
 ) => {
   try {

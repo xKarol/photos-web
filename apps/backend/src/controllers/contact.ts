@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import type {
@@ -9,7 +10,7 @@ import { sendEmail } from "../utils/mailer";
 
 export const Create = async (
   req: Request<any, any, ContactCreateSchema["body"]>,
-  res: Response,
+  res: Response<API["Contact"]["Create"]>,
   next: NextFunction
 ) => {
   try {
@@ -28,7 +29,7 @@ export const Create = async (
 
 export const Delete = async (
   req: Request<ContactDeleteSchema["params"]>,
-  res: Response,
+  res: Response<API["Contact"]["Delete"]>,
   next: NextFunction
 ) => {
   try {

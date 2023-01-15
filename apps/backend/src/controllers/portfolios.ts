@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import slugify from "slugify";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import type {
@@ -18,7 +19,7 @@ const transformImages = (images: string[]) => images.map((id) => ({ id }));
 
 export const Create = async (
   req: Request<any, any, CreatePortfolioSchema["body"]>,
-  res: Response,
+  res: Response<API["Portfolios"]["Create"]>,
   next: NextFunction
 ) => {
   try {
@@ -26,13 +27,16 @@ export const Create = async (
 
     const slug = slugify(name, { lower: true });
 
-    const newPortfolio = await prisma.portfolios.create({
+    const newPortfolio = (await prisma.portfolios.create({
       data: {
         slug,
         name,
         images: { connect: transformImages(images) },
       },
-    });
+    })) as API["Portfolios"]["Create"];//TODO why prisma return wrong types? 
+
+    if (!newPortfolio?.images) throw new Error("Something went wrong"); //TODO use tinyvariant package
+
     return res.send(newPortfolio);
   } catch (error) {
     next(error);
@@ -41,7 +45,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<GetPortfolioSchema["params"]>,
-  res: Response,
+  res: Response<API["Portfolios"]["GetOne"]>,
   next: NextFunction
 ) => {
   try {
@@ -61,7 +65,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<any, any, any, GetPortfoliosSchema["query"]>,
-  res: Response,
+  res: Response<API["Portfolios"]["Get"]>,
   next: NextFunction
 ) => {
   try {
@@ -84,7 +88,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<DeletePortfolioSchema["params"]>,
-  res: Response,
+  res: Response<API["Portfolios"]["Delete"]>,
   next: NextFunction
 ) => {
   try {
@@ -110,7 +114,7 @@ export const UpdateName = async (
     any,
     UpdatePortfolioNameSchema["body"]
   >,
-  res: Response,
+  res: Response<API["Portfolios"]["UpdateName"]>,
   next: NextFunction
 ) => {
   try {
@@ -136,7 +140,7 @@ export const UpdateImages = async (
     any,
     UpdatePortfolioImagesSchema["body"]
   >,
-  res: Response,
+  res: Response<API["Portfolios"]["UpdateImages"]>,
   next: NextFunction
 ) => {
   try {

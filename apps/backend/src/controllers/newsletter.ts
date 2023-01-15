@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import type { API } from "types";
 
 import { prisma } from "../db";
 import type {
@@ -9,7 +10,7 @@ import { sendEmail } from "../utils/mailer";
 
 export const Subscribe = async (
   req: Request<any, any, NewsletterSubscribeSchema["body"]>,
-  res: Response,
+  res: Response<API["Newsletter"]["Subscribe"]>,
   next: NextFunction
 ) => {
   try {
@@ -28,7 +29,7 @@ export const Subscribe = async (
 
 export const CreateTemplate = async (
   req: Request<any, any, NewsletterCreateTemplateSchema["body"]>,
-  res: Response,
+  res: Response<API["Newsletter"]["CreateTemplate"]>,
   next: NextFunction
 ) => {
   try {
