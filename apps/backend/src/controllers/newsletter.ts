@@ -1,6 +1,6 @@
-import { prisma } from "database";
 import type { NextFunction, Request, Response } from "express";
 
+import { prisma } from "../db";
 import type {
   NewsletterSubscribeSchema,
   NewsletterCreateTemplateSchema,

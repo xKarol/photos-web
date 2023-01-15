@@ -16,5 +16,3 @@ export const prisma =
   });
 
 if (!isProduction) global.prisma = prisma;
-
-export * from '.prisma/client'

@@ -1,8 +1,8 @@
-import { prisma } from "database";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import slugify from "slugify";
 
+import { prisma } from "../db";
 import type {
   CreatePortfolioSchema,
   DeletePortfolioSchema,
@@ -53,7 +53,7 @@ export const GetOne = async (
     });
     if (!data) throw createError(404, "Photo not found.");
 
-    return res.send({ ...data });
+    return res.send(data);
   } catch (error) {
     next(error);
   }
