@@ -1,0 +1,23 @@
+{
+  "name": "schemas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup index.ts --format cjs,esm --dts"
+  },
+  "devDependencies": {
+    "tozod": "^3.0.0",
+    "tsup": "^6.5.0",
+    "types": "^1.0.0",
+    "typescript": "^4.9.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
