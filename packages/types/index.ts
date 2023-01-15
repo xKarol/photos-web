@@ -14,6 +14,8 @@ type Pagination<T> = {
 
 export * from "backend/node_modules/.prisma/client";
 
+type ReturnStatus = void | unknown;
+
 export type API = {
   About: {
     Upload: Image;
@@ -21,7 +23,7 @@ export type API = {
   };
   Contact: {
     Create: Contact;
-    Delete: Record<string, any>;
+    Delete: ReturnStatus;
   };
   Image: {
     GetOne: ArrayBuffer;
@@ -34,13 +36,13 @@ export type API = {
     Create: Image;
     GetOne: Image;
     Get: Pagination<Image[]>;
-    Delete: Record<string, any>;
+    Delete: ReturnStatus;
   };
   Portfolios: {
-    Create: Image;
+    Create: Portfolios & { images: Image[] };
     GetOne: Portfolios & { images: Image[] };
     Get: Pagination<(Portfolios & { images: Image[] })[]>;
-    Delete: Record<string, any>;
+    Delete: ReturnStatus;
     UpdateName: Portfolios;
     UpdateImages: Portfolios & { images: Image[] };
   };
