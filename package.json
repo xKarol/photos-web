@@ -5,14 +5,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=apps/backend\" \"npm run dev --workspace=apps/web\"",
-    "build": "concurrently \"npm run build --workspace=apps/backend\" \"npm run build --workspace=apps/web\"",
-    "start": "concurrently \"npm run start --workspace=apps/backend\" \"npm run start --workspace=apps/web\"",
-    "test": "concurrently \"npm run test --workspace=apps/backend\" \"npm run test --workspace=apps/web\"",
-    "lint": "concurrently \"npm run lint --workspace=apps/backend\" \"npm run lint --workspace=apps/web\"",
-    "prettier": "concurrently \"npm run prettier --workspace=apps/backend\" \"npm run prettier --workspace=apps/web\"",
-    "prettier:fix": "concurrently \"npm run prettier:fix --workspace=apps/backend\" \"npm run prettier:fix --workspace=apps/web\"",
-    "type-check": "concurrently \"npm run type-check --workspace=apps/backend\" \"npm run type-check --workspace=apps/web\""
+    "dev": "npx lerna run dev",
+    "build": "npx lerna run build",
+    "start": "npx lerna run start",
+    "test": "npx lerna run test",
+    "lint": "npx lerna run lint",
+    "lint:fix": "npx lerna run lint:fix",
+    "format": "npx lerna run format",
+    "format:fix": "npx lerna run format:fix",
+    "type-check": "npx lerna run type-check"
   },
   "workspaces": [
     "apps/*",
@@ -30,7 +31,7 @@
   },
   "homepage": "https://github.com/xKarol/photos-web#readme",
   "devDependencies": {
-    "concurrently": "^7.6.0",
+    "lerna": "^6.4.1",
     "typescript": "^4.9.4"
   }
 }
