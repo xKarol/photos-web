@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { server } from "../../../__mocks__/server";
@@ -98,5 +98,31 @@ describe("Newsletter", () => {
     const infoElement = await screen.findByText(/Unknown error/i);
     expect(infoElement).toBeInTheDocument();
   });
-  // TODO add more tests (button should be disabled when loading state is active etc)
+
+  it("loading component should be visible after submit", async () => {
+    setup();
+
+    const inputElement = getInputElement();
+    fireEvent.change(inputElement, { target: { value: "email@gmail.com" } });
+    const spinnerElement = screen.queryByRole("alert");
+    expect(spinnerElement).not.toBeInTheDocument();
+    const buttonElement = getButtonElement();
+    fireEvent.click(buttonElement);
+    expect(await screen.findByRole("alert")).toBeInTheDocument();
+    await waitFor(() => expect(spinnerElement).not.toBeInTheDocument());
+  });
+
+  it("button should be disabled when loading state is active", async () => {
+    setup();
+
+    const inputElement = getInputElement();
+
+    fireEvent.change(inputElement, { target: { value: "email@gmail.com" } });
+    expect(inputElement).toHaveValue("email@gmail.com");
+
+    const buttonElement = getButtonElement();
+    expect(buttonElement).not.toBeDisabled();
+    fireEvent.click(buttonElement);
+    await waitFor(() => expect(buttonElement).toBeDisabled());
+  });
 });
