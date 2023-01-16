@@ -27,7 +27,7 @@ export const UploadImage = async (
     const photo = await prisma.image.create({
       data: {
         ...data,
-        alt: body.alt,
+        alt: body.alt || "",
         type: ImageType.ABOUT,
       },
     });

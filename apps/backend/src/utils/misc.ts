@@ -25,8 +25,7 @@ export function paginationParams(query: { page?: string; limit?: string }) {
   };
 }
 
-export async function getBufferFromUrl(url: string) {
-  //TODO return buffer type from func
+export async function getBufferFromUrl(url: string): Promise<Buffer> {
   const { data: buffer } = await axios.get(url, {
     responseType: "arraybuffer",
   });

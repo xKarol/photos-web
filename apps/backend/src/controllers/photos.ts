@@ -35,7 +35,7 @@ export const Create = async (
         image: {
           create: {
             ...data,
-            alt: body.alt,
+            alt: body.alt || "",
           },
         },
       },
