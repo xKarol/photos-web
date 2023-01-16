@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import slugify from "slugify";
+import invariant from "tiny-invariant";
 import type { API } from "types";
 
 import { prisma } from "../db";
@@ -28,7 +29,7 @@ export const Create = async (
       },
     })) as API["Portfolios"]["Create"]; //TODO why prisma return wrong types?
 
-    if (!newPortfolio?.images) throw new Error("Something went wrong"); //TODO use tinyvariant package
+    invariant(!newPortfolio?.images, "Something went wrong");
 
     return res.send(newPortfolio);
   } catch (error) {
