@@ -4,6 +4,7 @@ import { Lightbox } from "../index";
 import "../../../__mocks__/intersection-observer";
 import { useState } from "react";
 import { API } from "types";
+import { getImageUrl } from "../../../utils/misc";
 
 jest.mock("next/image", () => ({
   __esModule: true,
@@ -15,7 +16,8 @@ jest.mock("next/image", () => ({
 
 const photos: API["Photos"]["GetOne"][] = [
   {
-    src: "http://test.com",
+    id: "32435",
+    src: getImageUrl("32435"),
     alt: "",
     type: "DEFAULT",
     mimeType: "image/webp",
@@ -23,11 +25,11 @@ const photos: API["Photos"]["GetOne"][] = [
     updatedAt: new Date(),
     height: 200,
     width: 300,
-    id: "32435",
     placeholder: "placeholder",
   },
   {
-    src: "http://test3.com",
+    id: "32436",
+    src: getImageUrl("32436"),
     alt: "",
     type: "DEFAULT",
     mimeType: "image/webp",
@@ -35,7 +37,6 @@ const photos: API["Photos"]["GetOne"][] = [
     updatedAt: new Date(),
     height: 200,
     width: 300,
-    id: "32436",
     placeholder: "placeholder",
   },
 ];
@@ -197,7 +198,7 @@ describe("Lightbox", () => {
 
     for (const [index] of photos.entries()) {
       const nextIndex = index + 1;
-      if (!photos[nextIndex]) break;
+      if (!photos[nextIndex]) return;
       await compareImage(nextIndex);
     }
   });
