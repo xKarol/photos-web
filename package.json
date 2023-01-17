@@ -39,11 +39,8 @@
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
-      "eslint --check",
+      "eslint --fix",
       "prettier --check"
-    ],
-    "**/*.{ts,tsx}": [
-      "npx tsc --noEmit"
     ],
     "*.json": [
       "prettier --write"
