@@ -43,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.29.0",
+    "eslint-config": "*",
     "eslint-config-next": "13.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.6",
