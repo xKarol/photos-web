@@ -2,10 +2,10 @@
 const nextConfig = require("eslint-config/nextjs");
 
 module.exports = {
-  root: true,
   ...nextConfig,
   extends: [...nextConfig.extends, "next/core-web-vitals"],
   parserOptions: {
+    root: true,
     tsconfigRootDir: __dirname,
     project: "./tsconfig.json",
   },

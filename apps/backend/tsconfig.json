@@ -1,4 +1,5 @@
 {
   "extends": "tsconfig/node16.json",
-  "exclude": ["node_modules", "**/__tests__/*", "dist"]
+  "include": ["."],
+  "exclude": ["node_modules", "src/**/*.test.ts", "dist"]
 }
