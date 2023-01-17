@@ -54,6 +54,7 @@ const Lightbox = ({
     <Dialog
       as="div"
       className={clsx("relative z-50", className)}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       onClose={() => {}}
       open={isOpen}
     >

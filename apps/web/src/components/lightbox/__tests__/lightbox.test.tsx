@@ -8,7 +8,7 @@ import { getImageUrl } from "../../../utils/misc";
 
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({ src, alt }: any) => {
+  default: ({ src, alt }: unknown) => {
     // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
     return <img src={src} alt={alt} />;
   },

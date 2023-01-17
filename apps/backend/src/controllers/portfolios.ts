@@ -12,7 +12,7 @@ import { paginationParams, getPaginationNextPage } from "../utils/misc";
 const transformImages = (images: string[]) => images.map((id) => ({ id }));
 
 export const Create = async (
-  req: Request<any, any, Schema.CreatePortfolio["body"]>,
+  req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,
   res: Response<API["Portfolios"]["Create"]>,
   next: NextFunction
 ) => {
@@ -58,7 +58,7 @@ export const GetOne = async (
 };
 
 export const Get = async (
-  req: Request<any, any, any, Schema.GetPortfolios["query"]>,
+  req: Request<unknown, unknown, unknown, Schema.GetPortfolios["query"]>,
   res: Response<API["Portfolios"]["Get"]>,
   next: NextFunction
 ) => {
@@ -105,7 +105,7 @@ export const Delete = async (
 export const UpdateName = async (
   req: Request<
     Schema.UpdatePortfolioName["params"],
-    any,
+    unknown,
     Schema.UpdatePortfolioName["body"]
   >,
   res: Response<API["Portfolios"]["UpdateName"]>,
@@ -131,7 +131,7 @@ export const UpdateName = async (
 export const UpdateImages = async (
   req: Request<
     Schema.UpdatePortfolioImages["params"],
-    any,
+    unknown,
     Schema.UpdatePortfolioImages["body"]
   >,
   res: Response<API["Portfolios"]["UpdateImages"]>,

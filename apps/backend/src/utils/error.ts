@@ -1,3 +1,4 @@
+import createError from "http-errors";
 import { ZodError } from "zod";
 
 function getErrorMessage(error: unknown) {
@@ -13,8 +14,8 @@ export type ReportError = {
 
 export const reportError = (error: unknown) => {
   const message = getErrorMessage(error);
-  const status: number = (error as any).statusCode || 400;
-
+  const status: number =
+    error instanceof createError.HttpError ? error.statusCode : 400;
   return {
     status,
     message,

@@ -17,7 +17,7 @@ type CreatePhotoBody = {
 };
 
 export const Create = async (
-  req: Request<any, any, CreatePhotoBody>,
+  req: Request<unknown, unknown, CreatePhotoBody>,
   res: Response<API["Photos"]["Create"]>,
   next: NextFunction
 ) => {
@@ -69,7 +69,7 @@ export const GetOne = async (
 };
 
 export const Get = async (
-  req: Request<any, any, any, GetPhotosSchema["query"]>,
+  req: Request<unknown, unknown, unknown, GetPhotosSchema["query"]>,
   res: Response<API["Photos"]["Get"]>,
   next: NextFunction
 ) => {

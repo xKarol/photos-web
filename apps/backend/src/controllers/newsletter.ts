@@ -6,7 +6,7 @@ import type * as Schema from "../schemas/newsletter";
 import { sendEmail } from "../utils/mailer";
 
 export const Subscribe = async (
-  req: Request<any, any, Schema.SubscribeNewsletter["body"]>,
+  req: Request<unknown, unknown, Schema.SubscribeNewsletter["body"]>,
   res: Response<API["Newsletter"]["Subscribe"]>,
   next: NextFunction
 ) => {
@@ -25,7 +25,7 @@ export const Subscribe = async (
 };
 
 export const CreateTemplate = async (
-  req: Request<any, any, Schema.CreateNewsletterTemplate["body"]>,
+  req: Request<unknown, unknown, Schema.CreateNewsletterTemplate["body"]>,
   res: Response<API["Newsletter"]["CreateTemplate"]>,
   next: NextFunction
 ) => {

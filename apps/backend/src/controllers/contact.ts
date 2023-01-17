@@ -6,7 +6,7 @@ import type * as Schema from "../schemas/contact";
 import { sendEmail } from "../utils/mailer";
 
 export const Create = async (
-  req: Request<any, any, Schema.CreateContact["body"]>,
+  req: Request<unknown, unknown, Schema.CreateContact["body"]>,
   res: Response<API["Contact"]["Create"]>,
   next: NextFunction
 ) => {

@@ -13,10 +13,11 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-empty-function": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/no-null": "off",
     "unicorn/better-regex": "off",
+    "unicorn/catch-error-name": "off",
+    "unicorn/prefer-top-level-await": "off",
   },
   settings: {
     "import/parsers": {

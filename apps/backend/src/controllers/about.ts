@@ -11,7 +11,7 @@ type CreatePhotoBody = {
 };
 
 export const UploadImage = async (
-  req: Request<any, any, CreatePhotoBody>,
+  req: Request<unknown, unknown, CreatePhotoBody>,
   res: Response<API["About"]["Upload"]>,
   next: NextFunction
 ) => {
