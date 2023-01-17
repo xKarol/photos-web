@@ -13,7 +13,8 @@
     "lint:fix": "npx lerna run lint:fix",
     "format": "npx lerna run format",
     "format:fix": "npx lerna run format:fix",
-    "type-check": "npx lerna run type-check"
+    "type-check": "npx lerna run type-check",
+    "prepare": "husky install"
   },
   "workspaces": [
     "apps/*",
@@ -31,6 +32,7 @@
   },
   "homepage": "https://github.com/xKarol/photos-web#readme",
   "devDependencies": {
+    "husky": "^8.0.0",
     "lerna": "^6.4.1",
     "typescript": "^4.9.4"
   }
