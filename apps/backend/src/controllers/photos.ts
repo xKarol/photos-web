@@ -13,7 +13,7 @@ import { paginationParams, getPaginationNextPage } from "../utils/misc";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
-  alt?: string;
+  alt: string;
 };
 
 export const Create = async (
@@ -35,7 +35,7 @@ export const Create = async (
         image: {
           create: {
             ...data,
-            alt: body.alt || "",
+            alt: body.alt,
           },
         },
       },

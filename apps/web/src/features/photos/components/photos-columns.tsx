@@ -35,7 +35,7 @@ const PhotosColumns = ({ columns = 2, photos = [], ...props }: Props) => {
                 <Link key={id} href={`/photo/${encodeURIComponent(id)}`}>
                   <Photo
                     src={getImageUrl(id)}
-                    alt={alt || ""} //TODO fix alt optional type
+                    alt={alt}
                     width={width}
                     height={height}
                     blurDataURL={placeholder}

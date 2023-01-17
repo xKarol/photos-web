@@ -99,7 +99,7 @@ const Lightbox = ({
             {!isEmpty && (
               <Photo
                 src={getImageUrl(id)}
-                alt={alt || ""} //TODO change alt optional type
+                alt={alt}
                 width={width}
                 height={height}
                 blurDataURL={placeholder}

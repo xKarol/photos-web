@@ -59,7 +59,7 @@ const PortfolioIndexPage: NextPage = () => {
           {images.map((image, index) => (
             <Photo
               key={image.id}
-              alt={image.alt || "portfolio"}
+              alt={image.alt}
               src={getImageUrl(image.id)}
               height={image.height}
               width={image.width}

@@ -24,8 +24,8 @@ const Home: NextPage = () => {
           <figure className="flex-1">
             {isLoading ? null : (
               <Image
-                src={getImageUrl(image?.id || "")}
-                alt={image?.alt || ""}
+                src={getImageUrl(image.id)}
+                alt={image.alt}
                 placeholder="blur"
                 blurDataURL={image?.placeholder}
                 width={image?.width}

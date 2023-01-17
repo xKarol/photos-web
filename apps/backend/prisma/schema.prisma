@@ -32,7 +32,7 @@ enum ImageType {
 model Image {
   id          String       @id @unique
   src         String       @unique
-  alt         String?
+  alt         String
   mimeType    String
   height      Int
   width       Int
