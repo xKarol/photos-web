@@ -1,5 +1,4 @@
 {
   "extends": "tsconfig/node16.json",
-  "include": ["src", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "**/__tests__/*", "dist"],
+  "exclude": ["node_modules", "**/__tests__/*", "dist"]
 }
