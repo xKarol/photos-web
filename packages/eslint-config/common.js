@@ -12,6 +12,7 @@ module.exports = {
     project: ["./tsconfig.json"],
   },
   rules: {
+    "prettier/prettier": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/no-null": "off",
