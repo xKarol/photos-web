@@ -19,7 +19,7 @@ export const sendEmail = async (options: SendMailOptions) => {
   return new Promise((resolve, reject) => {
     transporter.sendMail(
       {
-        from: process.env.MAIL_LOGIN,
+        from: process.env.MAIL_USER,
         ...options,
       },
       (error, info) => {
