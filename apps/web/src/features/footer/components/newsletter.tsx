@@ -33,7 +33,11 @@ const Newsletter = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <LoadingButton isLoading={isLoading} disabled={email.length <= 0} className="btn">
+        <LoadingButton
+          isLoading={isLoading}
+          disabled={email.length <= 0}
+          className="btn"
+        >
           Submit
         </LoadingButton>
         <div className="absolute left-0 -bottom-6 text-xs">

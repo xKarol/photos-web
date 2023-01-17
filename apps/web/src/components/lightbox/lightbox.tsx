@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import type { Image } from "types";
-import Photo from "../../features/photos/components/photo";//TODO export this component to /components dir
+import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
 import { getImageUrl } from "../../utils/misc";
 import clsx from "clsx";
 
@@ -98,7 +98,7 @@ const Lightbox = ({
             {!isEmpty && (
               <Photo
                 src={getImageUrl(id)}
-                alt={alt || ""}//TODO change alt optional type
+                alt={alt || ""} //TODO change alt optional type
                 width={width}
                 height={height}
                 blurDataURL={placeholder}
