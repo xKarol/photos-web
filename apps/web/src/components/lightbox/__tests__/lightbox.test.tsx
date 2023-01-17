@@ -8,7 +8,7 @@ import { getImageUrl } from "../../../utils/misc";
 
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({ src, alt }: unknown) => {
+  default: ({ src, alt }: { src: string; alt: string }) => {
     // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
     return <img src={src} alt={alt} />;
   },
@@ -196,6 +196,7 @@ describe("Lightbox", () => {
       expect(currentImage).toBe(photos[nextIndex].src);
     };
 
+    // @ts-expect-error
     for (const [index] of photos.entries()) {
       const nextIndex = index + 1;
       if (!photos[nextIndex]) return;
