@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "npx tsc --project tsconfig.production.json",
     "dev": "cross-env NODE_ENV=dev concurrently \"npx tsc --watch\" \"nodemon -q dist/src/app.js'\"",
     "start": "cross-env NODE_ENV=production node ./dist/src/app.js",
     "test": "cross-env NODE_ENV=test jest",

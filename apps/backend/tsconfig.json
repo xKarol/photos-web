@@ -2,8 +2,8 @@
   "extends": "tsconfig/node16.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "dist"
+    "outDir": "./dist"
   },
   "include": ["."],
-  "exclude": ["node_modules", "**/*.test.ts", "dist"]
+  "exclude": ["node_modules", "dist"]
 }
