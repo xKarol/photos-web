@@ -3,7 +3,6 @@
   "display": "Node 16",
   "extends": "./base.json",
   "compilerOptions": {
-    "outDir": "dist",
     "lib": ["esnext"],
     "module": "CommonJS",
     "esModuleInterop": true,
