@@ -1,5 +1,5 @@
 {
-  "name": "prettierconfig",
+  "name": "prettier-config",
   "version": "0.0.0",
   "private": true,
   "main": "base.json",

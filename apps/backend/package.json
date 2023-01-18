@@ -65,7 +65,7 @@
     "jest": "^29.3.1",
     "nodemon": "^2.0.20",
     "prettier": "2.8.3",
-    "prettierconfig": "*",
+    "prettier-config": "*",
     "prisma": "^4.8.1",
     "supertest": "^6.3.1",
     "ts-jest": "^29.0.3",

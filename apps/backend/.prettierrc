@@ -1,3 +1,3 @@
 {
-  "plugins": ["prettierconfig"]
+  "plugins": ["prettier-config"]
 }
