@@ -99,7 +99,13 @@ export const Delete = async (
     const { photoId } = req.params;
 
     await deleteCloudinaryImageById(photoId);
-    await prisma.photos.delete({ where: { imageId: photoId } });
+    await prisma.photos
+      .delete({
+        where: { imageId: photoId },
+      })
+      .catch(() => {
+        throw createError(404, "Photo not found.");
+      });
 
     return res.send(200);
   } catch (error) {
