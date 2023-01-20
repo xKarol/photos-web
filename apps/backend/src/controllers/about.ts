@@ -1,9 +1,6 @@
-import { ImageType } from "@prisma/client";
 import type { NextFunction, Request, Response } from "express";
 import type { API } from "types";
-
-import { prisma } from "../db";
-import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
+import { deleteImage, getImage, uploadImage } from "../services/about";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -17,27 +14,15 @@ export const UploadImage = async (
 ) => {
   try {
     const file = req.file;
-    const body = req.body;
+    const { alt } = req.body;
     if (!file?.buffer) throw new Error("Image is required.");
 
     const { buffer: photoBuffer } = file;
 
-    const data = await uploadPhoto(photoBuffer);
+    const image = await getImage().catch(() => null);
+    if (image) await deleteImage(image.id);
 
-    const image = await prisma.image.findFirst({ where: { type: "ABOUT" } });
-
-    if (image) {
-      await deleteCloudinaryImageById(image.id);
-      await prisma.image.delete({ where: { id: image.id } });
-    }
-
-    const photo = await prisma.image.create({
-      data: {
-        ...data,
-        alt: body.alt,
-        type: ImageType.ABOUT,
-      },
-    });
+    const photo = await uploadImage(photoBuffer, alt);
     return res.send(photo);
   } catch (error) {
     next(error);
@@ -50,9 +35,7 @@ export const GetImage = async (
   next: NextFunction
 ) => {
   try {
-    const photo = await prisma.image.findFirstOrThrow({
-      where: { type: ImageType.ABOUT },
-    });
+    const photo = await getImage();
     return res.send(photo);
   } catch (error) {
     next(error);
