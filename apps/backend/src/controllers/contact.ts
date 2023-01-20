@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 import type { API } from "types";
 
 import { prisma } from "../db";
@@ -32,7 +33,9 @@ export const Delete = async (
   try {
     const { contactId } = req.params;
 
-    await prisma.contact.delete({ where: { id: contactId } });
+    await prisma.contact.delete({ where: { id: contactId } }).catch(() => {
+      throw createError(404, "Contact not found.");
+    });
 
     return res.send(200);
   } catch (error) {
