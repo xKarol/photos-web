@@ -1,6 +1,7 @@
 import express from "express";
 
 import * as portfoliosController from "../controllers/portfolios";
+import { requireAuth } from "../middlewares/require-auth";
 import { validateSchema } from "../middlewares/validate-schema";
 import * as Schema from "../schemas/portfolios";
 
