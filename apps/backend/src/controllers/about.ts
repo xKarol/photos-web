@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express";
 import type { API } from "types";
 
 import { prisma } from "../db";
-import { uploadPhoto } from "../services/cloudinary";
+import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -23,6 +23,13 @@ export const UploadImage = async (
     const { buffer: photoBuffer } = file;
 
     const data = await uploadPhoto(photoBuffer);
+
+    const image = await prisma.image.findFirst({ where: { type: "ABOUT" } });
+
+    if (image) {
+      await deleteCloudinaryImageById(image.id);
+      await prisma.image.delete({ where: { id: image.id } });
+    }
 
     const photo = await prisma.image.create({
       data: {
