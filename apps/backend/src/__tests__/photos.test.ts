@@ -1,28 +1,11 @@
 import supertest from "supertest";
 import app from "../app";
-import * as upload from "../services/cloudinary";
-import crypto from "node:crypto";
 import { prisma } from "../db";
+import "../mocks/cloudinary";
 
 const request = supertest(app);
 
-// TODO mock this test
-jest.mock("../services/cloudinary");
-
-const mockReturnValue = () => {
-  const uniqueId = crypto.randomUUID();
-  return Promise.resolve({
-    id: uniqueId,
-    src: `test/${uniqueId}`,
-    width: 500,
-    height: 500,
-    placeholder: "test",
-    mimeType: "image/webp",
-  });
-};
-
 describe("Photos", () => {
-  jest.spyOn(upload, "uploadPhoto").mockImplementation(mockReturnValue);
   let id: string;
 
   beforeAll(async () => {

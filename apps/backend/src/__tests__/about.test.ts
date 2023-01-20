@@ -1,9 +1,8 @@
 import supertest from "supertest";
 import app from "../app";
 import type { API } from "types";
-import * as upload from "../services/cloudinary";
 import { prisma } from "../db";
-import crypto from "node:crypto";
+import "../mocks/cloudinary";
 
 const request = supertest(app);
 
@@ -20,46 +19,24 @@ const checkAboutResponse = () => ({
   updatedAt: expect.any(String),
 });
 
-jest.mock("../services/cloudinary");
-
-const mockReturnValue = () => {
-  const uniqueId = crypto.randomUUID();
-  return Promise.resolve({
-    id: uniqueId,
-    src: `test/${uniqueId}`,
-    width: 500,
-    height: 500,
-    placeholder: "test",
-    mimeType: "image/webp",
-  });
+const uploadImage = async () => {
+  const response = await request
+    .put("/about/image")
+    .attach("image", Buffer.from("test", "base64"), "test.jpg")
+    .field("alt", "test")
+    .expect(200);
+  return response;
 };
 
 describe("about", () => {
-  jest.spyOn(upload, "uploadPhoto").mockImplementation(mockReturnValue);
-
-  describe("GET /about/image (get about image data)", () => {
-    beforeAll(async () => {
-      await prisma.image.create({
-        data: { ...(await mockReturnValue()), alt: "test" },
-      });
-    });
-
-    it("should return valid data", async () => {
-      const { body } = await request.get("/about/image").expect(200);
-      // TODO parse with zod
-      console.log(body);
-      expect(body).toMatchObject<API["About"]["Get"]>(checkAboutResponse());
-    });
+  beforeAll(async () => {
+    await prisma.image.deleteMany({ where: { type: "ABOUT" } });
   });
+
   describe("PUT /about/image (upload about image)", () => {
     let imageId: string;
     it("should upload new about image", async () => {
-      const { body } = await request
-        .put("/about/image")
-        .attach("image", Buffer.from("test", "base64"), "test.jpg")
-        .field("alt", "test")
-        .expect(200);
-
+      const { body } = await uploadImage();
       imageId = body.id;
       expect(body).toMatchObject<API["About"]["Get"]>(checkAboutResponse());
     });
@@ -69,19 +46,21 @@ describe("about", () => {
       });
       expect(count).toBe(1);
     });
-    // it("only one about image should exist", async () => {
-    //   jest.spyOn(upload, "uploadPhoto").mockImplementationOnce(mockReturnValue);
+    it("only one about image should exist", async () => {
+      await uploadImage();
+      await uploadImage();
 
-    //   await prisma.image.create({
-    //     data: { ...(await mockReturnValue()), alt: "test" },
-    //   });
-    //   await prisma.image.create({
-    //     data: { ...(await mockReturnValue()), alt: "test" },
-    //   });
-    //   const count = await prisma.image.count({
-    //     where: { type: "ABOUT" },
-    //   });
-    //   expect(count).toBe(1);
-    // });
+      const count = await prisma.image.count({
+        where: { type: "ABOUT" },
+      });
+      expect(count).toBe(1);
+    });
+  });
+  describe("GET /about/image (get about image data)", () => {
+    it("should return valid data", async () => {
+      const { body } = await request.get("/about/image").expect(200);
+      // TODO parse with zod
+      expect(body).toMatchObject<API["About"]["Get"]>(checkAboutResponse());
+    });
   });
 });
