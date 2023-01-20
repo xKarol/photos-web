@@ -14,6 +14,7 @@ router.get(
 
 router.post(
   "/portfolios",
+  requireAuth,
   validateSchema(Schema.createPortfolio),
   portfoliosController.Create
 );
@@ -26,6 +27,7 @@ router.get(
 
 router.delete(
   "/portfolios/:slug",
+  requireAuth,
   validateSchema(Schema.deletePortfolio),
   portfoliosController.Delete
 );
@@ -34,12 +36,14 @@ router.delete(
 
 router.put(
   "/portfolios/:slug/images",
+  requireAuth,
   validateSchema(Schema.updatePortfolioImages),
   portfoliosController.UpdateImages
 );
 
 router.put(
   "/portfolios/:slug/name",
+  requireAuth,
   validateSchema(Schema.updatePortfolioNameSchema),
   portfoliosController.UpdateName
 );
