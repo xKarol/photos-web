@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 
 export const requireAuth = (
   req: Request,
@@ -7,7 +7,7 @@ export const requireAuth = (
   next: NextFunction
 ) => {
   try {
-    // TODO checking auth
+    if (!req.isAuthenticated()) throw createError(401, "Please log in.");
     next();
   } catch (e) {
     next(e);

@@ -7,9 +7,11 @@ import imageRoutes from "./images";
 import newsletterRoutes from "./newsletter";
 import photoRoutes from "./photos";
 import portfoliosRoutes from "./portfolios";
+import authRoutes from "./auth";
 
 const router = express.Router();
 
+router.use(authRoutes);
 router.use(imageRoutes);
 router.use(photoRoutes);
 router.use(portfoliosRoutes);
