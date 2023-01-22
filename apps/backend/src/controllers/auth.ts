@@ -11,3 +11,14 @@ export const Login = (req: Request, res: Response, next: NextFunction) => {
     next(e);
   }
 };
+
+export const Logout = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    req.logOut((err) => {
+      if (err) throw err;
+      res.send(200);
+    });
+  } catch (e) {
+    next(e);
+  }
+};
