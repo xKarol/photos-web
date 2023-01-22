@@ -37,7 +37,6 @@ app.use(
 );
 passport.use(
   new LocalStrategy(function (username, password, done) {
-    console.log(username, password);
     if (
       process.env.ADMIN_LOGIN === username &&
       process.env.ADMIN_PASSWORD === password
