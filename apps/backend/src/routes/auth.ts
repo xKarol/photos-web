@@ -5,8 +5,11 @@ const router = express.Router();
 
 router.post("/admin/login", auth.Login);
 
-// router.post("/admin/logout", (req, _res) => {
-//   req.logOut({ keepSessionInfo: false });
-// });
+router.post("/admin/logout", (req, res) => {
+  req.logOut((err) => {
+    if (err) throw err;
+    res.send(200);
+  });
+});
 
 export default router;
