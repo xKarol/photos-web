@@ -4,7 +4,7 @@ import type {
   NewsletterSubscriber,
   NewsletterTemplate,
   Portfolios,
-} from "backend/node_modules/.prisma/client";
+} from "../../node_modules/.prisma/client";
 
 type Pagination<T> = {
   data: T;
@@ -12,7 +12,7 @@ type Pagination<T> = {
   limit: number;
 };
 
-export * from "backend/node_modules/.prisma/client";
+export * from "../../node_modules/.prisma/client";
 
 type ReturnStatus = void | unknown;
 
