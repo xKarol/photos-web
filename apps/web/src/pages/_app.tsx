@@ -6,6 +6,7 @@ import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
 
 const defaultFont = Montserrat({
   subsets: ["latin"],
+  variable: "--font-montserrat",
   weight: ["200", "300", "400", "500"],
 });
 
