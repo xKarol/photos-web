@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Montserrat } from "@next/font/google";
 import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
+import localFont from "@next/font/local";
 
-const defaultFont = Montserrat({
-  subsets: ["latin"],
+const defaultFont = localFont({
   variable: "--font-montserrat",
-  weight: ["200", "300", "400", "500"],
+  src: [
+    {
+      path: "../../../public/montserrat/ExtraLight.ttf",
+      weight: "200",
+    },
+    {
+      path: "../../../public/montserrat/Light.ttf",
+      weight: "300",
+    },
+    {
+      path: "../../../public/montserrat/Regular.ttf",
+      weight: "400",
+    },
+    {
+      path: "../../../public/montserrat/Medium.ttf",
+      weight: "500",
+    },
+  ],
 });
 
 const ReactQueryDevtoolsProduction = React.lazy(() =>
@@ -37,7 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <style jsx global>{`
-        html {
+        :root {
           font-family: ${defaultFont.style.fontFamily};
         }
       `}</style>
