@@ -8,19 +8,19 @@ const defaultFont = localFont({
   variable: "--font-montserrat",
   src: [
     {
-      path: "../../../public/montserrat/ExtraLight.ttf",
+      path: "../../public/assets/fonts/montserrat/Montserrat-ExtraLight.ttf",
       weight: "200",
     },
     {
-      path: "../../../public/montserrat/Light.ttf",
+      path: "../../public/assets/fonts/montserrat/Montserrat-Light.ttf",
       weight: "300",
     },
     {
-      path: "../../../public/montserrat/Regular.ttf",
+      path: "../../public/assets/fonts/montserrat/Montserrat-Regular.ttf",
       weight: "400",
     },
     {
-      path: "../../../public/montserrat/Medium.ttf",
+      path: "../../public/assets/fonts/montserrat/Montserrat-Medium.ttf",
       weight: "500",
     },
   ],
