@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Image, ImageType } from "@prisma/client";
+import { ImageType } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
 
 import { cloudinaryConfig } from "../src/config/cloudinary";
@@ -14,6 +14,7 @@ import {
   getRandomPhoto,
   getRandomPeoplePhoto,
 } from "./seed.utils";
+import ora from "ora";
 
 cloudinaryConfig();
 
@@ -21,12 +22,24 @@ const MAX_MAIN_PHOTOS = 25;
 const MAX_IMAGES = 100;
 
 const main = async () => {
-  await deleteAllCloudinaryImages();
-  const images = await seedImages();
-  const photos = await seedMainPhotos();
-  await seedAboutPhoto();
-  images.push(...photos.map(({ image }) => image));
-  await seedPortfolios(images);
+  const steps = {
+    "Deleting cloudinary images": deleteAllCloudinaryImages,
+    "Seeding images": seedImages,
+    "Seeding main photos": seedMainPhotos,
+    "Seeding about photos": seedAboutPhoto,
+    "Seeding portfolios": seedPortfolios,
+  };
+
+  for await (const [key, value] of Object.entries(steps)) {
+    const spinner = ora(key).start();
+    try {
+      await value();
+      spinner.succeed(key);
+    } catch (e) {
+      spinner.fail(e instanceof Error ? e.message : "Unknown error");
+      throw e;
+    }
+  }
 };
 
 main()
@@ -34,14 +47,13 @@ main()
     return await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e);
+    console.error(e.message);
     await prisma.$disconnect();
-    throw new Error(e);
   });
 
 async function seedMainPhotos() {
   await prisma.photos.deleteMany({});
-  console.time("Created main photos in");
+  // console.time("Created main photos in");
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
       const randomPhotoBuffer = await getRandomPhoto();
@@ -61,13 +73,13 @@ async function seedMainPhotos() {
       return photo;
     })
   );
-  console.timeEnd("Created main photos in");
+  // console.timeEnd("Created main photos in");
   return photos;
 }
 
 async function seedAboutPhoto() {
   await prisma.image.deleteMany({ where: { type: "ABOUT" } });
-  console.time("Created about photo in");
+  // console.time("Created about photo in");
   const randomPhotoBuffer = await getRandomPeoplePhoto();
   const data = await uploadPhoto(randomPhotoBuffer);
 
@@ -78,12 +90,12 @@ async function seedAboutPhoto() {
       type: ImageType.ABOUT,
     },
   });
-  console.timeEnd("Created about photo in");
+  // console.timeEnd("Created about photo in");
 }
 
 async function seedImages() {
   await prisma.image.deleteMany({});
-  console.time("Created images in");
+  // console.time("Created images in");
   const images = await Promise.all(
     Array.from({ length: MAX_IMAGES }, async () => {
       const randomPhotoBuffer = await getRandomPhoto();
@@ -98,14 +110,17 @@ async function seedImages() {
       return photo;
     })
   );
-  console.timeEnd("Created images in");
+  // console.timeEnd("Created images in");
   return images;
 }
 
-async function seedPortfolios(photos: Image[]) {
+async function seedPortfolios() {
   await prisma.portfolios.deleteMany({});
+  const photos = await prisma.image.findMany({
+    where: { type: ImageType.DEFAULT },
+  });
   const MAX_PORTFOLIOS = randomBetween(4, 8);
-  console.time("Created portfolio images in");
+  // console.time("Created portfolio images in");
   const uniqueNames = faker.helpers.uniqueArray(
     () => faker.lorem.words(randomBetween(1, 2)),
     MAX_PORTFOLIOS
@@ -121,11 +136,11 @@ async function seedPortfolios(photos: Image[]) {
       return portfolio;
     })
   );
-  console.timeEnd("Created portfolio images in");
+  // console.timeEnd("Created portfolio images in");
 }
 
 async function deleteAllCloudinaryImages() {
-  console.time("Deleted all cloudinary images in");
+  // console.time("Deleted all cloudinary images in");
   await cloudinary.api.delete_all_resources({ all: true });
-  console.timeEnd("Deleted all cloudinary images in");
+  // console.timeEnd("Deleted all cloudinary images in");
 }
