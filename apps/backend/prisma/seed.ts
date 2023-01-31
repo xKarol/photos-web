@@ -47,8 +47,8 @@ main()
     return await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e.message);
     await prisma.$disconnect();
+    throw e;
   });
 
 async function seedMainPhotos() {
