@@ -56,8 +56,12 @@ const Lightbox = ({
       <Carousel
         showArrows
         showIndicators={false}
+        showThumbs={false}
+        swipeable={false}
+        showStatus={false}
         animationHandler="fade"
         className="relative z-50"
+        onChange={console.log}
         renderArrowNext={(onClickHandler, hasNext, label) =>
           hasNext && (
             <button
