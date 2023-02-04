@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
@@ -30,8 +30,19 @@ const Lightbox = ({
   onClickPrev,
   className,
 }: Props) => {
-  // eslint-disable-next-line unicorn/consistent-function-scoping, @typescript-eslint/no-empty-function
-  const handleClose = () => {};
+  const active = useRef<number>(initialIndex);
+
+  const handleClose = () => {
+    onClose?.();
+    setIsOpen(false);
+  };
+
+  const handleChange = (index: number) => {
+    if (index > active.current) onClickNext?.(index);
+    else onClickPrev?.(index);
+
+    active.current = index;
+  };
 
   return (
     <Dialog
@@ -47,7 +58,7 @@ const Lightbox = ({
       />
 
       <button
-        className="fixed top-5 right-5 text-white cursor-pointer z-10 text-3xl"
+        className="fixed top-5 right-5 text-white cursor-pointer z-[60] text-3xl"
         onClick={handleClose}
         aria-label="close"
       >
@@ -61,7 +72,8 @@ const Lightbox = ({
         showStatus={false}
         animationHandler="fade"
         className="relative z-50"
-        onChange={console.log}
+        selectedItem={initialIndex}
+        onChange={handleChange}
         renderArrowNext={(onClickHandler, hasNext, label) =>
           hasNext && (
             <button
