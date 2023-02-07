@@ -74,24 +74,24 @@ const Lightbox = ({
         className="relative z-50"
         selectedItem={initialIndex}
         onChange={handleChange}
-        renderArrowNext={(onClickHandler, hasNext, label) =>
+        renderArrowNext={(onClickHandler, hasNext) =>
           hasNext && (
             <button
               type="button"
               onClick={onClickHandler}
-              title={label}
+              aria-label="next photo"
               className="z-[2] p-5 text-white absolute right-0 top-0 bottom-0 w-1/2 text-3xl flex justify-end items-center"
             >
               <TfiAngleRight />
             </button>
           )
         }
-        renderArrowPrev={(onClickHandler, hasPrev, label) =>
+        renderArrowPrev={(onClickHandler, hasPrev) =>
           hasPrev && (
             <button
               type="button"
               onClick={onClickHandler}
-              title={label}
+              aria-label="previous photo"
               className="z-[2] p-5 text-white absolute left-0 top-0 bottom-0 w-1/2 text-3xl flex items-center justify-start"
             >
               <TfiAngleLeft />
