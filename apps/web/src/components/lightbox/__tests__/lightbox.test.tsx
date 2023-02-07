@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Lightbox } from "../index";
 import "../../../__mocks__/intersection-observer";
@@ -46,6 +46,11 @@ type Setup = { show?: boolean } & Partial<
   Omit<LightboxProps, "isOpen" | "setIsOpen">
 >;
 
+const getInitialIndex = (index: number) => {
+  if (!photos[index]) throw new Error("Invalid photo index");
+  return index;
+};
+
 const setup = ({
   show = true,
   photos = [],
@@ -82,7 +87,7 @@ describe("Lightbox", () => {
   });
 
   it("next button should not be visible when current index is last", () => {
-    setup({ initialIndex: photos.length - 1 });
+    setup({ initialIndex: getInitialIndex(photos.length - 1) });
 
     const nextButton = screen.queryByLabelText("next photo");
     expect(nextButton).not.toBeInTheDocument();
@@ -127,80 +132,87 @@ describe("Lightbox", () => {
     const overlayElement = screen.getByLabelText("dialog overlay");
     expect(overlayElement).toBeInTheDocument();
 
-    const { click } = userEvent.setup();
-    await click(overlayElement);
+    fireEvent.click(overlayElement);
 
     expect(dialogElement).toBeInTheDocument();
   });
 
   it("image should change when user click next button", async () => {
-    setup({ photos });
+    const initialIndex = getInitialIndex(0);
+    setup({ photos, initialIndex: initialIndex });
 
-    const imageElement = screen.getByRole("img");
-    expect(imageElement).toBeInTheDocument();
-
-    const initialImage = imageElement.getAttribute("src");
+    const imageElements = screen.getAllByRole("listitem");
+    expect(imageElements[initialIndex]).toBeInTheDocument();
+    expect(
+      imageElements[initialIndex].classList.contains("selected")
+    ).toBeTruthy();
+    expect(
+      imageElements[initialIndex + 1].classList.contains("selected")
+    ).toBeFalsy();
 
     const nextButton = screen.getByLabelText("next photo");
 
     const { click } = userEvent.setup();
     await click(nextButton);
 
-    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
+    expect(
+      imageElements[initialIndex].classList.contains("selected")
+    ).toBeFalsy();
   });
 
   it("image should change when user click prev button", async () => {
-    setup({ photos, initialIndex: photos.length - 1 });
+    const initialIndex = getInitialIndex(photos.length - 1);
 
-    const imageElement = screen.getByRole("img");
-    expect(imageElement).toBeInTheDocument();
+    setup({ photos, initialIndex: initialIndex });
 
-    const initialImage = imageElement.getAttribute("src");
+    const imageElements = screen.getAllByRole("listitem");
+    expect(imageElements[initialIndex]).toBeInTheDocument();
+    expect(
+      imageElements[initialIndex].classList.contains("selected")
+    ).toBeTruthy();
+    expect(
+      imageElements[initialIndex - 1].classList.contains("selected")
+    ).toBeFalsy();
 
     const prevButton = screen.getByLabelText("previous photo");
 
     const { click } = userEvent.setup();
     await click(prevButton);
 
-    expect(initialImage).not.toBe(imageElement.getAttribute("src"));
+    expect(
+      imageElements[initialIndex].classList.contains("selected")
+    ).toBeFalsy();
   });
 
   it("initialIndex prop should work", async () => {
-    const initialIndex = (index: number) => {
-      if (!photos[index]) throw new Error("Invalid photo index");
-      return index;
-    };
-    const index = initialIndex(1);
+    const index = getInitialIndex(1);
     setup({ photos, initialIndex: index });
 
-    const imageElement = screen.getByRole("img");
+    const imageElement = screen.getAllByRole("img")[index];
     const initialImage = imageElement.getAttribute("src");
 
     expect(initialImage).toBe(photos[index].src);
   });
 
   it("should display valid images when clicking buttons multiple times", async () => {
-    const initialIndex = 0;
-    setup({ photos, initialIndex });
-    const imageElement = screen.getByRole("img");
+    setup({ photos, initialIndex: getInitialIndex(0) });
+    const imageElements = screen.getAllByRole("img");
     const { click } = userEvent.setup();
     const nextButton = screen.getByLabelText("next photo");
-
-    const compareImage = async (nextIndex: number) => {
-      const initialImage = imageElement.getAttribute("src");
-
-      await click(nextButton);
-
-      const currentImage = imageElement.getAttribute("src");
-      expect(initialImage).not.toBe(currentImage);
-      expect(currentImage).toBe(photos[nextIndex].src);
-    };
 
     // @ts-expect-error
     for (const [index] of photos.entries()) {
       const nextIndex = index + 1;
       if (!photos[nextIndex]) return;
-      await compareImage(nextIndex);
+
+      const initialImage = imageElements[index].getAttribute("src");
+
+      await click(nextButton);
+
+      const currentImage = imageElements[nextIndex].getAttribute("src");
+      expect(initialImage).not.toBe(currentImage);
+      expect(imageElements[index]).not.toBeVisible();
+      expect(currentImage).toBe(photos[nextIndex].src);
     }
   });
 
@@ -218,7 +230,11 @@ describe("Lightbox", () => {
 
   it("onClickPrev function should be called after click prev button", async () => {
     const onClickPrev = jest.fn();
-    setup({ photos, initialIndex: 1, onClickPrev: onClickPrev });
+    setup({
+      photos,
+      initialIndex: getInitialIndex(1),
+      onClickPrev: onClickPrev,
+    });
 
     const prevButton = screen.getByLabelText("previous photo");
 
@@ -246,7 +262,7 @@ describe("Lightbox", () => {
     const onClickPrev = jest.fn();
     setup({
       photos,
-      initialIndex: 1,
+      initialIndex: getInitialIndex(1),
       onClickNext: onClickNext,
       onClickPrev: onClickPrev,
     });
