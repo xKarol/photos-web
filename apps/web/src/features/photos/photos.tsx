@@ -7,7 +7,6 @@ const Photos = () => {
   const { ref, data, fetchNextPage, hasNextPage, isFetching } = usePhotos();
 
   const photos = data?.pages.flatMap(({ data }) => data) || [];
-
   return (
     <section className="flex flex-col">
       <PhotosColumns photos={photos} />
