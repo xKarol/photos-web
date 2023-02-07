@@ -69,8 +69,8 @@ app.use(errorHandler);
 scheduledFunctions.init();
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, () => {
-    transporterVerify();
+  app.listen(port, async () => {
+    await transporterVerify().catch(() => null);
     logger.info(`App is running on http://localhost:${port}`);
   });
 }
