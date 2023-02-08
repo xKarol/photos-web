@@ -21,13 +21,13 @@ export const uploadPhoto = async (
   const sharpImg = await sharp(buffer).webp({ quality: 100 }).toBuffer();
   const placeholder = await generateImagePlaceholder(buffer);
 
-  const { public_id, url, width, height, format } = await uploadFromBuffer(
+  const { asset_id, url, width, height, format } = await uploadFromBuffer(
     sharpImg,
     folder
   );
 
   return {
-    id: public_id,
+    id: asset_id,
     src: url,
     width,
     height,

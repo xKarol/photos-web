@@ -27,7 +27,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       {photos.map(({ id, alt, width, height, placeholder }, index) => (
         <Link
           key={id}
-          href={`/photo/${encodeURIComponent(id)}`}
+          href={`/photo/${id}`}
           className="absolute"
           style={{
             height: height + "px",
