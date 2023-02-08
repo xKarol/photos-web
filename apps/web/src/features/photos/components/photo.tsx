@@ -6,8 +6,7 @@ type Props = ImageProps;
 
 const Photo = ({ className, alt, children, ...props }: Props) => {
   return (
-    // TODO fix className
-    <figure className={className}>
+    <figure>
       <Image
         className={clsx("relative select-none", className)}
         placeholder="blur"

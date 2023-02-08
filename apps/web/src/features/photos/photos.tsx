@@ -4,12 +4,13 @@ import Spinner from "../../components/spinner";
 import PhotosColumns from "./components/photos-columns";
 
 const Photos = () => {
-  const { ref, data, fetchNextPage, hasNextPage, isFetching } = usePhotos();
+  const { ref, data, fetchNextPage, hasNextPage, isFetching, isLoading } =
+    usePhotos();
 
   const photos = data?.pages.flatMap(({ data }) => data) || [];
   return (
     <section className="flex flex-col">
-      <PhotosColumns photos={photos} />
+      {isLoading ? null : <PhotosColumns photos={photos} />}
       {hasNextPage ? (
         <div className="mt-[2.5rem] mx-auto">
           {isFetching ? (
