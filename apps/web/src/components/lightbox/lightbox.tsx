@@ -34,7 +34,7 @@ const Lightbox = ({
 
   const handleClose = () => {
     onClose?.();
-    setIsOpen(false);
+    setIsOpen?.(false);
   };
 
   const handleChange = (index: number) => {
