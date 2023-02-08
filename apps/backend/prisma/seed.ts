@@ -19,14 +19,15 @@ import ora from "ora";
 cloudinaryConfig();
 
 const MAX_MAIN_PHOTOS = 25;
-const MAX_IMAGES = 100;
+const MAX_IMAGES = 50;
 
 const main = async () => {
   const steps = {
+    "Deleting all records": deleteAllRecords,
     "Deleting cloudinary images": deleteAllCloudinaryImages,
-    "Seeding images": seedImages,
     "Seeding main photos": seedMainPhotos,
     "Seeding about photos": seedAboutPhoto,
+    "Seeding images": seedImages,
     "Seeding portfolios": seedPortfolios,
   };
 
@@ -51,8 +52,13 @@ main()
     throw e;
   });
 
-async function seedMainPhotos() {
+async function deleteAllRecords() {
   await prisma.photos.deleteMany({});
+  await prisma.image.deleteMany({});
+  await prisma.portfolios.deleteMany({});
+}
+
+async function seedMainPhotos() {
   // console.time("Created main photos in");
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
@@ -70,6 +76,7 @@ async function seedMainPhotos() {
         },
         include: { image: true },
       });
+
       return photo;
     })
   );
@@ -78,7 +85,6 @@ async function seedMainPhotos() {
 }
 
 async function seedAboutPhoto() {
-  await prisma.image.deleteMany({ where: { type: "ABOUT" } });
   // console.time("Created about photo in");
   const randomPhotoBuffer = await getRandomPeoplePhoto();
   const data = await uploadPhoto(randomPhotoBuffer);
@@ -94,7 +100,6 @@ async function seedAboutPhoto() {
 }
 
 async function seedImages() {
-  await prisma.image.deleteMany({});
   // console.time("Created images in");
   const images = await Promise.all(
     Array.from({ length: MAX_IMAGES }, async () => {
@@ -115,7 +120,6 @@ async function seedImages() {
 }
 
 async function seedPortfolios() {
-  await prisma.portfolios.deleteMany({});
   const photos = await prisma.image.findMany({
     where: { type: ImageType.DEFAULT },
   });

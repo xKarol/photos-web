@@ -18,10 +18,7 @@ export const uploadPhoto = async (
   placeholder: string;
   mimeType: string;
 }> => {
-  const sharpImg = await sharp(buffer)
-    .resize(undefined, 1280)
-    .webp({ quality: 100 })
-    .toBuffer();
+  const sharpImg = await sharp(buffer).webp({ quality: 100 }).toBuffer();
   const placeholder = await generateImagePlaceholder(buffer);
 
   const { public_id, url, width, height, format } = await uploadFromBuffer(
