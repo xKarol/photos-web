@@ -100,20 +100,21 @@ const Lightbox = ({
         }
       >
         {photos.map(({ height, width, placeholder, alt, id }) => (
-          <Photo
-            key={id}
-            src={getImageUrl(id)}
-            alt={alt}
-            width={width}
-            height={height}
-            blurDataURL={placeholder}
-            style={{
-              width: "100%",
-              height: "auto",
-              maxHeight: "80vh",
-              objectFit: "contain",
-            }}
-          />
+          <div key={id} className="h-screen flex items-center justify-center">
+            <Photo
+              src={getImageUrl(id)}
+              alt={alt}
+              width={width}
+              height={height}
+              blurDataURL={placeholder}
+              style={{
+                width: "100%",
+                height: "auto",
+                maxHeight: "80vh",
+                objectFit: "contain",
+              }}
+            />
+          </div>
         ))}
       </Carousel>
     </Dialog>
