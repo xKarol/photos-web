@@ -9,6 +9,8 @@ import { getPortfolio, getPortfolios } from "../services/portfolios";
 import Photo from "../features/photos/components/photo";
 import { getImageUrl } from "../utils/misc";
 import { Lightbox } from "../components/lightbox";
+import { getErrorMessage } from "../utils/get-error-message";
+import Heading from "../components/heading";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -36,12 +38,12 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
   const slug = router.query.portfolioSlug as string;
-  const { data, error, isLoading } = useQuery(["portfolio", slug], () =>
+  const { data, error, isError } = useQuery(["portfolio", slug], () =>
     getPortfolio(slug)
   );
   const selected = Number(router.query.selected);
   const { name, images = [] } = data || {};
-  // TODO why name can be undefined?
+
   return (
     <>
       <Head>
@@ -51,10 +53,8 @@ const PortfolioIndexPage: NextPage = () => {
       </Head>
       <Header />
       <Layout>
-        <div> {JSON.stringify(router.query)}</div>
-        <h1>Portfolio {name}</h1>
-        <span>Loading: {isLoading}</span>
-        <span>Error: {JSON.stringify(error)}</span>
+        <Heading className="mb-5">{name}</Heading>
+        {isError ? <span>{getErrorMessage(error)}</span> : null}
         <section className="flex flex-col gap-10">
           {images.map((image, index) => (
             <Photo
