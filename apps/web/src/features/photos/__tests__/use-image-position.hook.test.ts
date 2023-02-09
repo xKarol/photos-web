@@ -1,56 +1,17 @@
 import { renderHook } from "@testing-library/react";
 import useImagePositions from "../hooks/use-image-position";
-import type { Image } from "types";
 
-const dummyData: Image[] = [
-  {
-    id: "test1",
-    alt: "test",
-    src: "src",
-    type: "DEFAULT",
-    height: 500,
-    width: 500,
-    mimeType: "image/webp",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    placeholder: "placeholder",
-  },
-  {
-    id: "test2",
-    alt: "test",
-    src: "src",
-    type: "DEFAULT",
-    height: 600,
-    width: 500,
-    mimeType: "image/webp",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    placeholder: "placeholder",
-  },
-  {
-    id: "test3",
-    alt: "test",
-    src: "src",
-    type: "DEFAULT",
-    height: 700,
-    width: 500,
-    mimeType: "image/webp",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    placeholder: "placeholder",
-  },
-  {
-    id: "test4",
-    alt: "test",
-    src: "src",
-    type: "DEFAULT",
-    height: 400,
-    width: 500,
-    mimeType: "image/webp",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    placeholder: "placeholder",
-  },
+const createImgElement = (height: number) => {
+  const el = document.createElement("img");
+  el.height = height;
+  return el;
+};
+
+const dummyData: HTMLImageElement[] = [
+  createImgElement(500),
+  createImgElement(600),
+  createImgElement(700),
+  createImgElement(400),
 ];
 
 describe("useImagePosition hook", () => {
