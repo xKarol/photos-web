@@ -1,12 +1,14 @@
 import { useCallback, useRef } from "react";
-import { Image } from "types";
 
 export type Options = {
   gap?: number;
   columns?: 1 | 2;
 };
 
-const useImagePositions = (images: Image[], options: Options = {}) => {
+const useImagePositions = (
+  images: HTMLImageElement[],
+  options: Options = {}
+) => {
   const { gap, columns } = { columns: 2, gap: 20, ...options };
   const columnHeights = useRef<number[]>();
 

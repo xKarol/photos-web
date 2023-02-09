@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useMedia } from "react-use";
 import type { Image as ImageType } from "types";
 import { getImageUrl } from "../../../utils/misc";
@@ -12,8 +12,13 @@ type Props = {
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
   const isMobile = useMedia("(max-width: 500px)", false);
+  const elements = useRef<HTMLImageElement[]>([]);
 
-  const { positions, getMaxHeight } = useImagePositions(photos, {
+  useEffect(() => {
+    elements.current = elements.current.slice(0, photos.length);
+  }, [photos]);
+
+  const { positions, getMaxHeight } = useImagePositions(elements.current, {
     gap: 50,
     columns: isMobile ? 1 : 2,
   });
@@ -30,7 +35,8 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
           href={`/photo/${id}`}
           className="absolute"
           style={{
-            height: height + "px",
+            visibility: elements.current.length === 0 ? "hidden" : "visible",
+            height: elements.current[index]?.height + "px",
             ...positions[index],
           }}
         >
@@ -41,18 +47,9 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
             height={height}
             blurDataURL={placeholder}
             className="absolute"
+            ref={(el) => (elements.current[index] = el)}
           />
         </Link>
-        // <div
-        //   key={index}
-        //   className="bg-font absolute"
-        //   style={{
-        //     height: image.height + "px",
-        //     ...positions[index],
-        //   }}
-        // >
-        //   {index}
-        // </div>
       ))}
     </div>
   );
