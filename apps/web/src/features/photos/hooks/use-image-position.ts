@@ -23,9 +23,9 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
         top: `${top}px`,
         left:
           columns === 1
-            ? 0
+            ? "0px"
             : columnIndex === 0
-            ? 0
+            ? "0px"
             : `calc(${100 / columns}% + ${Math.floor(gap / 2)}px)`,
         width: `calc(${100 / columns}% - ${
           columns === 1 ? 0 : Math.floor(gap / columns)
@@ -35,11 +35,12 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
   }, [images, gap, columns]);
 
   const getMaxHeight = useCallback(() => {
+    if (images.length === 0) return;
     const heights = columnHeights.current;
     if (columns === 1) return heights[0] - gap;
     const maxHeight = heights[0] > heights[1] ? heights[0] : heights[1];
     return maxHeight - gap;
-  }, [gap, columns]);
+  }, [gap, columns, images.length]);
 
   return {
     getMaxHeight: getMaxHeight,
