@@ -17,18 +17,18 @@ const Newsletter = () => {
 
   return (
     <section className="flex flex-col">
-      <h1 className="text-font text-lg uppercase tracking-widest mb-2">
+      <h1 className="mb-2 text-lg uppercase tracking-widest text-font">
         Newsletter
       </h1>
       <form
-        className="relative h-[40px] flex text-sm"
+        className="relative flex h-[40px] text-sm"
         onSubmit={handleSubmit}
         aria-label="form"
       >
         <input
           type="email"
           placeholder="Enter your email"
-          className="px-5 placeholder:text-black border border-black"
+          className="border border-black px-5 placeholder:text-black"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

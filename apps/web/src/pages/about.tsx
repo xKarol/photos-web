@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useQuery } from "react-query";
 import { getAboutImage } from "../services/about";
 import { getImageUrl } from "../utils/misc";
+import Heading from "../components/heading";
 
 const Home: NextPage = () => {
   const { data: image, isLoading } = useQuery("about", getAboutImage);
@@ -31,13 +32,13 @@ const Home: NextPage = () => {
                 width={image?.width}
                 height={image?.height}
                 style={{ objectFit: "cover" }}
-                className="outline-dotted w-full max-h-[600px]"
+                className="max-h-[600px] w-full outline-dotted"
               />
             )}
           </figure>
-          <section className="flex-1 flex flex-col">
-            <h1 className="uppercase text-bold text-3xl mb-5">About</h1>
-            <p className="mb-3 tracking-wide font-light text-xl">
+          <section className="flex flex-1 flex-col">
+            <Heading className="mb-5">About</Heading>
+            <p className="mb-3 text-xl font-light tracking-wide">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Exercitationem sit adipisci officia culpa fugiat, explicabo optio
               dolorem doloremque possimus consequatur delectus amet suscipit qui
@@ -45,7 +46,7 @@ const Home: NextPage = () => {
               sequi ipsa dolor facilis. Voluptates velit ab quas ipsa hic
               provident voluptatum. Nam, inventore tempore.
             </p>
-            <p className="mb-3 tracking-wide font-light text-xl">
+            <p className="mb-3 text-xl font-light tracking-wide">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Exercitationem sit adipisci officia culpa fugiat, explicabo optio
               dolorem doloremque possimus consequatur delectus amet suscipit qui

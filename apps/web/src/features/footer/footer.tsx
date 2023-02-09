@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <Layout
       as="footer"
-      className="py-20 mt-[7.5rem] flex flex-col md:flex-row justify-between"
+      className="mt-[7.5rem] flex flex-col justify-between py-20 md:flex-row"
     >
       <Newsletter />
       <Socials className="mt-10 md:mt-0" />

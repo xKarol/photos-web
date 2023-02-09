@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <Layout
       as="header"
-      className="my-10 lg:my-20 flex justify-between items-center"
+      className="my-10 flex items-center justify-between lg:my-20"
     >
       <Logo />
       {isMobile ? (

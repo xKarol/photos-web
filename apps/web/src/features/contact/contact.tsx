@@ -19,13 +19,13 @@ const Contact = () => {
 
   return (
     <form
-      className="flex flex-col space-y-[25px] max-w-[500px] relative"
+      className="relative flex max-w-[500px] flex-col space-y-[25px]"
       onSubmit={handleSubmit}
     >
       <h1 className="text-2xl">Contact</h1>
       <ContactFields fields={fields} errors={errors} register={register} />
 
-      <LoadingButton isLoading={isLoading} className="btn ml-auto text-sm py-2">
+      <LoadingButton isLoading={isLoading} className="btn ml-auto py-2 text-sm">
         Submit
       </LoadingButton>
 

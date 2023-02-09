@@ -13,7 +13,7 @@ const Socials = ({ className, ...rest }: Props) => {
   return (
     <section
       className={clsx(
-        "flex items-center gap-5 text-font text-3xl [&_>*]:transition-colors [&_>*:hover]:opacity-50",
+        "flex items-center gap-5 text-3xl text-font [&_>*]:transition-colors [&_>*:hover]:opacity-50",
         className
       )}
       {...rest}

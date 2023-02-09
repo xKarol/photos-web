@@ -15,8 +15,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   ) => {
     const inputClass = "border border-zinc-300 p-2";
     return (
-      <div className={clsx("flex flex-col w-full relative", className)}>
-        <label className="text-xs mb-1">
+      <div className={clsx("relative flex w-full flex-col", className)}>
+        <label className="mb-1 text-xs">
           {label} {required ? <span className="text-red-500">*</span> : null}
         </label>
         {textarea ? (
@@ -31,7 +31,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         )}
         {error ? (
           <span
-            className="text-red-400 text-xs absolute left-0 top-[calc(100%_+_5px)] truncate max-w-full"
+            className="absolute left-0 top-[calc(100%_+_5px)] max-w-full truncate text-xs text-red-400"
             role="alert"
             title={error}
           >

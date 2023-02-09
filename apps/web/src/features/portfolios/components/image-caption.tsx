@@ -25,7 +25,7 @@ const ImageCaption = ({
         style={{ objectFit: "cover" }}
         fill
       />
-      <figcaption className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-2xl font-semibold tracking-widest text-center bg-white px-5 py-2">
+      <figcaption className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-5 py-2 text-center text-2xl font-semibold uppercase tracking-widest">
         {caption}
       </figcaption>
     </figure>

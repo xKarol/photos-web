@@ -6,7 +6,7 @@ type Props = Omit<React.ComponentPropsWithoutRef<"button">, "children">;
 const Hamburger = ({ className, ...props }: Props) => {
   return (
     <button
-      className={clsx("flex flex-col space-y-1 w-[30px]", className)}
+      className={clsx("flex w-[30px] flex-col space-y-1", className)}
       aria-label="Open the navbar"
       {...props}
     >

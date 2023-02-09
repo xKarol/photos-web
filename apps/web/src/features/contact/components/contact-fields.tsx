@@ -19,7 +19,7 @@ const ContactFields = ({ fields, errors, register }: Props) => {
           const arrKey = field.map(({ name }) => name).join(", ");
           return (
             <div
-              className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-3"
+              className="flex flex-col space-y-5 md:flex-row md:space-y-0 md:space-x-3"
               key={arrKey}
             >
               <ContactFields

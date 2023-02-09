@@ -7,7 +7,7 @@ const Navbar = () => {
   const router = useRouter();
   return (
     <nav>
-      <ul className="flex space-x-5 font-light tracking-wider text-font uppercase text-sm">
+      <ul className="flex space-x-5 text-sm font-light uppercase tracking-wider text-font">
         {navbarItems.map(({ href, text }) => (
           <NavbarLink key={text} href={href} isActive={router.route === href}>
             {text}

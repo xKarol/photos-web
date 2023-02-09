@@ -12,7 +12,7 @@ const Photos = () => {
     <section className="flex flex-col">
       {isLoading ? null : <PhotosColumns photos={photos} />}
       {hasNextPage ? (
-        <div className="mt-[2.5rem] mx-auto">
+        <div className="mx-auto mt-[2.5rem]">
           {isFetching ? (
             <Spinner color="black" />
           ) : (

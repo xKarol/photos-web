@@ -20,7 +20,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
 
   return (
     <div
-      className="relative w-100"
+      className="relative w-full"
       style={{ height: getMaxHeight() }}
       {...props}
     >

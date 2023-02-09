@@ -8,13 +8,13 @@ const Portfolios = () => {
   const { fetchNextPage, data: portfolios, hasNextPage } = usePortfolios();
   return (
     <>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {portfolios.map(({ id, slug, name, images }) => {
           const thumbnail = images[0];
           return (
             <Link key={id} href={`/${slug}`}>
               <ImageCaption
-                className=" w-full h-[450px] md:h-[250px]"
+                className=" h-[450px] w-full md:h-[250px]"
                 caption={name}
                 alt={thumbnail.alt}
                 src={getImageUrl(thumbnail.id)}

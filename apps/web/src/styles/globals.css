@@ -10,6 +10,6 @@
 
 @layer components {
   .btn {
-    @apply relative px-5 w-[100px] bg-black text-white h-[calc(100%-1px)] mt-[-3px] ml-[3px] before:absolute before:left-[-4px] before:top-[2px] before:h-full before:w-[4px] before:border before:border-black before:skew-y-[-45deg] after:absolute after:left-[-2px] after:top-[100%] after:h-[4px] after:w-full after:border after:border-black after:skew-x-[-45deg];
+    @apply relative mt-[-3px] ml-[3px] h-[calc(100%-1px)] w-[100px] bg-black px-5 text-white before:absolute before:left-[-4px] before:top-[2px] before:h-full before:w-[4px] before:skew-y-[-45deg] before:border before:border-black after:absolute after:left-[-2px] after:top-[100%] after:h-[4px] after:w-full after:skew-x-[-45deg] after:border after:border-black;
   }
 }

@@ -58,7 +58,7 @@ const Lightbox = ({
       />
 
       <button
-        className="fixed top-5 right-5 text-white cursor-pointer z-[60] text-3xl"
+        className="fixed top-5 right-5 z-[60] cursor-pointer text-3xl text-white"
         onClick={handleClose}
         aria-label="close"
       >
@@ -80,7 +80,7 @@ const Lightbox = ({
               type="button"
               onClick={onClickHandler}
               aria-label="next photo"
-              className="z-[2] p-5 text-white absolute right-0 top-0 bottom-0 w-1/2 text-3xl flex justify-end items-center"
+              className="absolute inset-y-0 right-0 z-[2] flex w-1/2 items-center justify-end p-5 text-3xl text-white"
             >
               <TfiAngleRight />
             </button>
@@ -92,7 +92,7 @@ const Lightbox = ({
               type="button"
               onClick={onClickHandler}
               aria-label="previous photo"
-              className="z-[2] p-5 text-white absolute left-0 top-0 bottom-0 w-1/2 text-3xl flex items-center justify-start"
+              className="absolute inset-y-0 left-0 z-[2] flex w-1/2 items-center justify-start p-5 text-3xl text-white"
             >
               <TfiAngleLeft />
             </button>
@@ -100,7 +100,7 @@ const Lightbox = ({
         }
       >
         {photos.map(({ height, width, placeholder, alt, id }) => (
-          <div key={id} className="h-screen flex items-center justify-center">
+          <div key={id} className="flex h-screen items-center justify-center">
             <Photo
               src={getImageUrl(id)}
               alt={alt}

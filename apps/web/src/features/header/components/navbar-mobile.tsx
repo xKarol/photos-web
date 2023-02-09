@@ -9,9 +9,9 @@ type Props = {
 
 const NavbarMobile = ({ onClose }: Props) => {
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 bg-white flex justify-center z-10">
+    <div className="fixed inset-0 z-10 flex justify-center bg-white">
       <nav className="mt-20">
-        <ul className="flex flex-col space-y-5 text-xl font-light [&_>*]:uppercase text-font tracking-wider items-center">
+        <ul className="flex flex-col items-center space-y-5 text-xl font-light tracking-wider text-font [&_>*]:uppercase">
           {navbarItems.map(({ href, text }) => (
             <li key={text}>
               <Link href={href}>{text}</Link>
