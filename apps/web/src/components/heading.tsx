@@ -6,7 +6,7 @@ type Props = React.ComponentPropsWithoutRef<"h1">;
 const Heading = ({ children, className, ...props }: Props) => {
   return (
     <h1
-      className={clsx("uppercase font-medium text-font text-4xl", className)}
+      className={clsx("uppercase font-light text-black text-4xl", className)}
       {...props}
     >
       {children}
