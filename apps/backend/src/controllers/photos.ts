@@ -9,6 +9,7 @@ import type {
   GetPhotoSchema,
 } from "../schemas/photos";
 import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
+import { createPhoto, deletePhoto, getPhoto } from "../services/photos";
 import { paginationParams, getPaginationNextPage } from "../utils/misc";
 
 type CreatePhotoBody = {
@@ -24,25 +25,13 @@ export const Create = async (
   try {
     const file = req.file;
     const body = req.body;
-    if (!file?.buffer) throw new Error("Image is required.");
-
+    if (!file?.buffer) throw createError(400, "Image is required.");
     const { buffer: photoBuffer } = file;
 
     const data = await uploadPhoto(photoBuffer, "photos");
+    const newPhoto = await createPhoto({ ...data, alt: body.alt });
 
-    const newPhoto = await prisma.photos.create({
-      data: {
-        image: {
-          create: {
-            ...data,
-            alt: body.alt,
-          },
-        },
-      },
-      include: { image: true },
-    });
-
-    return res.send(newPhoto.image);
+    return res.send(newPhoto);
   } catch (error) {
     next(error);
   }
@@ -55,14 +44,8 @@ export const GetOne = async (
 ) => {
   try {
     const { photoId } = req.params;
-
-    const data = await prisma.photos.findUnique({
-      where: { imageId: photoId },
-      include: { image: true },
-    });
-    if (!data) throw createError(404, "Photo not found.");
-
-    return res.send(data.image);
+    const data = await getPhoto(photoId);
+    return res.send(data);
   } catch (error) {
     next(error);
   }
@@ -99,13 +82,7 @@ export const Delete = async (
     const { photoId } = req.params;
 
     await deleteCloudinaryImageById(photoId);
-    await prisma.photos
-      .delete({
-        where: { imageId: photoId },
-      })
-      .catch(() => {
-        throw createError(404, "Photo not found.");
-      });
+    await deletePhoto(photoId);
 
     return res.send(200);
   } catch (error) {
