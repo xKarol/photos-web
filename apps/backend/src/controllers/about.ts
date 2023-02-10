@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 import type { API } from "types";
 import { deleteImage, getImage, uploadImage } from "../services/about";
+import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -15,14 +17,18 @@ export const UploadImage = async (
   try {
     const file = req.file;
     const { alt } = req.body;
-    if (!file?.buffer) throw new Error("Image is required.");
-
-    const { buffer: photoBuffer } = file;
+    if (!file?.buffer) throw createError(400, "Image is required.");
+    const { buffer } = file;
 
     const image = await getImage().catch(() => null);
-    if (image) await deleteImage(image.id);
 
-    const photo = await uploadImage(photoBuffer, alt);
+    if (image) {
+      await deleteCloudinaryImageById(image.id);
+      await deleteImage(image.id);
+    }
+
+    const data = await uploadPhoto(buffer);
+    const photo = await uploadImage({ ...data, alt });
     return res.send(photo);
   } catch (error) {
     next(error);
