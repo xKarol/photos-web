@@ -1,15 +1,18 @@
 import type { NextFunction, Request, Response } from "express";
-import createError from "http-errors";
 import slugify from "slugify";
-import invariant from "tiny-invariant";
 import type { API } from "types";
 
 import { prisma } from "../db";
 import type * as Schema from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";
+import {
+  createPortfolio,
+  deletePortfolio,
+  getPortfolio,
+  updateImages,
+  updateName,
+} from "../services/portfolios";
 import { paginationParams, getPaginationNextPage } from "../utils/misc";
-
-const transformImages = (images: string[]) => images.map((id) => ({ id }));
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,
@@ -20,18 +23,9 @@ export const Create = async (
     const { name, images } = req.body;
 
     const slug = slugify(name, { lower: true });
+    const portfolio = await createPortfolio({ slug, name, images });
 
-    const newPortfolio = (await prisma.portfolios.create({
-      data: {
-        slug,
-        name,
-        images: { connect: transformImages(images) },
-      },
-    })) as API["Portfolios"]["Create"]; //TODO why prisma return wrong types?
-
-    invariant(!newPortfolio?.images, "Something went wrong");
-
-    return res.send(newPortfolio);
+    return res.send(portfolio);
   } catch (error) {
     next(error);
   }
@@ -44,12 +38,7 @@ export const GetOne = async (
 ) => {
   try {
     const { slug } = req.params;
-
-    const data = await prisma.portfolios.findUnique({
-      where: { slug: slug },
-      include: { images: true },
-    });
-    if (!data) throw createError(404, "Photo not found.");
+    const data = await getPortfolio(slug);
 
     return res.send(data);
   } catch (error) {
@@ -88,13 +77,10 @@ export const Delete = async (
   try {
     const { slug } = req.params;
 
-    const portfolio = await prisma.portfolios.findUniqueOrThrow({
-      where: { slug: slug },
-      include: { images: true },
-    });
+    const portfolio = await getPortfolio(slug);
     const ids = portfolio.images.map(({ id }) => id);
     await deleteManyCloudinaryImages(ids);
-    await prisma.portfolios.delete({ where: { slug: slug } });
+    await deletePortfolio(slug);
 
     return res.send(200);
   } catch (error) {
@@ -115,12 +101,7 @@ export const UpdateName = async (
     const { slug } = req.params;
     const { name } = req.body;
 
-    const portfolio = await prisma.portfolios.update({
-      where: { slug: slug },
-      data: {
-        name: name,
-      },
-    });
+    const portfolio = await updateName(slug, name);
 
     return res.send(portfolio);
   } catch (error) {
@@ -141,14 +122,7 @@ export const UpdateImages = async (
     const { slug } = req.params;
     const { images } = req.body;
 
-    const ids = images.map((id) => ({ id }));
-    const portfolio = await prisma.portfolios.update({
-      where: { slug: slug },
-      data: {
-        images: { set: ids },
-      },
-      include: { images: true },
-    });
+    const portfolio = await updateImages(slug, images);
 
     return res.send(portfolio);
   } catch (error) {
