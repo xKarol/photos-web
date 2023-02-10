@@ -10,7 +10,7 @@ type Props = {
 const LoadingButton = ({
   children,
   className,
-  LoadingComponent = <Spinner />,
+  LoadingComponent = <Spinner color="black" />,
   isLoading = false,
   ...rest
 }: Props) => {
