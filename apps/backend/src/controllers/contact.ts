@@ -1,9 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import createError from "http-errors";
 import type { API } from "types";
 
-import { prisma } from "../db";
 import type * as Schema from "../schemas/contact";
+import { createContact, deleteContact } from "../services/contact";
 import { sendEmail } from "../utils/mailer";
 
 export const Create = async (
@@ -13,7 +12,7 @@ export const Create = async (
 ) => {
   try {
     const data = req.body;
-    const contact = await prisma.contact.create({ data: data });
+    const contact = await createContact(data);
     await sendEmail({
       subject: "Contact",
       to: data.email,
@@ -32,10 +31,7 @@ export const Delete = async (
 ) => {
   try {
     const { contactId } = req.params;
-
-    await prisma.contact.delete({ where: { id: contactId } }).catch(() => {
-      throw createError(404, "Contact not found.");
-    });
+    await deleteContact({ contactId });
 
     return res.send(200);
   } catch (error) {
