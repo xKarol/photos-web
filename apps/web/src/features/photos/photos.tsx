@@ -2,30 +2,46 @@ import React from "react";
 import { usePhotos } from "./hooks/use-photos";
 import Spinner from "../../components/spinner";
 import PhotosColumns from "./components/photos-columns";
+import EmptyState from "./components/empty-state";
 
 const Photos = () => {
-  const { ref, data, fetchNextPage, hasNextPage, isFetching, isLoading } =
-    usePhotos();
+  const {
+    ref,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isLoading,
+    refetch,
+  } = usePhotos();
 
-  const photos = data?.pages.flatMap(({ data }) => data) || [];
+  const photos = data.pages.flatMap(({ data }) => data);
+  const isEmptyState = photos[0]?.id.length === 0;
+
   return (
     <section className="flex flex-col">
-      {isLoading ? null : <PhotosColumns photos={photos} />}
-      {hasNextPage ? (
-        <div className="mx-auto mt-[2.5rem]">
-          {isFetching ? (
-            <Spinner color="black" />
-          ) : (
-            <button
-              className=" border border-black py-2 px-4 text-sm"
-              onClick={() => fetchNextPage()}
-              ref={ref}
-            >
-              Load More
-            </button>
-          )}
-        </div>
-      ) : null}
+      {isEmptyState ? (
+        <EmptyState showButton isLoading={isFetching} handleRefresh={refetch} />
+      ) : (
+        <>
+          {isLoading ? null : <PhotosColumns photos={photos} />}
+          {hasNextPage ? (
+            <div className="mx-auto mt-[2.5rem]">
+              {isFetching ? (
+                <Spinner color="black" />
+              ) : (
+                <button
+                  className="border border-black py-2 px-4 text-sm"
+                  onClick={() => fetchNextPage()}
+                  ref={ref}
+                >
+                  Load More
+                </button>
+              )}
+            </div>
+          ) : null}
+        </>
+      )}
     </section>
   );
 };
