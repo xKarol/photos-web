@@ -6,7 +6,7 @@ import { getPhotos } from "../../../services/photos";
 export const usePhotos = () => {
   const { fetchNextPage, ...response } = useInfiniteQuery(
     "photos",
-    ({ pageParam: page = 1 }) => getPhotos(page, 10),
+    ({ pageParam: page = 1 }) => getPhotos(page ?? 1, 10),
     {
       getNextPageParam: ({ nextPage }) => nextPage,
     }
