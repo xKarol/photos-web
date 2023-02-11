@@ -1,8 +1,8 @@
+import createError from "http-errors";
 import { prisma } from "../db";
 import logger from "../utils/logger";
 import { sendEmail } from "../utils/mailer";
 import type * as Schema from "../schemas/newsletter";
-import createError from "http-errors";
 
 export const subscribeToNewsletter = async (
   data: Schema.SubscribeNewsletter["body"]

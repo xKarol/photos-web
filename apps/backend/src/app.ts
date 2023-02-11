@@ -4,7 +4,6 @@ dotenv.config();
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-
 import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
 import routes from "./routes";

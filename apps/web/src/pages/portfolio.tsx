@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { dehydrate, QueryClient } from "react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
-import { dehydrate, QueryClient } from "react-query";
 import { getPortfolios } from "../services/portfolios";
 import Layout from "../components/layout";
 import { Portfolios } from "../features/portfolios";

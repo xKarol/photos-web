@@ -1,6 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
 import type { API } from "types";
-
 import type * as Schema from "../schemas/newsletter";
 import { createTemplate, subscribeToNewsletter } from "../services/newsletter";
 import { sendEmail } from "../utils/mailer";

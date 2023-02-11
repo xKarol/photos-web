@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import { paginationSchema } from "./pagination";
 
 export const getPhotosSchema = z.object({

@@ -1,6 +1,6 @@
 import supertest from "supertest";
-import app from "../app";
 import { faker } from "@faker-js/faker";
+import app from "../app";
 import { prisma } from "../db";
 import "../mocks/auth";
 

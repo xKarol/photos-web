@@ -1,7 +1,5 @@
 import nodemailer, { type SendMailOptions } from "nodemailer";
-
 import { nodemailerConfig } from "../config/nodemailer";
-
 import logger from "./logger";
 
 export const transporter = nodemailer.createTransport(nodemailerConfig);

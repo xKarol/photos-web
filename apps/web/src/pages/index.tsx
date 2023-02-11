@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { dehydrate, QueryClient } from "react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import { Photos } from "../features/photos";
 import { getPhotos } from "../services/photos";
-import { dehydrate, QueryClient } from "react-query";
 import Layout from "../components/layout";
 
 export async function getStaticProps() {

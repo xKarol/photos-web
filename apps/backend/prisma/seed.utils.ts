@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { type Image, type Portfolios } from "@prisma/client";
 import slugify from "slugify";
-
 import { getBufferFromUrl } from "../src/utils/misc";
 
 export const createPhoto = (): Pick<Image, "alt"> => {

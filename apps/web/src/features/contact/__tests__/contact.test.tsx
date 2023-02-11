@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Contact } from "../index";
 import { faker } from "@faker-js/faker";
-import { server } from "../../../__mocks__/server";
 import { rest } from "msw";
+import { Contact } from "../index";
+import { server } from "../../../__mocks__/server";
 
 const setup = () =>
   render(

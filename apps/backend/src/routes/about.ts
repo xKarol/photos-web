@@ -1,5 +1,4 @@
 import express from "express";
-
 import { cloudinaryConfig } from "../config/cloudinary";
 import * as aboutController from "../controllers/about";
 import { upload } from "../middlewares/multer";

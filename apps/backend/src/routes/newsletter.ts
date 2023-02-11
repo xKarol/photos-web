@@ -1,5 +1,4 @@
 import express from "express";
-
 import * as newsletterController from "../controllers/newsletter";
 import { requireAuth } from "../middlewares/require-auth";
 import { validateSchema } from "../middlewares/validate-schema";

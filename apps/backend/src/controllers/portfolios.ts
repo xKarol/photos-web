@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import slugify from "slugify";
 import type { API } from "types";
-
 import { prisma } from "../db";
 import type * as Schema from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";

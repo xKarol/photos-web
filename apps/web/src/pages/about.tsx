@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
+import { useQuery } from "react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
-import Image from "next/image";
-import { useQuery } from "react-query";
 import { getAboutImage } from "../services/about";
 import { getImageUrl } from "../utils/misc";
 import Heading from "../components/heading";

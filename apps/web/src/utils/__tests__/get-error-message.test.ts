@@ -1,8 +1,8 @@
-import { getErrorMessage } from "../get-error-message";
 import { z } from "zod";
 import axios from "axios";
-import { server } from "../../__mocks__/server";
 import { rest } from "msw";
+import { server } from "../../__mocks__/server";
+import { getErrorMessage } from "../get-error-message";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 

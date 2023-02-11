@@ -1,6 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
 import type { API } from "types";
-
 import type * as Schema from "../schemas/contact";
 import { createContact, deleteContact } from "../services/contact";
 import { sendEmail } from "../utils/mailer";

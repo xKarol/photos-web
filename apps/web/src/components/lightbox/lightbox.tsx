@@ -3,10 +3,10 @@ import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 import type { Image } from "types";
-import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
-import { getImageUrl } from "../../utils/misc";
 import clsx from "clsx";
 import { Carousel } from "react-responsive-carousel";
+import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
+import { getImageUrl } from "../../utils/misc";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 type Props = {

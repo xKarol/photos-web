@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import type { API } from "types";
-
 import { prisma } from "../db";
 import type {
   DeletePhotoSchema,

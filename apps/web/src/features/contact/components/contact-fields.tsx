@@ -1,8 +1,8 @@
 import React from "react";
+import type { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 import InputField from "../../../components/input-field";
 import { fields } from "../fields";
 import type { FormValues } from "../types";
-import type { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 
 type Props = {
   fields: typeof fields;

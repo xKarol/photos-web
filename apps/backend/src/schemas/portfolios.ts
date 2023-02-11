@@ -1,6 +1,5 @@
 import { portfolio as Schema } from "schemas";
 import { z } from "zod";
-
 import { paginationSchema } from "./pagination";
 
 export const createPortfolio = z.object({

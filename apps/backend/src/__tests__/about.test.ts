@@ -1,6 +1,6 @@
 import supertest from "supertest";
-import app from "../app";
 import type { API } from "types";
+import app from "../app";
 import { prisma } from "../db";
 import "../mocks/cloudinary";
 import "../mocks/auth";

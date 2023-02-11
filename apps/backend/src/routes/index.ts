@@ -1,5 +1,4 @@
 import express from "express";
-
 import notFoundRoutes from "./404";
 import aboutRoutes from "./about";
 import contactRoutes from "./contact";

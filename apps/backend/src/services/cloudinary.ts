@@ -1,6 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
-
 import { cloudinaryConfig } from "../config/cloudinary";
 import { generateImagePlaceholder } from "../utils/placeholder";
 import { uploadFromBuffer } from "../utils/upload";

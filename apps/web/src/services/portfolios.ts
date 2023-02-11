@@ -1,5 +1,5 @@
-import axios from "../libs/axios";
 import type { API } from "types";
+import axios from "../libs/axios";
 
 export async function getPortfolios(
   page = 1,

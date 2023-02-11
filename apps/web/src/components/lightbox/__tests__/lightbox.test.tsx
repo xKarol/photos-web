@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Lightbox } from "../index";
-import "../../../__mocks__/intersection-observer";
 import { useState } from "react";
 import { API } from "types";
 import { getImageUrl } from "../../../utils/misc";
+import "../../../__mocks__/intersection-observer";
+import { Lightbox } from "../index";
 
 jest.mock("next/image", () => ({
   __esModule: true,

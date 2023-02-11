@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { newsletterSubscribe } from "../../../services/newsletter";
 import { newsletter as Schema } from "schemas";
+import { newsletterSubscribe } from "../../../services/newsletter";
 
 const useNewsletter = () => {
   const [email, setEmail] = useState("");

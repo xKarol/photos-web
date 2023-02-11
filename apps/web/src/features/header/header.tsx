@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { useMedia } from "react-use";
 import Layout from "../../components/layout";
 import Hamburger from "./components/hamburger";
 import Navbar from "./components/navbar";
-import { useMedia } from "react-use";
 import NavbarMobile from "./components/navbar-mobile";
 import Logo from "../../components/logo";
 
