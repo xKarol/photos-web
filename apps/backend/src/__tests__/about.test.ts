@@ -3,6 +3,9 @@ import app from "../app";
 import type { API } from "types";
 import { prisma } from "../db";
 import "../mocks/cloudinary";
+import "../mocks/auth";
+
+jest.mock("../middlewares/require-auth");
 
 const request = supertest(app);
 

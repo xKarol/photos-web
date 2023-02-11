@@ -2,6 +2,9 @@ import supertest from "supertest";
 import app from "../app";
 import { faker } from "@faker-js/faker";
 import { prisma } from "../db";
+import "../mocks/auth";
+
+jest.mock("../middlewares/require-auth");
 
 const request = supertest(app);
 
