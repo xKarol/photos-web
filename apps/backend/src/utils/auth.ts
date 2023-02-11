@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import type { VerifyFunction } from "passport-local";
 import type { Express } from "express";
 import session from "express-session";
+import crypto from "node:crypto";
 
 const sessionConfig = {
   secret: process.env.SESSION_SECRET as string,
