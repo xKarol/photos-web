@@ -22,16 +22,16 @@ const useImagePositions = (
       columnHeights.current = heights;
 
       return {
-        top: `${top}px`,
-        left:
+        top: 0,
+        left: 0,
+        transform: `translate(${
           columns === 1
             ? "0px"
             : columnIndex === 0
             ? "0px"
-            : `calc(${100 / columns}% + ${Math.floor(gap / 2)}px)`,
-        width: `calc(${100 / columns}% - ${
-          columns === 1 ? 0 : Math.floor(gap / columns)
-        }px)`,
+            : `calc(100% + ${gap}px)`
+        },${top}px)`,
+        width: `calc(50% - ${gap / columns}px)`,
       };
     });
   }, [images, gap, columns]);
