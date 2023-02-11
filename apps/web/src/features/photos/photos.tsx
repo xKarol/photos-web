@@ -16,7 +16,7 @@ const Photos = () => {
   } = usePhotos();
 
   const photos = data.pages.flatMap(({ data }) => data);
-  const isEmptyState = photos[0]?.id.length === 0;
+  const isEmptyState = !photos?.[0]?.id;
 
   return (
     <section className="flex flex-col">
