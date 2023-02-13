@@ -15,7 +15,7 @@ const Photos = () => {
     refetch,
   } = usePhotos();
 
-  const photos = data.pages.flatMap(({ data }) => data);
+  const photos = data?.pages.flatMap(({ data }) => data);
   const isEmptyState = !photos?.[0]?.id;
 
   return (
