@@ -1,7 +1,7 @@
 import { ImageType } from "@prisma/client";
 import type { Image } from "@prisma/client";
 import createError from "http-errors";
-import { prisma } from "../db";
+import { prisma } from "../lib/prisma";
 
 export const uploadImage = async (
   data: Omit<Image, "type" | "createdAt" | "updatedAt">

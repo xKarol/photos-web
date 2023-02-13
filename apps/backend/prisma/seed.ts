@@ -3,7 +3,7 @@ import { ImageType } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
 import ora from "ora";
 import { cloudinaryConfig } from "../src/config/cloudinary";
-import { prisma } from "../src/db";
+import { prisma } from "../src/lib/prisma";
 import { uploadPhoto } from "../src/services/cloudinary";
 import {
   randomBetween,

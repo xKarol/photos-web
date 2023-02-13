@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import { prisma } from "../db";
+import { prisma } from "../lib/prisma";
 import logger from "../utils/logger";
 import { sendEmail } from "../utils/mailer";
 import type * as Schema from "../schemas/newsletter";

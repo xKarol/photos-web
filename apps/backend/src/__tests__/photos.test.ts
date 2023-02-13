@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import app from "../app";
-import { prisma } from "../db";
+import { prisma } from "../lib/prisma";
 import "../mocks/cloudinary";
 import "../mocks/auth";
 

@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import { prisma } from "../db";
+import { prisma } from "../lib/prisma";
 import type * as Schema from "../schemas/contact";
 
 export const createContact = async (data: Schema.CreateContact["body"]) => {

@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { faker } from "@faker-js/faker";
 import app from "../app";
-import { prisma } from "../db";
+import { prisma } from "../lib/prisma";
 import "../mocks/auth";
 
 jest.mock("../middlewares/require-auth");
