@@ -7,7 +7,7 @@ import morgan from "morgan";
 import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
 import routes from "./routes";
-import scheduledFunctions from "./scheduled-functions";
+import scheduledFunctions from "./utils/scheduled-functions";
 import logger, { stream } from "./utils/logger";
 import { transporterVerify } from "./utils/mailer";
 import initAuth from "./utils/auth";

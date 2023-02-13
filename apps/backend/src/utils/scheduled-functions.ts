@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import { sendNewsletters } from "./services/newsletter";
+import { sendNewsletters } from "../services/newsletter";
 
 const scheduledFunctions = {} as {
   init: () => void;
