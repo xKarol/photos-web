@@ -1,31 +1,20 @@
 import { useCallback, useRef } from "react";
 import type { Image } from "types";
-import { useWindowSize } from "react-use";
 
 export type Options = {
   gap?: number;
   columns?: 1 | 2;
-};
-
-const adjustHeight = (
-  imageWidth: number,
-  imageHeight: number,
-  width: number
-) => {
-  const aspectRatio = imageWidth / imageHeight;
-  return width / aspectRatio;
-};
-
-const calcElementWidth = (screenWidth: height, gap: height) => {
-  const padding = screenWidth - 768; //TODO dynamic width
-  console.log(Math.abs(padding - screenWidth / 2 - gap));
-  return Math.abs(padding - screenWidth / 2 - gap);
+  elementWidth?: number;
 };
 
 const useImagePositions = (images: Image[], options: Options = {}) => {
-  const { gap, columns } = { columns: 2, gap: 20, ...options };
+  const { gap, columns, elementWidth } = {
+    columns: 2,
+    gap: 20,
+    elementWidth: 300,
+    ...options,
+  };
   const columnHeights = useRef<number[]>();
-  const { width: screenWidth } = useWindowSize();
 
   const calculatePositions = useCallback(() => {
     const heights = Array.from({ length: columns }).fill(0) as number[];
@@ -33,11 +22,7 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
     return images.map((image) => {
       const columnIndex = heights.indexOf(Math.min(...heights));
       const top = heights[columnIndex];
-      const height = adjustHeight(
-        image.width,
-        image.height,
-        calcElementWidth(screenWidth, gap)
-      );
+      const height = adjustHeight(image.width, image.height, elementWidth);
       heights[columnIndex] += height + gap;
       columnHeights.current = heights;
 
@@ -51,11 +36,11 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
             ? "0px"
             : `calc(100% + ${gap}px)`
         },${top}px)`,
-        width: `calc(50% - ${gap / columns}px)`,
+        width: columns === 1 ? "100%" : `calc(50% - ${gap / columns}px)`,
         height: `${height}px`,
       };
     });
-  }, [images, gap, columns, screenWidth]);
+  }, [images, gap, columns, elementWidth]);
 
   const getMaxHeight = useCallback(() => {
     if (images.length === 0) return;
@@ -72,3 +57,8 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
 };
 
 export default useImagePositions;
+
+function adjustHeight(imageWidth: number, imageHeight: number, width: number) {
+  const aspectRatio = imageWidth / imageHeight;
+  return width / aspectRatio;
+}

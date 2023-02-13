@@ -16,6 +16,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
   const { positions, getMaxHeight } = useImagePositions(photos, {
     gap: 50,
     columns: isMobile ? 1 : 2,
+    elementWidth: 526, //TODO calc based on screen width
   });
 
   return (
@@ -24,7 +25,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       style={{ height: getMaxHeight() }}
       {...props}
     >
-      {photos.map(({ id, alt, width, height, placeholder }, index) => (
+      {photos.map(({ id, alt, placeholder }, index) => (
         <Link
           key={id}
           href={`/photo/${id}`}
@@ -34,10 +35,9 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
           <Photo
             src={getImageUrl(id)}
             alt={alt}
-            width={width}
-            height={height}
             blurDataURL={placeholder}
-            className="absolute"
+            style={{ objectFit: "cover" }}
+            fill
           />
         </Link>
       ))}
