@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { server } from "./src/mocks/server";
+import "./src/mocks/logger";
 
 dotenv.config({ path: "./.env.test" });
 
