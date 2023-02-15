@@ -1,5 +1,6 @@
 import supertest from "supertest";
 import { faker } from "@faker-js/faker";
+import type * as Schema from "../schemas/contact";
 import app from "../app";
 import { prisma } from "../lib/prisma";
 import "../mocks/auth";
@@ -15,8 +16,8 @@ describe("Contact", () => {
   let contactId: string;
 
   describe("POST /contact", () => {
-    it("should send new contact form", async () => {
-      const input = {
+    it("should create new contact form", async () => {
+      const input: Schema.CreateContact["body"] = {
         email: faker.internet.email(),
         firstName: faker.name.firstName(),
         lastName: faker.name.firstName(),
