@@ -7,21 +7,23 @@ import type * as Schema from "../schemas/newsletter";
 export const subscribeToNewsletter = async (
   data: Schema.SubscribeNewsletter["body"]
 ) => {
-  const response = await prisma.newsletterSubscriber.create({ data: data });
-  if (!response) throw createError(400, "Could not subscribe to newsletter.");
-  return response;
+  try {
+    const response = await prisma.newsletterSubscriber.create({ data });
+    return response;
+  } catch {
+    throw createError(400, "Could not subscribe to newsletter.");
+  }
 };
 
 export const createTemplate = async (
   data: Schema.CreateNewsletterTemplate["body"]
 ) => {
-  const response = await prisma.newsletterTemplate.create({
-    data: data,
-  });
-  if (!response) {
+  try {
+    const response = await prisma.newsletterTemplate.create({ data });
+    return response;
+  } catch {
     throw createError(400, "Could not create newsletter template.");
   }
-  return response;
 };
 
 export const sendNewsletters = async () => {

@@ -6,22 +6,28 @@ import { prisma } from "../lib/prisma";
 export const uploadImage = async (
   data: Omit<Image, "type" | "createdAt" | "updatedAt">
 ) => {
-  const photo = await prisma.image.create({
-    data: {
-      ...data,
-      type: ImageType.ABOUT,
-    },
-  });
-  if (!photo) throw createError(400, "Could not create image.");
-  return photo;
+  try {
+    const photo = await prisma.image.create({
+      data: {
+        ...data,
+        type: ImageType.ABOUT,
+      },
+    });
+    return photo;
+  } catch {
+    throw createError(400, "Could not create image.");
+  }
 };
 
 export const getImage = async () => {
-  const photo = await prisma.image.findFirst({
-    where: { type: ImageType.ABOUT },
-  });
-  if (!photo) throw createError(404, "Cannot find about image.");
-  return photo;
+  try {
+    const photo = await prisma.image.findFirstOrThrow({
+      where: { type: ImageType.ABOUT },
+    });
+    return photo;
+  } catch {
+    throw createError(404, "Cannot find about image.");
+  }
 };
 
 export const deleteImage = async (imageId: string) => {

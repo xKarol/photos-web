@@ -3,9 +3,12 @@ import { prisma } from "../lib/prisma";
 import type * as Schema from "../schemas/contact";
 
 export const createContact = async (data: Schema.CreateContact["body"]) => {
-  const contact = await prisma.contact.create({ data: data });
-  if (!contact) throw createError(400, "Could not create contact");
-  return contact;
+  try {
+    const contact = await prisma.contact.create({ data: data });
+    return contact;
+  } catch {
+    throw createError(400, "Could not create contact");
+  }
 };
 
 export const deleteContact = async ({
