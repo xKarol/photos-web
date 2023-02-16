@@ -22,11 +22,10 @@ export const createPhoto = async (
 
 export const getPhoto = async (photoId: string) => {
   try {
-    const data = await prisma.photos.findUnique({
+    const data = await prisma.photos.findUniqueOrThrow({
       where: { imageId: photoId },
       include: { image: true },
     });
-    if (!data?.image) throw null;
     return data.image;
   } catch {
     throw createError(404, "Photo not found.");

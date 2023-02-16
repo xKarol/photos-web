@@ -12,7 +12,7 @@ export const GetOne = async (
 ) => {
   try {
     const { id } = req.params;
-    const image = await prisma?.image.findUniqueOrThrow({ where: { id: id } });
+    const image = await prisma.image.findUniqueOrThrow({ where: { id: id } });
     const buffer = await getBufferFromUrl(image.src);
     const mimeType = mime.lookup(image.mimeType) || "image/webp";
     res.set("Content-Type", mimeType);
