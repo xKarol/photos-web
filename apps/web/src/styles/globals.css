@@ -9,7 +9,10 @@
 }
 
 @layer components {
-  .btn {
+  .btn-3d {
     @apply relative mt-[-3px] ml-[3px] h-[calc(100%-1px)] w-[100px] bg-black px-5 text-white before:absolute before:left-[-4px] before:top-[2px] before:h-full before:w-[4px] before:skew-y-[-45deg] before:border before:border-black after:absolute after:left-[-2px] after:top-[100%] after:h-[4px] after:w-full after:skew-x-[-45deg] after:border after:border-black;
+  }
+  .btn {
+    @apply border border-black py-2 px-4 text-sm;
   }
 }

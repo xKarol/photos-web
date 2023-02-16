@@ -25,7 +25,7 @@ const EmptyState = ({
       <Heading className="text-xl capitalize">No images found</Heading>
       {showButton ? (
         <LoadingButton
-          className="mt-3 border border-black py-2 px-4 text-sm"
+          className="btn mt-3"
           isLoading={isLoading}
           onClick={handleRefresh}
         >

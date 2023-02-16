@@ -31,7 +31,7 @@ const Photos = () => {
                 <Spinner color="black" />
               ) : (
                 <button
-                  className="border border-black py-2 px-4 text-sm"
+                  className="btn"
                   onClick={() => fetchNextPage()}
                   ref={ref}
                 >

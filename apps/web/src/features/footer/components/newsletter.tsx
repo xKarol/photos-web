@@ -36,7 +36,7 @@ const Newsletter = () => {
         <LoadingButton
           isLoading={isLoading}
           disabled={email.length <= 0}
-          className="btn"
+          className="btn-3d"
         >
           Submit
         </LoadingButton>

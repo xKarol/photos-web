@@ -25,7 +25,10 @@ const Contact = () => {
       <h1 className="text-2xl">Contact</h1>
       <ContactFields fields={fields} errors={errors} register={register} />
 
-      <LoadingButton isLoading={isLoading} className="btn ml-auto py-2 text-sm">
+      <LoadingButton
+        isLoading={isLoading}
+        className="btn-3d ml-auto py-2 text-sm"
+      >
         Submit
       </LoadingButton>
 
