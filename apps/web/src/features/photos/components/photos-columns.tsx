@@ -1,10 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import { useMedia, useWindowSize } from "react-use";
+import { useWindowSize } from "react-use";
 import type { Image as ImageType } from "types";
 import { getImageUrl } from "../../../utils/misc";
 import useImagePositions from "../hooks/use-image-position";
 import Photo from "./photo";
+import { getScreenName } from "../../../utils/screen";
 
 type Props = {
   photos?: ImageType[];
@@ -14,13 +15,15 @@ const DEFAULT_ELEMENT_WIDTH = 520;
 const MOBILE_PADDING = 32;
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
-  const isMobile = useMedia("(max-width: 500px)", false);
-  const { width } = useWindowSize(DEFAULT_ELEMENT_WIDTH);
+  const { width } = useWindowSize();
+  const screenName = getScreenName(width);
+  console.log(screenName);
 
   const { positions, getMaxHeight } = useImagePositions(photos, {
     gap: 50,
-    columns: isMobile ? 1 : 2,
-    elementWidth: isMobile ? width - MOBILE_PADDING : DEFAULT_ELEMENT_WIDTH,
+    columns: screenName === "sm" ? 1 : 2,
+    elementWidth:
+      screenName === "sm" ? width - MOBILE_PADDING : DEFAULT_ELEMENT_WIDTH,
   });
 
   return (
