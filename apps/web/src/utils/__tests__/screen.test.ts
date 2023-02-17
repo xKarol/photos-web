@@ -31,15 +31,25 @@ describe("screen", () => {
         expect(getScreenName(value)).toBe(key);
       }
     );
+    it.each(Object.entries(screens))(
+      "should return %s when screen size = %i",
+      (key, value) => {
+        expect(getScreenName(value + 1)).toBe(key);
+      }
+    );
+    it.each(Object.entries(screens))(
+      "%s screen should return previous screen name when screen size = %i-1",
+      (key, value) => {
+        const keyIndex = Object.keys(screens).indexOf(key);
+        const [prevKey] = Object.entries(screens)[keyIndex - 1] || ["sm"];
+        expect(getScreenName(value - 1)).toBe(prevKey);
+      }
+    );
     it("should return last screen name", () => {
       expect(getScreenName(9999)).toBe("2xl");
     });
-    //TODO add more tests
-    //it.each(Object.entries(screens))(
-    //  "should return %s when screen size = %i",
-    //  (key, value) => {
-    //    expect(getScreenName(value+1)).toBe(key);
-    //  }
-    //);
+    it("should return first screen name", () => {
+      expect(getScreenName(0)).toBe("sm");
+    });
   });
 });

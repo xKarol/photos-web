@@ -16,9 +16,8 @@ const getScreenSizesAsNumbers = (screens: ResolvableTo<ScreensConfig>) => {
 
 export const getScreenName = (screenWidth: number) => {
   const screensValues = getScreenSizesAsNumbers(defaultScreens);
-  for (const key in screensValues) {
-    if (screenWidth <= screensValues[key]) return key;
+  for (const [key, value] of Object.entries(screensValues).reverse()) {
+    if (screenWidth >= value) return key;
   }
-  const keys = Object.keys(screensValues);
-  return keys[keys.length - 1];
+  return Object.keys(screensValues)[0];
 };
