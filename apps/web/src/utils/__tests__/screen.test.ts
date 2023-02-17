@@ -26,17 +26,20 @@ jest.mock("tailwindcss/defaultConfig", () => {
 describe("screen", () => {
   describe("getScreenName function", () => {
     it.each(Object.entries(screens))(
-      "screen size %s should return %i",
+      "should return %s when screen size = %i",
       (key, value) => {
         expect(getScreenName(value)).toBe(key);
       }
     );
+    it("should return last screen name", () => {
+      expect(getScreenName(9999)).toBe("2xl");
+    });
     //TODO add more tests
-    // it.each(Object.entries(screens))(
-    //   "screen size %s should return %i",
-    //   (key, value) => {
-    //     expect(getScreenName(value + 1)).toBe(key);
-    //   }
-    // );
+    //it.each(Object.entries(screens))(
+    //  "should return %s when screen size = %i",
+    //  (key, value) => {
+    //    expect(getScreenName(value+1)).toBe(key);
+    //  }
+    //);
   });
 });
