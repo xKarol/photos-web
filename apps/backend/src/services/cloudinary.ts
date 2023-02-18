@@ -1,8 +1,8 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, type AdminAndResourceOptions } from "cloudinary";
 import sharp from "sharp";
+import type { Image } from "@prisma/client";
 import { cloudinaryConfig } from "../config/cloudinary";
 import { uploadFromBuffer } from "../utils/upload";
-import type { Image } from "@prisma/client";
 
 cloudinaryConfig();
 
@@ -34,4 +34,12 @@ export const deleteCloudinaryImageById = async (imageId: string) => {
 export const deleteManyCloudinaryImages = async (imageIds: string[]) => {
   const res = await cloudinary.api.delete_resources(imageIds);
   return res;
+};
+
+export const getImageByIds = async (
+  imageIds: string[],
+  options?: AdminAndResourceOptions
+) => {
+  const res = await cloudinary.api.resources_by_asset_ids(imageIds, options);
+  return res.resources;
 };

@@ -27,6 +27,7 @@ export type API = {
   };
   Image: {
     GetOne: ArrayBuffer;
+    GetPlaceholder: ArrayBuffer;
   };
   Newsletter: {
     Subscribe: NewsletterSubscriber;
