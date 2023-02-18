@@ -15,12 +15,11 @@ jest.mock("../services/cloudinary");
 
 export default jest.spyOn(upload, "uploadPhoto").mockImplementation(() => {
   const uniqueId = crypto.randomUUID();
-  return Promise.resolve({
+  return Promise.resolve<Awaited<ReturnType<typeof upload.uploadPhoto>>>({
     id: uniqueId,
     src: `test/${uniqueId}`,
     width: 500,
     height: 500,
-    placeholder: "test",
     mimeType: "image/webp",
   });
 });
