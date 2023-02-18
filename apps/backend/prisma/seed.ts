@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { ImageType } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
 import ora from "ora";
+import { program } from "commander";
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/lib/prisma";
 import { uploadPhoto } from "../src/services/cloudinary";
@@ -13,6 +14,10 @@ import {
   getRandomPhoto,
   getRandomPeoplePhoto,
 } from "./seed.utils";
+
+program.option("--clear");
+program.parse();
+const options = program.opts();
 
 type ResourceType = {
   asset_id: string;
@@ -37,14 +42,19 @@ const MAX_IMAGES = 50;
 let cloudinaryImages: ResourceType[] = [];
 
 const main = async () => {
-  cloudinaryImages = await getCloudinaryImages();
-  const steps = {
+  if (!options?.clear) cloudinaryImages = await getCloudinaryImages();
+
+  const steps: Record<string, () => Promise<unknown>> = {
+    ...(options?.clear && {
+      "Removing images from cloud": deleteAllCloudinaryImages,
+    }),
     "Deleting all records": deleteAllRecords,
     "Seeding main photos": seedMainPhotos,
     "Seeding about photos": seedAboutPhoto,
     "Seeding images": seedImages,
     "Seeding portfolios": seedPortfolios,
   };
+
   for await (const [key, value] of Object.entries(steps)) {
     const spinner = ora(key).start();
     try {
@@ -170,7 +180,6 @@ async function getCloudinaryImages() {
 
 async function getRandomImage(type: "default" | "people" = "default") {
   if (cloudinaryImages.length > 0) {
-    console.log("from cloud");
     const randomIndex = Math.floor(Math.random() * cloudinaryImages.length);
     const {
       asset_id,
@@ -188,6 +197,7 @@ async function getRandomImage(type: "default" | "people" = "default") {
       mimeType,
     };
   }
+
   const randomBuffer =
     type === "default" ? await getRandomPhoto() : await getRandomPeoplePhoto();
   const data = await uploadPhoto(randomBuffer);
