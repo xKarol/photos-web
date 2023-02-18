@@ -9,6 +9,7 @@
     "start": "cross-env NODE_ENV=production node ./dist/src/app.js",
     "setup": "npx prisma db push && npx prisma db seed",
     "test": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest ./ --coverage",
     "type-check": "npx tsc --noEmit",
     "format": "prettier . --check --ignore-path .gitignore",
     "format:fix": "prettier . --write --ignore-path .gitignore",
