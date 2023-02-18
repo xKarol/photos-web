@@ -4,6 +4,12 @@ import type { API } from "types";
 import { prisma } from "../lib/prisma";
 import { GetImageSchema } from "../schemas/images";
 import { getBufferFromUrl } from "../utils/misc";
+import cache from "../lib/cache";
+
+type CacheType = {
+  buffer: Buffer;
+  mimeType: string;
+};
 
 export const GetOne = async (
   req: Request<GetImageSchema["params"]>,
@@ -12,9 +18,21 @@ export const GetOne = async (
 ) => {
   try {
     const { id } = req.params;
-    const image = await prisma.image.findUniqueOrThrow({ where: { id: id } });
+    const cachedImage = cache.get(id);
+
+    if (cachedImage) {
+      const { buffer, mimeType } = cachedImage as CacheType;
+      res.set("Content-Type", mimeType);
+      return res.send(buffer);
+    }
+
+    const image = await prisma.image.findUniqueOrThrow({
+      where: { id: id },
+      select: { src: true, mimeType: true },
+    });
     const buffer = await getBufferFromUrl(image.src);
     const mimeType = mime.lookup(image.mimeType) || "image/webp";
+    cache.set<CacheType>(id, { buffer, mimeType }, 60 * 60); //1 hour cache
     res.set("Content-Type", mimeType);
     return res.send(buffer);
   } catch (error) {
