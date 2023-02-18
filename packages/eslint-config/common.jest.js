@@ -8,9 +8,7 @@ module.exports = {
         "**/?(*.)+(spec|test).[jt]s?(x)",
       ],
       plugins: ["jest"],
-      rules: {
-        "jest/no-mocks-import": "off",
-      },
+      rules: {},
     },
   ],
 };
