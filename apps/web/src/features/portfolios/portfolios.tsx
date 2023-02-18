@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { getImageUrl } from "../../utils/misc";
+import { getImagePlaceholder } from "../../utils/placeholder";
 import ImageCaption from "./components/image-caption";
 import usePortfolios from "./hooks/use-portfolios";
 
@@ -18,7 +19,7 @@ const Portfolios = () => {
                 caption={name}
                 alt={thumbnail.alt}
                 src={getImageUrl(thumbnail.id)}
-                blurDataURL={thumbnail.placeholder}
+                blurDataURL={getImagePlaceholder(thumbnail.id)}
               />
             </Link>
           );

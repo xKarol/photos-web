@@ -8,6 +8,7 @@ import { Carousel } from "react-responsive-carousel";
 import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
 import { getImageUrl } from "../../utils/misc";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { getImagePlaceholder } from "../../utils/placeholder";
 
 type Props = {
   isOpen?: boolean;
@@ -99,14 +100,14 @@ const Lightbox = ({
           )
         }
       >
-        {photos.map(({ height, width, placeholder, alt, id }) => (
+        {photos.map(({ height, width, alt, id }) => (
           <div key={id} className="flex h-screen items-center justify-center">
             <Photo
               src={getImageUrl(id)}
               alt={alt}
               width={width}
               height={height}
-              blurDataURL={placeholder}
+              blurDataURL={getImagePlaceholder(id)}
               style={{
                 width: "100%",
                 height: "auto",

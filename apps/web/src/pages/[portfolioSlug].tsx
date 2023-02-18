@@ -11,6 +11,7 @@ import { getImageUrl } from "../utils/misc";
 import { Lightbox } from "../components/lightbox";
 import { getErrorMessage } from "../utils/get-error-message";
 import Heading from "../components/heading";
+import { getImagePlaceholder } from "../utils/placeholder";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -56,14 +57,14 @@ const PortfolioIndexPage: NextPage = () => {
         <Heading className="mb-5">{name}</Heading>
         {isError ? <span>{getErrorMessage(error)}</span> : null}
         <section className="flex flex-col gap-10">
-          {images.map((image, index) => (
+          {images.map(({ id, alt, height, width }, index) => (
             <Photo
-              key={image.id}
-              alt={image.alt}
-              src={getImageUrl(image.id)}
-              height={image.height}
-              width={image.width}
-              blurDataURL={image.placeholder}
+              key={id}
+              alt={alt}
+              src={getImageUrl(id)}
+              height={height}
+              width={width}
+              blurDataURL={getImagePlaceholder(id)}
               style={{
                 width: "100%",
                 maxHeight: "1200px",
