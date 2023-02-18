@@ -12,6 +12,7 @@ module.exports = {
     project: ["./tsconfig.json"],
   },
   rules: {
+    "no-console": 1,
     "prettier/prettier": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "unicorn/prevent-abbreviations": "off",
@@ -20,7 +21,7 @@ module.exports = {
     "unicorn/catch-error-name": "off",
     "unicorn/prefer-top-level-await": "off",
     "import/order": [
-      "error",
+      1,
       {
         "newlines-between": "never",
         groups: [
