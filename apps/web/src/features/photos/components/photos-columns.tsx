@@ -5,25 +5,27 @@ import type { Image as ImageType } from "types";
 import { getImageUrl } from "../../../utils/misc";
 import useImagePositions from "../hooks/use-image-position";
 import Photo from "./photo";
-import { getScreenName } from "../../../utils/screen";
+import {
+  calculateContainerPadding,
+  getScreenName,
+} from "../../../utils/screen";
 
 type Props = {
   photos?: ImageType[];
 } & React.ComponentPropsWithoutRef<"div">;
 
-const DEFAULT_ELEMENT_WIDTH = 520;
-const MOBILE_PADDING = 32;
-
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
   const { width } = useWindowSize();
   const screenName = getScreenName(width);
-  console.log(screenName);
+  const isOneColumn = screenName === "sm";
+  const gap = 50;
 
   const { positions, getMaxHeight } = useImagePositions(photos, {
-    gap: 50,
-    columns: screenName === "sm" ? 1 : 2,
-    elementWidth:
-      screenName === "sm" ? width - MOBILE_PADDING : DEFAULT_ELEMENT_WIDTH,
+    gap: gap,
+    columns: isOneColumn ? 1 : 2,
+    elementWidth: isOneColumn
+      ? width - calculateContainerPadding(width)
+      : (width - calculateContainerPadding(width)) / 2,
   });
 
   return (

@@ -26,11 +26,12 @@ module.exports = {
     extend: {
       container: {
         padding: {
-          DEFAULT: "1rem",
-          sm: "2rem",
-          lg: "4rem",
-          xl: "5rem",
-          "2xl": "6rem",
+          DEFAULT: "16px",
+          sm: "32px",
+          md: "32px",
+          lg: "64px",
+          xl: "80px",
+          "2xl": "96px",
         },
       },
     },
