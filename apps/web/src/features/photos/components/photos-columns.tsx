@@ -16,7 +16,7 @@ type Props = {
 } & React.ComponentPropsWithoutRef<"div">;
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
-  const { width } = useWindowSize();
+  const { width } = useWindowSize(500);
   const screenName = getScreenName(width);
   const isOneColumn = screenName === "sm";
   const gap = 50;
