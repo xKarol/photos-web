@@ -8,6 +8,7 @@ import Layout from "../components/layout";
 import { getAboutImage } from "../services/about";
 import { getImageUrl } from "../utils/misc";
 import Heading from "../components/heading";
+import { getImagePlaceholder } from "../utils/placeholder";
 
 const Home: NextPage = () => {
   const { data: image, isLoading } = useQuery("about", getAboutImage);
@@ -28,9 +29,9 @@ const Home: NextPage = () => {
                 src={getImageUrl(image.id)}
                 alt={image.alt}
                 placeholder="blur"
-                blurDataURL={image?.placeholder}
-                width={image?.width}
-                height={image?.height}
+                blurDataURL={getImagePlaceholder(image.id)}
+                width={image.width}
+                height={image.height}
                 style={{ objectFit: "cover" }}
                 className="max-h-[600px] w-full outline-dotted"
               />

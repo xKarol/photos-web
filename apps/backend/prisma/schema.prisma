@@ -37,7 +37,6 @@ model Image {
   mimeType    String
   height      Int
   width       Int
-  placeholder String
   type        ImageType?   @default(DEFAULT)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

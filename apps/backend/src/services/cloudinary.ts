@@ -1,7 +1,7 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, type AdminAndResourceOptions } from "cloudinary";
 import sharp from "sharp";
+import type { Image } from "@prisma/client";
 import { cloudinaryConfig } from "../config/cloudinary";
-import { generateImagePlaceholder } from "../utils/placeholder";
 import { uploadFromBuffer } from "../utils/upload";
 
 cloudinaryConfig();
@@ -9,16 +9,8 @@ cloudinaryConfig();
 export const uploadPhoto = async (
   buffer: Buffer,
   folder = "images"
-): Promise<{
-  id: string;
-  src: string;
-  width: number;
-  height: number;
-  placeholder: string;
-  mimeType: string;
-}> => {
+): Promise<Pick<Image, "id" | "src" | "width" | "height" | "mimeType">> => {
   const sharpImg = await sharp(buffer).webp({ quality: 100 }).toBuffer();
-  const placeholder = await generateImagePlaceholder(buffer);
 
   const { asset_id, url, width, height, format } = await uploadFromBuffer(
     sharpImg,
@@ -30,7 +22,6 @@ export const uploadPhoto = async (
     src: url,
     width,
     height,
-    placeholder,
     mimeType: format,
   };
 };
@@ -43,4 +34,12 @@ export const deleteCloudinaryImageById = async (imageId: string) => {
 export const deleteManyCloudinaryImages = async (imageIds: string[]) => {
   const res = await cloudinary.api.delete_resources(imageIds);
   return res;
+};
+
+export const getImageByIds = async (
+  imageIds: string[],
+  options?: AdminAndResourceOptions
+) => {
+  const res = await cloudinary.api.resources_by_asset_ids(imageIds, options);
+  return res.resources;
 };

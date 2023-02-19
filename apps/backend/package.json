@@ -8,12 +8,15 @@
     "dev": "cross-env NODE_ENV=dev concurrently \"npx tsc --watch\" \"nodemon -q dist/src/app.js'\"",
     "start": "cross-env NODE_ENV=production node ./dist/src/app.js",
     "setup": "npx prisma db push && npx prisma db seed",
-    "test": "cross-env NODE_ENV=test jest --watch",
+    "test": "cross-env NODE_ENV=test jest --watchAll",
+    "test:coverage": "cross-env NODE_ENV=test jest ./ --coverage",
     "type-check": "npx tsc --noEmit",
     "format": "prettier . --check --ignore-path .gitignore",
     "format:fix": "prettier . --write --ignore-path .gitignore",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "seed": "npx prisma db seed",
+    "seed:clear": "ts-node prisma/seed.ts --clear"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -37,6 +40,7 @@
     "mime-types": "^2.1.35",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
     "nodemailer": "^6.8.0",
     "ora": "^5.4.1",
     "passport": "^0.6.0",
@@ -67,6 +71,7 @@
     "@types/readable-stream": "^2.3.15",
     "@types/sharp": "^0.31.0",
     "@types/supertest": "^2.0.12",
+    "commander": "^10.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.27.0",
     "eslint-config": "*",

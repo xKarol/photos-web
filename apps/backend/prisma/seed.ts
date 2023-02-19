@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { ImageType } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
 import ora from "ora";
+import { program } from "commander";
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/lib/prisma";
 import { uploadPhoto } from "../src/services/cloudinary";
@@ -14,15 +15,40 @@ import {
   getRandomPeoplePhoto,
 } from "./seed.utils";
 
+program.option("--clear");
+program.parse();
+const options = program.opts();
+
+type ResourceType = {
+  asset_id: string;
+  public_id: string;
+  format: string;
+  version: number;
+  resource_type: string;
+  type: string;
+  created_at: string;
+  bytes: number;
+  width: number;
+  height: number;
+  folder: string;
+  url: string;
+  secure_url: string;
+};
+
 cloudinaryConfig();
 
 const MAX_MAIN_PHOTOS = 25;
 const MAX_IMAGES = 50;
+let cloudinaryImages: ResourceType[] = [];
 
 const main = async () => {
-  const steps = {
+  if (!options?.clear) cloudinaryImages = await getCloudinaryImages();
+
+  const steps: Record<string, () => Promise<unknown>> = {
+    ...(options?.clear && {
+      "Removing images from cloud": deleteAllCloudinaryImages,
+    }),
     "Deleting all records": deleteAllRecords,
-    "Deleting cloudinary images": deleteAllCloudinaryImages,
     "Seeding main photos": seedMainPhotos,
     "Seeding about photos": seedAboutPhoto,
     "Seeding images": seedImages,
@@ -60,8 +86,7 @@ async function seedMainPhotos() {
   // console.time("Created main photos in");
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
-      const randomPhotoBuffer = await getRandomPhoto();
-      const data = await uploadPhoto(randomPhotoBuffer, "photos");
+      const data = await getRandomImage("people");
 
       const photo = await prisma.photos.create({
         data: {
@@ -84,8 +109,7 @@ async function seedMainPhotos() {
 
 async function seedAboutPhoto() {
   // console.time("Created about photo in");
-  const randomPhotoBuffer = await getRandomPeoplePhoto();
-  const data = await uploadPhoto(randomPhotoBuffer);
+  const data = await getRandomImage("people");
 
   await prisma.image.create({
     data: {
@@ -101,8 +125,7 @@ async function seedImages() {
   // console.time("Created images in");
   const images = await Promise.all(
     Array.from({ length: MAX_IMAGES }, async () => {
-      const randomPhotoBuffer = await getRandomPhoto();
-      const data = await uploadPhoto(randomPhotoBuffer);
+      const data = await getRandomImage();
 
       const photo = await prisma.image.create({
         data: {
@@ -145,4 +168,38 @@ async function deleteAllCloudinaryImages() {
   // console.time("Deleted all cloudinary images in");
   await cloudinary.api.delete_all_resources({ all: true });
   // console.timeEnd("Deleted all cloudinary images in");
+}
+
+async function getCloudinaryImages() {
+  const data = await cloudinary.api.resources({
+    all: true,
+    max_results: 9999,
+  });
+  return data.resources as ResourceType[];
+}
+
+async function getRandomImage(type: "default" | "people" = "default") {
+  if (cloudinaryImages.length > 0) {
+    const randomIndex = Math.floor(Math.random() * cloudinaryImages.length);
+    const {
+      asset_id,
+      url,
+      width,
+      height,
+      format: mimeType,
+    } = cloudinaryImages.splice(randomIndex, 1)[0];
+
+    return {
+      id: asset_id,
+      src: url,
+      width,
+      height,
+      mimeType,
+    };
+  }
+
+  const randomBuffer =
+    type === "default" ? await getRandomPhoto() : await getRandomPeoplePhoto();
+  const data = await uploadPhoto(randomBuffer);
+  return data;
 }

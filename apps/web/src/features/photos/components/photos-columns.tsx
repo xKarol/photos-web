@@ -9,6 +9,7 @@ import {
   calculateContainerPadding,
   getScreenName,
 } from "../../../utils/screen";
+import { getImagePlaceholder } from "../../../utils/placeholder";
 
 type Props = {
   photos?: ImageType[];
@@ -34,7 +35,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       style={{ height: getMaxHeight() }}
       {...props}
     >
-      {photos.map(({ id, alt, placeholder }, index) => (
+      {photos.map(({ id, alt }, index) => (
         <Link
           key={id}
           href={`/photo/${id}`}
@@ -44,7 +45,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
           <Photo
             src={getImageUrl(id)}
             alt={alt}
-            blurDataURL={placeholder}
+            blurDataURL={getImagePlaceholder(id)}
             style={{ objectFit: "cover" }}
             fill
           />

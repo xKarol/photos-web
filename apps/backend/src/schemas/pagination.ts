@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { stringAsNumber } from "./misc";
 
 export const paginationSchema = () => {
   return z.object({
@@ -20,12 +21,3 @@ export const paginationSchema = () => {
       .optional(),
   });
 };
-
-function stringAsNumber() {
-  return z
-    .string()
-    .min(1)
-    .refine((v) => {
-      if (!Number.isNaN(+v) && typeof +v === "number" && +v >= 0) return true;
-    }, "Query param must be a number.");
-}

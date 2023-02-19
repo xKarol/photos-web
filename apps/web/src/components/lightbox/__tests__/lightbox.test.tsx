@@ -25,7 +25,6 @@ const photos: API["Photos"]["GetOne"][] = [
     updatedAt: new Date(),
     height: 200,
     width: 300,
-    placeholder: "placeholder",
   },
   {
     id: "32436",
@@ -37,7 +36,6 @@ const photos: API["Photos"]["GetOne"][] = [
     updatedAt: new Date(),
     height: 200,
     width: 300,
-    placeholder: "placeholder",
   },
 ];
 
