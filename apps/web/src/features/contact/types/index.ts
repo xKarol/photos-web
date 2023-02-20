@@ -1,7 +1,6 @@
-export type FormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  subject: string;
-  message: string;
-};
+import { Contact } from "types";
+
+export type FormValues = Pick<
+  Contact,
+  "firstName" | "lastName" | "email" | "subject" | "message"
+>;
