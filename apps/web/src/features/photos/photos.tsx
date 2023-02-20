@@ -7,15 +7,13 @@ import EmptyState from "../../components/empty-state";
 const Photos = () => {
   const {
     ref,
-    data,
+    data: photos,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isLoading,
     refetch,
   } = usePhotos();
-
-  const photos = data?.pages.flatMap(({ data }) => data);
   const isEmptyState = !photos?.[0]?.id;
 
   return (

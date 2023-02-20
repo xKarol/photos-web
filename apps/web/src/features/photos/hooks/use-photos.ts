@@ -20,5 +20,7 @@ export const usePhotos = () => {
     if (inView) fetchNextPage();
   }, [inView, fetchNextPage]);
 
-  return { ref, fetchNextPage, ...response };
+  const data = response.data?.pages.flatMap(({ data }) => data) || [];
+
+  return { ref, fetchNextPage, ...response, data: data };
 };
