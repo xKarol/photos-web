@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import type { API } from "types";
+import { cache } from "../lib/cache";
 import { prisma } from "../lib/prisma";
 import type {
   DeletePhotoSchema,
@@ -82,6 +83,8 @@ export const Delete = async (
 
     await deleteCloudinaryImageById(photoId);
     await deletePhoto(photoId);
+
+    cache.del(photoId);
 
     return res.send(200);
   } catch (error) {
