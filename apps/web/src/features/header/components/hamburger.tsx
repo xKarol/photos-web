@@ -6,6 +6,7 @@ const Hamburger = ({ ...props }: CommonBurgerProps) => {
   return (
     <div className="z-20">
       <HamburgerComponent
+        label="hamburger menu"
         size={25}
         rounded={true}
         distance="sm"
