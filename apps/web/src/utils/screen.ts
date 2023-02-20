@@ -4,6 +4,9 @@ import customConfig from "../../tailwind.config";
 const defaultScreens = defaultConfig.theme.screens;
 const containerPadding = customConfig.theme.extend.container.padding;
 
+export const getScreenSizes = () =>
+  defaultScreens as Record<"sm" | "md" | "lg" | "xl" | "2xl", string>;
+
 export const getScreenName = (screenWidth: number) => {
   const screensValues = transformObjectValuesToNumbers(
     defaultScreens as Record<string, string>

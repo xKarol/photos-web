@@ -5,10 +5,13 @@ import Hamburger from "./components/hamburger";
 import NavbarMobile from "./components/navbar-mobile";
 import Layout from "../../components/layout";
 import Logo from "../../components/logo";
+import { getScreenSizes } from "../../utils/screen";
+
+const smallScreen = getScreenSizes().sm;
 
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const isMobile = useMedia("(max-width: 500px)", false);
+  const isDesktop = useMedia(`(min-width: ${smallScreen})`, false);
 
   return (
     <Layout
@@ -16,7 +19,7 @@ const Header = () => {
       className="my-10 flex items-center justify-between lg:my-20"
     >
       <Logo />
-      {isMobile || showNavbar ? (
+      {!isDesktop || showNavbar ? (
         <Hamburger toggled={showNavbar} toggle={setShowNavbar} />
       ) : (
         <Navbar />
