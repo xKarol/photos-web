@@ -8,7 +8,10 @@ module.exports = {
         "**/?(*.)+(spec|test).[jt]s?(x)",
       ],
       plugins: ["jest"],
-      rules: {},
+      rules: {
+        "unicorn/prefer-module": "off",
+        "@typescript-eslint/no-empty-function": "off",
+      },
     },
   ],
 };
