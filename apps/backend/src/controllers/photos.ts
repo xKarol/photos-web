@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import type { API } from "types";
-import { cache } from "../lib/cache";
+import cache from "../lib/cache";
 import { prisma } from "../lib/prisma";
 import type {
   DeletePhotoSchema,
