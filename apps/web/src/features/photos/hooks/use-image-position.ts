@@ -27,8 +27,8 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
       columnHeights.current = heights;
 
       return {
-        top: 0,
-        left: 0,
+        top: "0px",
+        left: "0px",
         transform: `translate(${
           columns === 1
             ? "0px"
