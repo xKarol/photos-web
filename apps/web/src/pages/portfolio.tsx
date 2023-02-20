@@ -6,7 +6,6 @@ import { Footer } from "../features/footer";
 import { getPortfolios } from "../services/portfolios";
 import Layout from "../components/layout";
 import { Portfolios } from "../features/portfolios";
-import Heading from "../components/heading";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -32,7 +31,6 @@ const PortfolioPage: NextPage = () => {
       <NextSeo title="Portfolio" />
       <Header />
       <Layout>
-        <Heading className="mb-5">Portfolios</Heading>
         <Portfolios />
       </Layout>
       <Footer />
