@@ -3,6 +3,8 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
 import localFont from "@next/font/local";
+import { DefaultSeo } from "next-seo";
+import SEO from "../config/next-seo";
 
 const defaultFont = localFont({
   variable: "--font-montserrat",
@@ -52,6 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <DefaultSeo {...SEO} />
       <style jsx global>{`
         :root {
           font-family: ${defaultFont.style.fontFamily};
