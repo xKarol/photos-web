@@ -1,39 +1,29 @@
 import { faker } from "@faker-js/faker";
 import { ImageType } from "@prisma/client";
-import { v2 as cloudinary } from "cloudinary";
 import ora from "ora";
 import { program } from "commander";
 import { cloudinaryConfig } from "../src/config/cloudinary";
 import { prisma } from "../src/lib/prisma";
-import { uploadPhoto } from "../src/services/cloudinary";
+import {
+  deleteAllCloudinaryImages,
+  getCloudinaryImages,
+  uploadPhoto,
+} from "../src/services/cloudinary";
 import {
   randomBetween,
-  createPhoto,
-  createPortfolio,
+  getFakePhotoData,
+  getFakePortfolioData,
   getRandomPortfolioPhotos,
   getRandomPhoto,
   getRandomPeoplePhoto,
 } from "./seed.utils";
+import { createPhoto } from "../src/services/photos";
+import { createPortfolio } from "../src/services/portfolios";
+import type { ResourceType } from "../src/services/cloudinary";
 
 program.option("--clear");
 program.parse();
 const options = program.opts();
-
-type ResourceType = {
-  asset_id: string;
-  public_id: string;
-  format: string;
-  version: number;
-  resource_type: string;
-  type: string;
-  created_at: string;
-  bytes: number;
-  width: number;
-  height: number;
-  folder: string;
-  url: string;
-  secure_url: string;
-};
 
 cloudinaryConfig();
 
@@ -83,60 +73,45 @@ async function deleteAllRecords() {
 }
 
 async function seedMainPhotos() {
-  // console.time("Created main photos in");
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
-      const data = await getRandomImage("people");
-
-      const photo = await prisma.photos.create({
-        data: {
-          image: {
-            create: {
-              ...data,
-              ...createPhoto(),
-            },
-          },
-        },
-        include: { image: true },
+      const data = await getRandomCloudinaryImage(cloudinaryImages, "default");
+      const photo = await createPhoto({
+        ...data,
+        ...getFakePhotoData(),
       });
-
       return photo;
     })
   );
-  // console.timeEnd("Created main photos in");
   return photos;
 }
 
 async function seedAboutPhoto() {
-  // console.time("Created about photo in");
-  const data = await getRandomImage("people");
+  const data = await getRandomCloudinaryImage(cloudinaryImages, "people");
 
   await prisma.image.create({
     data: {
       ...data,
-      ...createPhoto(),
+      ...getFakePhotoData(),
       type: ImageType.ABOUT,
     },
   });
-  // console.timeEnd("Created about photo in");
 }
 
 async function seedImages() {
-  // console.time("Created images in");
   const images = await Promise.all(
     Array.from({ length: MAX_IMAGES }, async () => {
-      const data = await getRandomImage();
+      const data = await getRandomCloudinaryImage(cloudinaryImages, "default");
 
       const photo = await prisma.image.create({
         data: {
           ...data,
-          ...createPhoto(),
+          ...getFakePhotoData(),
         },
       });
       return photo;
     })
   );
-  // console.timeEnd("Created images in");
   return images;
 }
 
@@ -145,40 +120,27 @@ async function seedPortfolios() {
     where: { type: ImageType.DEFAULT },
   });
   const MAX_PORTFOLIOS = randomBetween(4, 8);
-  // console.time("Created portfolio images in");
   const uniqueNames = faker.helpers.uniqueArray(
     () => faker.lorem.words(randomBetween(1, 2)),
     MAX_PORTFOLIOS
   );
   await Promise.all(
     Array.from({ length: MAX_PORTFOLIOS }, async (_, index) => {
-      const portfolio = await prisma.portfolios.create({
-        data: {
-          ...createPortfolio(uniqueNames[index]),
-          images: { connect: [...getRandomPortfolioPhotos(photos)] },
-        },
+      const { name, slug } = getFakePortfolioData(uniqueNames[index]);
+      const portfolio = await createPortfolio({
+        images: getRandomPortfolioPhotos(photos),
+        name,
+        slug,
       });
       return portfolio;
     })
   );
-  // console.timeEnd("Created portfolio images in");
 }
 
-async function deleteAllCloudinaryImages() {
-  // console.time("Deleted all cloudinary images in");
-  await cloudinary.api.delete_all_resources({ all: true });
-  // console.timeEnd("Deleted all cloudinary images in");
-}
-
-async function getCloudinaryImages() {
-  const data = await cloudinary.api.resources({
-    all: true,
-    max_results: 9999,
-  });
-  return data.resources as ResourceType[];
-}
-
-async function getRandomImage(type: "default" | "people" = "default") {
+async function getRandomCloudinaryImage(
+  cloudinaryImages: ResourceType[] = [],
+  type: "default" | "people" = "default"
+) {
   if (cloudinaryImages.length > 0) {
     const randomIndex = Math.floor(Math.random() * cloudinaryImages.length);
     const {

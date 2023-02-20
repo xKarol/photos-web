@@ -43,3 +43,31 @@ export const getImageByIds = async (
   const res = await cloudinary.api.resources_by_asset_ids(imageIds, options);
   return res.resources;
 };
+
+export const deleteAllCloudinaryImages = async () => {
+  const res = await cloudinary.api.delete_all_resources({ all: true });
+  return res;
+};
+
+export type ResourceType = {
+  asset_id: string;
+  public_id: string;
+  format: string;
+  version: number;
+  resource_type: string;
+  type: string;
+  created_at: string;
+  bytes: number;
+  width: number;
+  height: number;
+  folder: string;
+  url: string;
+  secure_url: string;
+};
+
+export const getCloudinaryImages = async (
+  options?: AdminAndResourceOptions
+) => {
+  const data = await cloudinary.api.resources(options);
+  return data.resources as ResourceType[];
+};
