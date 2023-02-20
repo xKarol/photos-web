@@ -24,7 +24,7 @@ const EmptyState = ({
         animationData={emptyStateAnimation}
         loop={true}
       />
-      <Heading className="text-xl capitalize">{text}</Heading>
+      <Heading className="!text-xl capitalize">{text}</Heading>
       {showButton ? (
         <LoadingButton
           className="btn mt-3"
