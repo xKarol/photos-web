@@ -4,13 +4,23 @@ import customConfig from "../../tailwind.config";
 const defaultScreens = defaultConfig.theme.screens;
 const containerPadding = customConfig.theme.extend.container.padding;
 
-export const getScreenSizes = () =>
-  defaultScreens as Record<"sm" | "md" | "lg" | "xl" | "2xl", string>;
+export const getScreenSizes = ({
+  asNumbers = false,
+}: {
+  asNumbers?: boolean;
+} = {}) => {
+  if (asNumbers)
+    transformObjectValuesToNumbers(defaultScreens) as Record<
+      "sm" | "md" | "lg" | "xl" | "2xl",
+      number
+    >;
+  return defaultScreens as Record<"sm" | "md" | "lg" | "xl" | "2xl", string>;
+};
 
 export const getScreenName = (screenWidth: number) => {
-  const screensValues = transformObjectValuesToNumbers(
-    defaultScreens as Record<string, string>
-  );
+  const screensValues = getScreenSizes({
+    asNumbers: true,
+  }) as unknown as Record<"sm" | "md" | "lg" | "xl" | "2xl", number>; //TODO fix return types
   for (const [key, value] of Object.entries(screensValues).reverse()) {
     if (screenWidth >= value) return key;
   }
@@ -23,9 +33,7 @@ export const getContainerPaddingValues = () => {
 };
 
 export const calculateContainerPadding = (screenWidth: number) => {
-  const screensValues = transformObjectValuesToNumbers(
-    defaultScreens as Record<string, string>
-  );
+  const screensValues = getScreenSizes({ asNumbers: true });
   const screenName = getScreenName(screenWidth);
   const paddingValues = getContainerPaddingValues();
   if (screenWidth < screensValues[screenName])
@@ -35,10 +43,7 @@ export const calculateContainerPadding = (screenWidth: number) => {
   );
 };
 
-function transformObjectValuesToNumbers(
-  screens: Record<string, string>,
-  replaceString = "px"
-) {
+function transformObjectValuesToNumbers<T>(screens: T, replaceString = "px") {
   const sizes: Record<string, number> = {};
 
   for (const [key, value] of Object.entries(screens)) {
