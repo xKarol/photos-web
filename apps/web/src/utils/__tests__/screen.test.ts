@@ -1,4 +1,8 @@
-import { getScreenName } from "../screen";
+import {
+  getScreenName,
+  calculateContainerPadding,
+  getContainerPaddingValues,
+} from "../screen";
 
 const screens = {
   sm: 640,
@@ -7,6 +11,8 @@ const screens = {
   xl: 1280,
   "2xl": 1536,
 };
+
+const paddingValues = getContainerPaddingValues();
 
 jest.mock("tailwindcss/defaultConfig", () => {
   return {
@@ -50,6 +56,17 @@ describe("screen", () => {
     });
     it("should return first screen name", () => {
       expect(getScreenName(0)).toBe("sm");
+    });
+  });
+  describe("getContainerPadding function", () => {
+    it.each([
+      [screens.sm, paddingValues.sm],
+      [screens.md, paddingValues.md],
+      [screens.lg, paddingValues.lg],
+      [screens.xl, paddingValues.xl],
+      [screens["2xl"], paddingValues["2xl"]],
+    ])("width %i should return %i padding", (screen, padding) => {
+      expect(calculateContainerPadding(screen)).toBe(padding);
     });
   });
 });

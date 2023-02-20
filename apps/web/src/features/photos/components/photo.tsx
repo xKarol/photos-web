@@ -7,9 +7,9 @@ type Props = ImageProps;
 const PhotoComponent = forwardRef<HTMLImageElement, Props>(
   ({ className, alt, children, ...props }, ref) => {
     return (
-      <figure>
+      <figure className="relative h-full w-full">
         <Image
-          className={clsx("relative select-none", className)}
+          className={clsx("select-none", className)}
           placeholder="blur"
           style={{
             width: "100%",
