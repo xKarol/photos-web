@@ -2,7 +2,7 @@ import React from "react";
 import { usePhotos } from "./hooks/use-photos";
 import Spinner from "../../components/spinner";
 import PhotosColumns from "./components/photos-columns";
-import EmptyState from "./components/empty-state";
+import EmptyState from "../../components/empty-state";
 
 const Photos = () => {
   const {
@@ -21,7 +21,12 @@ const Photos = () => {
   return (
     <section className="flex flex-col">
       {isEmptyState ? (
-        <EmptyState showButton isLoading={isFetching} handleRefresh={refetch} />
+        <EmptyState
+          text="No images found"
+          isLoading={isFetching}
+          handleRefresh={refetch}
+          showButton
+        />
       ) : (
         <>
           {isLoading ? null : <PhotosColumns photos={photos} />}

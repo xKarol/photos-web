@@ -1,16 +1,18 @@
 import React from "react";
 import Lottie from "lottie-react";
-import emptyStateAnimation from "../../../../public/assets/animations/empty-state.json";
-import Heading from "../../../components/heading";
-import LoadingButton from "../../../components/loading-button";
+import emptyStateAnimation from "../../public/assets/animations/empty-state.json";
+import Heading from "./heading";
+import LoadingButton from "./loading-button";
 
 type Props = {
+  text?: string;
   showButton?: boolean;
   isLoading?: boolean;
   handleRefresh?: () => void;
 };
 
 const EmptyState = ({
+  text = "No data found",
   showButton = false,
   isLoading = false,
   handleRefresh,
@@ -22,7 +24,7 @@ const EmptyState = ({
         animationData={emptyStateAnimation}
         loop={true}
       />
-      <Heading className="text-xl capitalize">No images found</Heading>
+      <Heading className="text-xl capitalize">{text}</Heading>
       {showButton ? (
         <LoadingButton
           className="btn mt-3"
