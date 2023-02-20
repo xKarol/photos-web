@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useState } from "react-use";
+import { useLockBodyScroll } from "react-use";
 import Navbar from "./components/navbar";
 import Hamburger from "./components/hamburger";
 import NavbarMobile from "./components/navbar-mobile";
@@ -10,6 +10,8 @@ import useScreen from "../../hooks/use-screen";
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);
   const isMobile = useScreen("sm");
+  const showHamburger = isMobile || showNavbar;
+  useLockBodyScroll(showNavbar);
 
   return (
     <Layout
@@ -17,7 +19,7 @@ const Header = () => {
       className="my-10 flex items-center justify-between lg:my-20"
     >
       <Logo />
-      {isMobile || showNavbar ? (
+      {showHamburger ? (
         <Hamburger toggled={showNavbar} toggle={setShowNavbar} />
       ) : (
         <Navbar />
