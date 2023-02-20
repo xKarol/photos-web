@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMedia } from "react-use";
-import Layout from "../../components/layout";
-import Hamburger from "./components/hamburger";
 import Navbar from "./components/navbar";
+import Hamburger from "./components/hamburger";
 import NavbarMobile from "./components/navbar-mobile";
+import Layout from "../../components/layout";
 import Logo from "../../components/logo";
 
 const Header = () => {
@@ -16,14 +16,12 @@ const Header = () => {
       className="my-10 flex items-center justify-between lg:my-20"
     >
       <Logo />
-      {isMobile ? (
-        <Hamburger onClick={() => setShowNavbar(true)} />
+      {isMobile || showNavbar ? (
+        <Hamburger toggled={showNavbar} toggle={setShowNavbar} />
       ) : (
         <Navbar />
       )}
-      {showNavbar ? (
-        <NavbarMobile onClose={() => setShowNavbar(false)} />
-      ) : null}
+      {showNavbar ? <NavbarMobile /> : null}
     </Layout>
   );
 };

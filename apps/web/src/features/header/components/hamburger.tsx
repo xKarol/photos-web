@@ -1,19 +1,18 @@
-import clsx from "clsx";
 import React from "react";
+import HamburgerComponent from "hamburger-react";
+import type { CommonBurgerProps } from "hamburger-react";
 
-type Props = Omit<React.ComponentPropsWithoutRef<"button">, "children">;
-
-const Hamburger = ({ className, ...props }: Props) => {
+const Hamburger = ({ ...props }: CommonBurgerProps) => {
   return (
-    <button
-      className={clsx("flex w-[30px] flex-col space-y-1", className)}
-      aria-label="Open the navbar"
-      {...props}
-    >
-      <span className="h-[2px] w-full bg-black" />
-      <span className="h-[2px] w-full bg-black" />
-      <span className="h-[2px] w-full bg-black" />
-    </button>
+    <div className="z-20">
+      <HamburgerComponent
+        size={25}
+        rounded={true}
+        distance="sm"
+        direction="right"
+        {...props}
+      />
+    </div>
   );
 };
 
