@@ -15,8 +15,8 @@ type Props = {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   initialIndex?: number;
   photos: Image[];
-  onClickNext?: (currentIndex: number) => void;
-  onClickPrev?: (currentIndex: number) => void;
+  onClickNext?: (currentIndex: number, lastIndex: number) => void;
+  onClickPrev?: (currentIndex: number, lastIndex: number) => void;
   onClose?: () => void;
   overlayOpacity?: number;
 } & React.ComponentPropsWithoutRef<"div">;
@@ -39,8 +39,9 @@ const Lightbox = ({
   };
 
   const handleChange = (index: number) => {
-    if (index > active.current) onClickNext?.(index);
-    else onClickPrev?.(index);
+    const lastIndex = photos.length - 1;
+    if (index > active.current) onClickNext?.(index, lastIndex);
+    else onClickPrev?.(index, lastIndex);
 
     active.current = index;
   };
@@ -72,7 +73,7 @@ const Lightbox = ({
         swipeable={false}
         showStatus={false}
         animationHandler="fade"
-        className="relative z-50"
+        className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
         selectedItem={initialIndex}
         onChange={handleChange}
         renderArrowNext={(onClickHandler, hasNext) =>
