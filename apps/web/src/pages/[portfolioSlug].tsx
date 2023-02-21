@@ -25,9 +25,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const queryClient = new QueryClient();
   const slug = ctx.params?.portfolioSlug as string;
-  await queryClient.prefetchQuery(["portfolio", slug], () =>
-    getPortfolio(slug)
-  );
+  try {
+    await queryClient.fetchQuery(["portfolio", slug], () => getPortfolio(slug));
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
