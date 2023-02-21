@@ -1,22 +1,12 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useInfiniteQuery } from "react-query";
 import { Lightbox as LightboxComponent } from "../../../components/lightbox";
-import { getPhotos } from "../../../services/photos";
+import { usePhotos } from "../hooks/use-photos";
 
 const Lightbox = () => {
   const { query, push } = useRouter();
+  const { fetchNextPage, data: photos } = usePhotos();
   const selectedIndex = Number(query?.selected);
-
-  const { fetchNextPage, data } = useInfiniteQuery(
-    "photos",
-    ({ pageParam: page = 1 }) => getPhotos(page, 10),
-    {
-      getNextPageParam: ({ nextPage }) => nextPage,
-    }
-  );
-
-  const photos = data?.pages.flatMap(({ data }) => data) || [];
 
   if (selectedIndex)
     return (

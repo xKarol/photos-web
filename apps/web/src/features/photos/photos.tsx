@@ -1,9 +1,9 @@
 import React from "react";
-import { usePhotos } from "./hooks/use-photos";
 import Spinner from "../../components/spinner";
 import PhotosColumns from "./components/photos-columns";
 import EmptyState from "../../components/empty-state";
 import Lightbox from "./components/lightbox";
+import { usePhotosRef } from "./hooks/use-photos-ref";
 
 const Photos = () => {
   const {
@@ -14,7 +14,7 @@ const Photos = () => {
     isFetching,
     isLoading,
     refetch,
-  } = usePhotos();
+  } = usePhotosRef();
   const isEmptyState = !photos?.[0]?.id;
 
   return (
