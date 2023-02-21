@@ -1,10 +1,10 @@
-import type {
+import {
   Contact,
   Image,
   NewsletterSubscriber,
   NewsletterTemplate,
   Portfolios,
-} from "backend/prisma/types";
+} from "backend/src/lib/prisma";
 
 type Pagination<T> = {
   data: T;
@@ -12,7 +12,7 @@ type Pagination<T> = {
   limit: number;
 };
 
-export * from "backend/prisma/types";
+export * from "backend/src/lib/prisma";
 
 type ReturnStatus = void | unknown;
 
