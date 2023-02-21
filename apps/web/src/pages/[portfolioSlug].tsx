@@ -15,7 +15,8 @@ import { getImagePlaceholder } from "../utils/placeholder";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
-  const paths = data.map((path) => ({ params: { portfolioSlug: path.slug } }));
+  const paths =
+    data?.map((path) => ({ params: { portfolioSlug: path.slug } })) || [];
   return {
     paths,
     fallback: false,
