@@ -11,7 +11,8 @@
     "format": "prettier --check . --ignore-path .gitignore",
     "format:fix": "prettier --write . --ignore-path .gitignore",
     "type-check": "npx tsc --noEmit",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "e2e": "npx playwright test"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
     "@jest/types": "^29.3.1",
+    "@playwright/test": "^1.30.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
