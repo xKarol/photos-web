@@ -1,32 +1,26 @@
 import Link from "next/link";
 import React from "react";
-import { useWindowSize } from "react-use";
+// import { useWindowSize } from "react-use";
 import type { Image as ImageType } from "types";
 import { getImageUrl } from "../../../utils/misc";
 import useImagePositions from "../hooks/use-image-position";
 import Photo from "./photo";
-import {
-  calculateContainerPadding,
-  getScreenName,
-} from "../../../utils/screen";
+// import { calculateContainerPadding } from "../../../utils/screen";
 import { getImagePlaceholder } from "../../../utils/placeholder";
+import useScreen from "../../../hooks/use-screen";
 
 type Props = {
   photos?: ImageType[];
 } & React.ComponentPropsWithoutRef<"div">;
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
-  const { width } = useWindowSize(500);
-  const screenName = getScreenName(width);
-  const isOneColumn = screenName === "sm";
-  const gap = 50;
+  // const { width } = useWindowSize(500);
+  const isMobile = useScreen("sm");
 
   const { positions, getMaxHeight } = useImagePositions(photos, {
-    gap: gap,
-    columns: isOneColumn ? 1 : 2,
-    elementWidth: isOneColumn
-      ? width - calculateContainerPadding(width)
-      : (width - calculateContainerPadding(width)) / 2,
+    gap: 50,
+    columns: isMobile ? 1 : 2,
+    elementWidth: 500,
   });
 
   return (
