@@ -2,6 +2,7 @@ import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
@@ -12,6 +13,7 @@ import { Lightbox } from "../components/lightbox";
 import { getErrorMessage } from "../utils/get-error-message";
 import Heading from "../components/heading";
 import { getImagePlaceholder } from "../utils/placeholder";
+import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -44,40 +46,40 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
   const slug = router.query.portfolioSlug as string;
-  const { data, error, isError } = useQuery(["portfolio", slug], () =>
-    getPortfolio(slug)
-  );
+  const { data, error, isError } = usePortfolio(slug);
   const selected = Number(router.query.selected);
   const { name, images = [] } = data || {};
-
+  console.log(router);
   return (
     <>
-      <NextSeo title={name || "Portfolio"} />
+      <NextSeo title={name} />
       <Header />
       <Layout>
         <Heading className="mb-5">{name}</Heading>
         {isError ? <span>{getErrorMessage(error)}</span> : null}
         <section className="flex flex-col gap-10">
           {images.map(({ id, alt, height, width }, index) => (
-            <Photo
+            <Link
               key={id}
-              alt={alt}
-              src={getImageUrl(id)}
-              height={height}
-              width={width}
-              blurDataURL={getImagePlaceholder(id)}
-              style={{
-                width: "100%",
-                maxHeight: "1200px",
-                objectFit: "cover",
-                cursor: "pointer",
+              href={{
+                query: { ...router.query, selected: index + 1 },
               }}
-              onClick={() =>
-                router.replace({
-                  query: { ...router.query, selected: index + 1 },
-                })
-              }
-            />
+              shallow
+            >
+              <Photo
+                alt={alt}
+                src={getImageUrl(id)}
+                height={height}
+                width={width}
+                blurDataURL={getImagePlaceholder(id)}
+                style={{
+                  width: "100%",
+                  maxHeight: "1200px",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                }}
+              />
+            </Link>
           ))}
         </section>
       </Layout>
@@ -86,12 +88,12 @@ const PortfolioIndexPage: NextPage = () => {
           initialIndex={selected - 1}
           photos={images}
           onClose={() =>
-            router.replace(
+            router.push(
               {
-                query: { id: router.query.id },
+                query: { portfolioSlug: router.query.portfolioSlug },
               },
               undefined,
-              { scroll: false } //TODO fix scroll
+              { shallow: true }
             )
           }
         />
