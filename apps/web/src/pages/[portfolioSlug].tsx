@@ -1,5 +1,4 @@
 import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
-import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "react-query";
 import { NextSeo } from "next-seo";
 import { Header } from "../features/header";
@@ -9,6 +8,7 @@ import { getPortfolio, getPortfolios } from "../services/portfolios";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 import Lightbox from "../features/portfolios/components/lightbox";
 import { PortfolioImages } from "../features/portfolios";
+import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -39,8 +39,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 };
 
 const PortfolioIndexPage: NextPage = () => {
-  const router = useRouter();
-  const slug = router.query.portfolioSlug as string;
+  const { slug } = usePortfolioPage();
   const { data } = usePortfolio(slug);
 
   return (

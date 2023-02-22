@@ -5,10 +5,11 @@ import Photo from "../../../features/photos/components/photo";
 import { getImageUrl } from "../../../utils/misc";
 import { getImagePlaceholder } from "../../../utils/placeholder";
 import usePortfolio from "../hooks/use-portfolio";
+import usePortfolioPage from "../hooks/use-portfolio-page";
 
 const ImagesList = () => {
   const router = useRouter();
-  const slug = router.query.portfolioSlug as string;
+  const { slug } = usePortfolioPage();
   const { data } = usePortfolio(slug);
 
   return (

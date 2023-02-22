@@ -1,13 +1,12 @@
-import { useRouter } from "next/router";
 import React from "react";
 import EmptyState from "../../components/empty-state";
 import Heading from "../../components/heading";
 import ImagesList from "./components/images-list";
 import usePortfolio from "./hooks/use-portfolio";
+import usePortfolioPage from "./hooks/use-portfolio-page";
 
 const PortfolioImages = () => {
-  const router = useRouter();
-  const slug = router.query.portfolioSlug as string;
+  const { slug } = usePortfolioPage();
   const { data, isError, isFetching, refetch } = usePortfolio(slug);
 
   return (
