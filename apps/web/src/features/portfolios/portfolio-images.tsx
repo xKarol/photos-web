@@ -9,7 +9,6 @@ const PortfolioImages = () => {
   const router = useRouter();
   const slug = router.query.portfolioSlug as string;
   const { data, isError, isFetching, refetch } = usePortfolio(slug);
-  const { name } = data || {};
 
   return (
     <>
@@ -22,7 +21,7 @@ const PortfolioImages = () => {
         />
       ) : (
         <>
-          <Heading className="mb-5">{name}</Heading>
+          <Heading className="mb-5">{data.name}</Heading>
           <ImagesList />
         </>
       )}

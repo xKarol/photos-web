@@ -42,11 +42,10 @@ const PortfolioIndexPage: NextPage = () => {
   const router = useRouter();
   const slug = router.query.portfolioSlug as string;
   const { data } = usePortfolio(slug);
-  const { name } = data || {};
 
   return (
     <>
-      <NextSeo title={name} />
+      <NextSeo title={data.name} />
       <Header />
       <Layout>
         <PortfolioImages />

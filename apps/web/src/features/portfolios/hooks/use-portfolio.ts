@@ -2,7 +2,12 @@ import { useQuery } from "react-query";
 import { getPortfolio } from "../../../services/portfolios";
 
 const usePortfolio = (slug: string) => {
-  return useQuery(["portfolio", slug], () => getPortfolio(slug));
+  const { data, ...rest } = useQuery(["portfolio", slug], () =>
+    getPortfolio(slug)
+  );
+  const { images = [], ...restData } = data || {};
+  const portfolioData = { ...restData, images };
+  return { data: portfolioData, ...rest };
 };
 
 export default usePortfolio;

@@ -8,13 +8,12 @@ const Lightbox = () => {
   const slug = router.query.portfolioSlug as string;
   const { data } = usePortfolio(slug);
   const selectedIndex = Number(router.query?.selected);
-  const { images = [] } = data || {};
 
   if (selectedIndex)
     return (
       <LightboxComponent
         initialIndex={selectedIndex - 1}
-        photos={images}
+        photos={data.images}
         onClose={() =>
           router.push(
             {

@@ -10,11 +10,10 @@ const ImagesList = () => {
   const router = useRouter();
   const slug = router.query.portfolioSlug as string;
   const { data } = usePortfolio(slug);
-  const { images = [] } = data || {};
 
   return (
     <section className="flex flex-col gap-10">
-      {images.map(({ id, alt, height, width }, index) => (
+      {data.images.map(({ id, alt, height, width }, index) => (
         <Link
           key={id}
           href={{
