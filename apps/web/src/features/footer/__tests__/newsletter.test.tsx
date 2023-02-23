@@ -1,5 +1,6 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
 // eslint-disable-next-line jest/no-mocks-import
@@ -22,38 +23,30 @@ const setup = () =>
   );
 
 const getInputElement = () => screen.getByRole("textbox");
-const getButtonElement = () =>
-  screen.getByRole("button", {
-    name: /Submit/i,
-  });
+const getButtonElement = () => screen.getByRole("button");
 
 describe("Newsletter", () => {
   it("button should be disabled when input is empty", () => {
     setup();
-
     const inputElement = getInputElement();
     expect(inputElement).toHaveValue("");
-
     const buttonElement = getButtonElement();
     expect(buttonElement).toBeDisabled();
   });
 
   it("input should be email type and be required", () => {
     setup();
-
     const inputElement = getInputElement();
     expect(inputElement).toHaveAttribute("type", "email");
     expect(inputElement).toHaveAttribute("required");
   });
 
-  it("button should not be disabled when text is passed", () => {
+  it("button should not be disabled when text is passed", async () => {
     setup();
-
     const inputElement = getInputElement();
-
-    fireEvent.change(inputElement, { target: { value: "email" } });
+    const { type } = userEvent.setup();
+    await type(inputElement, "email");
     expect(inputElement).toHaveValue("email");
-
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
   });
@@ -62,14 +55,14 @@ describe("Newsletter", () => {
     setup();
 
     const inputElement = getInputElement();
-
     const inputValue = "email@gmail.com";
-    fireEvent.change(inputElement, { target: { value: inputValue } });
+    const { type, click } = userEvent.setup();
+    await type(inputElement, inputValue);
     expect(inputElement).toHaveValue(inputValue);
 
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
-    fireEvent.click(buttonElement);
+    await click(buttonElement);
 
     const infoElement = await screen.findByText(
       /Thanks for subscribe to our newsletter!/i
@@ -78,10 +71,8 @@ describe("Newsletter", () => {
   });
 
   it("should display error message", async () => {
-    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
     server.use(
-      rest.post(`${BACKEND_URL}/newsletter/subscribe`, (_req, res, ctx) => {
+      rest.post(`/newsletter/subscribe`, (_req, res, ctx) => {
         return res(ctx.status(400));
       })
     );
@@ -89,13 +80,13 @@ describe("Newsletter", () => {
     setup();
 
     const inputElement = getInputElement();
-
-    fireEvent.change(inputElement, { target: { value: "email@gmail.com" } });
+    const { type, click } = userEvent.setup();
+    await type(inputElement, "email@gmail.com");
     expect(inputElement).toHaveValue("email@gmail.com");
 
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
-    fireEvent.click(buttonElement);
+    await click(buttonElement);
 
     const infoElement = await screen.findByText(/Unknown error/i);
     expect(infoElement).toBeInTheDocument();
@@ -103,28 +94,28 @@ describe("Newsletter", () => {
 
   it("loading component should be visible after submit", async () => {
     setup();
-
     const inputElement = getInputElement();
-    fireEvent.change(inputElement, { target: { value: "email@gmail.com" } });
+    const { type, click } = userEvent.setup();
+
+    await type(inputElement, "email@gmail.com");
     const spinnerElement = screen.queryByRole("alert");
     expect(spinnerElement).not.toBeInTheDocument();
+
     const buttonElement = getButtonElement();
-    fireEvent.click(buttonElement);
+    await click(buttonElement);
     expect(await screen.findByRole("alert")).toBeInTheDocument();
     await waitFor(() => expect(spinnerElement).not.toBeInTheDocument());
   });
 
   it("button should be disabled when loading state is active", async () => {
     setup();
-
     const inputElement = getInputElement();
+    const { type, click } = userEvent.setup();
 
-    fireEvent.change(inputElement, { target: { value: "email@gmail.com" } });
-    expect(inputElement).toHaveValue("email@gmail.com");
-
+    await type(inputElement, "email@gmail.com");
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
-    fireEvent.click(buttonElement);
+    await click(buttonElement);
     await waitFor(() => expect(buttonElement).toBeDisabled());
   });
 });
