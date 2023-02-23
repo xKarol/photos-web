@@ -18,11 +18,16 @@ const EmptyState = ({
   handleRefresh,
 }: Props) => {
   return (
-    <div className="mx-auto flex flex-col items-center justify-center">
+    <div
+      className="mx-auto flex flex-col items-center justify-center"
+      role="region"
+      aria-label="No data available"
+    >
       <Lottie
         className="mx-auto w-[150px] max-w-[300px] "
         animationData={emptyStateAnimation}
         loop={true}
+        aria-label="Animation of empty state"
       />
       <Heading className="!text-xl capitalize">{text}</Heading>
       {showButton ? (

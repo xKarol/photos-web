@@ -1,13 +1,16 @@
+/* eslint-disable no-console */
 import "@testing-library/jest-dom/extend-expect";
+import "jest-canvas-mock";
 
-import { server } from "./src/__mocks__/server";
 import { QueryCache, setLogger } from "react-query";
+import { server } from "./src/__mocks__/server";
 
 const queryCache = new QueryCache();
 
 setLogger({
   log: console.log,
   warn: console.warn,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   error: () => {},
 });
 
