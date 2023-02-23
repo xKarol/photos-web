@@ -10,7 +10,7 @@ export const getScreenSizes = ({
   asNumbers?: boolean;
 } = {}) => {
   if (asNumbers)
-    transformObjectValuesToNumbers(defaultScreens) as Record<
+    return transformObjectValuesToNumbers(defaultScreens) as Record<
       "sm" | "md" | "lg" | "xl" | "2xl",
       number
     >;
