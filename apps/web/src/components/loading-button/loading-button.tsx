@@ -18,6 +18,8 @@ const LoadingButton = ({
     <button
       className={clsx("relative", className)}
       disabled={isLoading}
+      aria-busy={isLoading}
+      aria-label="Loading button"
       {...rest}
     >
       <span style={{ visibility: isLoading ? "hidden" : "visible" }}>
@@ -25,6 +27,7 @@ const LoadingButton = ({
       </span>
       {isLoading
         ? cloneElement(LoadingComponent, {
+            ["aria-live"]: "polite",
             className:
               "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
           })
