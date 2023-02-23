@@ -4,12 +4,12 @@ import LoadingButton from "./loading-button";
 describe("Loading Button", () => {
   it("spinner should not be visible when isLoading = false", () => {
     render(<LoadingButton isLoading={false} />);
-    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(screen.queryByRole(/loading spinner/i)).not.toBeInTheDocument();
   });
 
   it("spinner should be visible when isLoading = true", () => {
     render(<LoadingButton isLoading={true} />);
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByLabelText(/loading spinner/i)).toBeInTheDocument();
   });
 
   it("button should not be disabled when spinner is not visible", () => {

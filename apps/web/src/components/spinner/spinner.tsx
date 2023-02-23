@@ -11,8 +11,8 @@ const Spinner = ({ className, ...rest }: Props) => {
       cssOverride={{ display: "flex" }}
       className={clsx("m-auto max-w-max", className)}
       size={10}
-      role="alert"
-      aria-busy="true"
+      role="status"
+      aria-label="loading spinner"
       {...rest}
     />
   );
