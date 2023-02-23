@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { Lightbox as LightboxComponent } from "../../../components/lightbox";
+import LightboxComponent from "../../../components/lightbox";
 import { usePhotos } from "../hooks/use-photos";
 
 const Lightbox = () => {

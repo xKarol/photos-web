@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { faker } from "@faker-js/faker";
 import { rest } from "msw";
 import { Contact } from "../index";
+// eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 
 const setup = () =>

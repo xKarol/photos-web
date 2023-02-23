@@ -2,9 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { API } from "types";
-import { getImageUrl } from "../../../utils/misc";
-import "../../../__mocks__/intersection-observer";
-import { Lightbox } from "../index";
+import { getImageUrl } from "../../utils/misc";
+// eslint-disable-next-line jest/no-mocks-import
+import "../../__mocks__/intersection-observer";
+import Lightbox from "./index";
 
 jest.mock("next/image", () => ({
   __esModule: true,

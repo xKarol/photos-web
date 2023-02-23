@@ -2,6 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
+// eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import Newsletter from "../components/newsletter";
 

@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React, { cloneElement } from "react";
-import Spinner from "./spinner";
+import Spinner from "../spinner";
 
-type Props = {
+export type LoadingButtonProps = {
   isLoading?: boolean;
   LoadingComponent?: JSX.Element;
 } & React.ComponentPropsWithoutRef<"button">;
@@ -13,7 +13,7 @@ const LoadingButton = ({
   LoadingComponent = <Spinner color="black" />,
   isLoading = false,
   ...rest
-}: Props) => {
+}: LoadingButtonProps) => {
   return (
     <button
       className={clsx("relative", className)}
