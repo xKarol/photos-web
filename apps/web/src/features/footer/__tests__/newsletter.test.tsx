@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { faker } from "@faker-js/faker";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import Newsletter from "../components/newsletter";
@@ -41,51 +42,46 @@ describe("Newsletter", () => {
     expect(inputElement).toHaveAttribute("required");
   });
 
-  it("button should not be disabled when text is passed", async () => {
+  it("input should contain valid text after type", async () => {
     setup();
     const inputElement = getInputElement();
-    const { type } = userEvent.setup();
-    await type(inputElement, "email");
-    expect(inputElement).toHaveValue("email");
+    const value = await fillInput("test");
+    expect(inputElement).toHaveValue(value);
+  });
+
+  it("button should not be disabled when text is passed", async () => {
+    setup();
+    await fillInput();
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
   });
 
   it("should display success message", async () => {
     setup();
-
-    const inputElement = getInputElement();
-    const inputValue = "email@gmail.com";
-    const { type, click } = userEvent.setup();
-    await type(inputElement, inputValue);
-    expect(inputElement).toHaveValue(inputValue);
-
+    await fillInput();
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
+    const { click } = userEvent.setup();
     await click(buttonElement);
 
     const infoElement = await screen.findByText(
-      /Thanks for subscribe to our newsletter!/i
+      /Thanks for subscribe to our newsletter/i
     );
     expect(infoElement).toBeVisible();
   });
 
   it("should display error message", async () => {
     server.use(
-      rest.post(`/newsletter/subscribe`, (_req, res, ctx) => {
+      rest.post("/newsletter/subscribe", (_req, res, ctx) => {
         return res(ctx.status(400));
       })
     );
 
     setup();
-
-    const inputElement = getInputElement();
-    const { type, click } = userEvent.setup();
-    await type(inputElement, "email@gmail.com");
-    expect(inputElement).toHaveValue("email@gmail.com");
-
+    await fillInput();
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
+    const { click } = userEvent.setup();
     await click(buttonElement);
 
     const infoElement = await screen.findByText(/Unknown error/i);
@@ -94,14 +90,12 @@ describe("Newsletter", () => {
 
   it("loading component should be visible after submit", async () => {
     setup();
-    const inputElement = getInputElement();
-    const { type, click } = userEvent.setup();
-
-    await type(inputElement, "email@gmail.com");
+    await fillInput();
     const spinnerElement = screen.queryByRole("alert");
     expect(spinnerElement).not.toBeInTheDocument();
 
     const buttonElement = getButtonElement();
+    const { click } = userEvent.setup();
     await click(buttonElement);
     expect(await screen.findByRole("alert")).toBeInTheDocument();
     await waitFor(() => expect(spinnerElement).not.toBeInTheDocument());
@@ -109,13 +103,18 @@ describe("Newsletter", () => {
 
   it("button should be disabled when loading state is active", async () => {
     setup();
-    const inputElement = getInputElement();
-    const { type, click } = userEvent.setup();
-
-    await type(inputElement, "email@gmail.com");
+    await fillInput();
     const buttonElement = getButtonElement();
     expect(buttonElement).not.toBeDisabled();
+    const { click } = userEvent.setup();
     await click(buttonElement);
     await waitFor(() => expect(buttonElement).toBeDisabled());
   });
 });
+
+async function fillInput(value = faker.internet.email()) {
+  const inputElement = getInputElement();
+  const { type } = userEvent.setup();
+  await type(inputElement, value);
+  return value;
+}
