@@ -45,7 +45,9 @@ describe("Empty State", () => {
   it("loading spinner should be visible when prop isLoading = true", () => {
     render(<EmptyState showButton isLoading={true} />);
     const button = screen.getByRole("button");
-    expect(within(button).getByRole("alert")).toBeInTheDocument();
+    expect(
+      within(button).getByLabelText(/loading spinner/i)
+    ).toBeInTheDocument();
   });
 
   it("handleRefresh function should be called once after click the button", async () => {
