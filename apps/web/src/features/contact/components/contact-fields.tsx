@@ -1,11 +1,11 @@
 import React from "react";
 import type { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 import InputField from "../../../components/input-field";
-import { fields } from "../fields";
+import type { ContactFieldsType } from "../constants/contact-fields";
 import type { FormValues } from "../types";
 
 type Props = {
-  fields: typeof fields;
+  fields: ContactFieldsType;
   errors: Partial<FieldErrorsImpl<FormValues>>;
   register: UseFormRegister<FormValues>;
 };
@@ -14,8 +14,7 @@ const ContactFields = ({ fields, errors, register }: Props) => {
   return (
     <>
       {fields.map((field) => {
-        const isArray = Array.isArray(field);
-        if (isArray) {
+        if (Array.isArray(field)) {
           const arrKey = field.map(({ name }) => name).join(", ");
           return (
             <div
@@ -34,8 +33,8 @@ const ContactFields = ({ fields, errors, register }: Props) => {
         const { name, ...fieldProps } = field;
         return (
           <InputField
-            error={errors[name]?.message}
             key={name}
+            error={errors[name]?.message}
             {...fieldProps}
             {...register(name, { required: fieldProps.required })}
           />

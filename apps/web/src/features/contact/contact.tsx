@@ -1,7 +1,7 @@
 import React from "react";
 import LoadingButton from "../../components/loading-button";
 import { getErrorMessage } from "../../utils/get-error-message";
-import { fields } from "./fields";
+import constactFieldsData from "./constants/contact-fields";
 import ContactFields from "./components/contact-fields";
 import Alert from "../../components/alert";
 import useContact from "./hooks/use-contact";
@@ -23,7 +23,11 @@ const Contact = () => {
       onSubmit={handleSubmit}
     >
       <h1 className="text-2xl">Contact</h1>
-      <ContactFields fields={fields} errors={errors} register={register} />
+      <ContactFields
+        fields={constactFieldsData}
+        errors={errors}
+        register={register}
+      />
 
       <LoadingButton
         isLoading={isLoading}

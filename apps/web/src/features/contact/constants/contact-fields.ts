@@ -1,9 +1,10 @@
-import type { InputFieldProps } from "../../components/input-field";
-import type { FormValues } from "./types";
+import type { InputFieldProps } from "../../../components/input-field";
+import type { FormValues } from "../types";
 
 type FieldProps = { name: keyof FormValues } & InputFieldProps;
+export type ContactFieldsType = (FieldProps | FieldProps[])[];
 
-export const fields: (FieldProps | FieldProps[])[] = [
+const contactFields: ContactFieldsType = [
   [
     {
       name: "firstName",
@@ -33,3 +34,5 @@ export const fields: (FieldProps | FieldProps[])[] = [
     textarea: true,
   },
 ];
+
+export default contactFields;
