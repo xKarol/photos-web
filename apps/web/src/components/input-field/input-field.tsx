@@ -7,7 +7,7 @@ export type InputFieldProps = {
   error?: string;
   type?: "text" | "password" | "email";
   textarea?: boolean;
-} & React.ComponentPropsWithoutRef<"input">;
+} & React.ComponentPropsWithRef<"input">;
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
@@ -15,33 +15,25 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     ref
   ) => {
     const id = useId();
-    const inputClass = "border border-zinc-300 p-2";
+    const TextBoxElement = textarea ? "textarea" : "input";
     return (
       <div className={clsx("relative flex w-full flex-col", className)}>
         <label className="mb-1 text-xs" htmlFor={id}>
           {label} {required ? <span className="text-red-500">*</span> : null}
         </label>
-        {textarea ? (
-          <textarea
-            id={id}
-            aria-describedby={id}
-            aria-invalid={error ? "true" : "false"}
-            className={clsx("min-h-[50px]", inputClass)}
-            {...rest}
-            // @ts-expect-error
-            ref={ref}
-          />
-        ) : (
-          <input
-            type={type}
-            className={inputClass}
-            {...rest}
-            ref={ref}
-            id={id}
-            aria-describedby={id}
-            aria-invalid={error ? "true" : "false"}
-          />
-        )}
+        <TextBoxElement
+          id={id}
+          aria-describedby={id}
+          aria-invalid={error ? "true" : "false"}
+          className={clsx(
+            "border-zinc-300 border p-2",
+            textarea && "min-h-[50px]"
+          )}
+          {...rest}
+          {...(!textarea && { type })}
+          // @ts-expect-error
+          ref={ref}
+        />
         {error ? (
           <Alert
             variant="error"

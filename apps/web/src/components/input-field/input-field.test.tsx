@@ -75,4 +75,14 @@ describe("InputField", () => {
     render(<InputField type="email" />);
     expect(screen.getByRole("textbox").getAttribute("type")).toBe("email");
   });
+
+  it("input should not have min-h class", () => {
+    render(<InputField textarea={false} />);
+    expect(screen.getByRole("textbox").className).not.toMatch("min-h");
+  });
+
+  it("textarea should have min-h class", () => {
+    render(<InputField textarea />);
+    expect(screen.getByRole("textbox").className).toMatch("min-h");
+  });
 });
