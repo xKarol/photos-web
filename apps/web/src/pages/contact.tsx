@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
-import { Contact as ContactContrainer } from "../features/contact";
+import { Contact as ContactContainer } from "../features/contact";
 import Layout from "../components/layout";
 
 const Contact: NextPage = () => {
@@ -11,7 +11,7 @@ const Contact: NextPage = () => {
       <NextSeo title="Contact" />
       <Header />
       <Layout as="main">
-        <ContactContrainer />
+        <ContactContainer />
       </Layout>
       <Footer />
     </>
