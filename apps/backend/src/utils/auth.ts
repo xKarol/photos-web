@@ -4,7 +4,7 @@ import type { VerifyFunction } from "passport-local";
 import type { Express } from "express";
 import session from "express-session";
 
-const sessionConfig = {
+const sessionConfig: session.SessionOptions = {
   secret: process.env.SESSION_SECRET as string,
   resave: false,
   saveUninitialized: true,
