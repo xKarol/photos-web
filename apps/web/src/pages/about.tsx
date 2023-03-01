@@ -13,15 +13,15 @@ const Home: NextPage = () => {
       <NextSeo title="About" />
       <Header />
       <Layout as="main">
-        <div className="flex space-x-10">
+        <div className="flex flex-col space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <figure className="flex-1">
             <Image
               src={aboutImg}
               alt="about image"
-              width={600}
-              height={500}
+              width={500}
+              height={600}
               style={{ objectFit: "cover" }}
-              className="max-h-[500px] w-full"
+              className="max-h-[600px] w-full md:max-w-[500px]"
             />
           </figure>
           <section className="flex flex-1 flex-col">
