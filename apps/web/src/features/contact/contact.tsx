@@ -4,7 +4,7 @@ import { getErrorMessage } from "../../utils/get-error-message";
 import constactFieldsData from "./constants/contact-fields";
 import ContactFields from "./components/contact-fields";
 import Alert from "../../components/alert";
-import useContact from "./hooks/use-contact";
+import useContactForm from "./hooks/use-contact-form";
 
 const Contact = () => {
   const {
@@ -15,7 +15,7 @@ const Contact = () => {
     handleSubmit,
     errors,
     register,
-  } = useContact();
+  } = useContactForm();
 
   return (
     <form
