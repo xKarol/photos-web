@@ -24,11 +24,6 @@ model NewsletterTemplate {
   updatedAt DateTime @updatedAt
 }
 
-enum ImageType {
-  DEFAULT
-  ABOUT
-}
-
 model Image {
   id          String       @id @unique
   src         String       @unique
@@ -36,7 +31,6 @@ model Image {
   mimeType    String
   height      Int
   width       Int
-  type        ImageType?   @default(DEFAULT)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   Portfolios  Portfolios[]

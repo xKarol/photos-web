@@ -40,8 +40,3 @@ export async function getRandomPhoto() {
   );
   return buffer;
 }
-
-export async function getRandomPeoplePhoto() {
-  const buffer = await getBufferFromUrl(faker.image.unsplash.people(640, 1280));
-  return buffer;
-}

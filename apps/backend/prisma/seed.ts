@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { ImageType } from "@prisma/client";
 import ora from "ora";
 import { program } from "commander";
 import { cloudinaryConfig } from "../src/config/cloudinary";
@@ -15,7 +14,6 @@ import {
   getFakePortfolioData,
   getRandomPortfolioPhotos,
   getRandomPhoto,
-  getRandomPeoplePhoto,
 } from "./seed.utils";
 import { createPhoto } from "../src/services/photos";
 import { createPortfolio } from "../src/services/portfolios";
@@ -40,7 +38,6 @@ const main = async () => {
     }),
     "Deleting all records": deleteAllRecords,
     "Seeding main photos": seedMainPhotos,
-    "Seeding about photos": seedAboutPhoto,
     "Seeding images": seedImages,
     "Seeding portfolios": seedPortfolios,
   };
@@ -75,7 +72,7 @@ async function deleteAllRecords() {
 async function seedMainPhotos() {
   const photos = await Promise.all(
     Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
-      const data = await getRandomCloudinaryImage(cloudinaryImages, "default");
+      const data = await getRandomCloudinaryImage(cloudinaryImages);
       const photo = await createPhoto({
         ...data,
         ...getFakePhotoData(),
@@ -86,22 +83,10 @@ async function seedMainPhotos() {
   return photos;
 }
 
-async function seedAboutPhoto() {
-  const data = await getRandomCloudinaryImage(cloudinaryImages, "people");
-
-  await prisma.image.create({
-    data: {
-      ...data,
-      ...getFakePhotoData(),
-      type: ImageType.ABOUT,
-    },
-  });
-}
-
 async function seedImages() {
   const images = await Promise.all(
     Array.from({ length: MAX_IMAGES }, async () => {
-      const data = await getRandomCloudinaryImage(cloudinaryImages, "default");
+      const data = await getRandomCloudinaryImage(cloudinaryImages);
 
       const photo = await prisma.image.create({
         data: {
@@ -116,9 +101,7 @@ async function seedImages() {
 }
 
 async function seedPortfolios() {
-  const photos = await prisma.image.findMany({
-    where: { type: ImageType.DEFAULT },
-  });
+  const photos = await prisma.image.findMany({});
   const MAX_PORTFOLIOS = randomBetween(4, 8);
   const uniqueNames = faker.helpers.uniqueArray(
     () => faker.lorem.words(randomBetween(1, 2)),
@@ -137,10 +120,7 @@ async function seedPortfolios() {
   );
 }
 
-async function getRandomCloudinaryImage(
-  cloudinaryImages: ResourceType[] = [],
-  type: "default" | "people" = "default"
-) {
+async function getRandomCloudinaryImage(cloudinaryImages: ResourceType[] = []) {
   if (cloudinaryImages.length > 0) {
     const randomIndex = Math.floor(Math.random() * cloudinaryImages.length);
     const {
@@ -160,8 +140,7 @@ async function getRandomCloudinaryImage(
     };
   }
 
-  const randomBuffer =
-    type === "default" ? await getRandomPhoto() : await getRandomPeoplePhoto();
+  const randomBuffer = await getRandomPhoto();
   const data = await uploadPhoto(randomBuffer);
   return data;
 }
