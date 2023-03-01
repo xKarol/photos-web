@@ -1,20 +1,13 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
-import { getAboutImage } from "../services/about";
-import { getImageUrl } from "../utils/misc";
 import Heading from "../components/heading";
-import { getImagePlaceholder } from "../utils/placeholder";
+import aboutImg from "../../public/assets/about.jpg";
 
 const Home: NextPage = () => {
-  const { data: image, isLoading } = useQuery({
-    queryKey: ["about"],
-    queryFn: getAboutImage,
-  });
   return (
     <>
       <NextSeo title="About" />
@@ -22,18 +15,14 @@ const Home: NextPage = () => {
       <Layout as="main">
         <div className="flex space-x-10">
           <figure className="flex-1">
-            {isLoading ? null : (
-              <Image
-                src={getImageUrl(image.id)}
-                alt={image.alt}
-                placeholder="blur"
-                blurDataURL={getImagePlaceholder(image.id)}
-                width={image.width}
-                height={image.height}
-                style={{ objectFit: "cover" }}
-                className="max-h-[600px] w-full outline-dotted"
-              />
-            )}
+            <Image
+              src={aboutImg}
+              alt="about image"
+              width={600}
+              height={500}
+              style={{ objectFit: "cover" }}
+              className="max-h-[500px] w-full"
+            />
           </figure>
           <section className="flex flex-1 flex-col">
             <Heading className="mb-5">About</Heading>
