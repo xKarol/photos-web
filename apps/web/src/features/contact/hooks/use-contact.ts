@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contact as Schema } from "schemas";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { createContact } from "../../../services/contact";
 import type { FormValues } from "../types";
 

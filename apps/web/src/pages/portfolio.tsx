@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { NextSeo } from "next-seo";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
@@ -10,13 +10,11 @@ import { Portfolios } from "../features/portfolios";
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery(
-    "portfolio",
-    ({ pageParam: page = 1 }) => getPortfolios(page),
-    {
-      getNextPageParam: ({ nextPage }) => nextPage,
-    }
-  );
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["portfolio"],
+    queryFn: ({ pageParam = 1 }) => getPortfolios(pageParam),
+    getNextPageParam: ({ nextPage }) => nextPage,
+  });
 
   return {
     props: {

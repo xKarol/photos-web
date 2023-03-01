@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPortfolio } from "../../../services/portfolios";
 
 const usePortfolio = (slug: string) => {

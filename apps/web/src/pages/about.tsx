@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
@@ -11,7 +11,10 @@ import Heading from "../components/heading";
 import { getImagePlaceholder } from "../utils/placeholder";
 
 const Home: NextPage = () => {
-  const { data: image, isLoading } = useQuery("about", getAboutImage);
+  const { data: image, isLoading } = useQuery({
+    queryKey: ["about"],
+    queryFn: getAboutImage,
+  });
   return (
     <>
       <NextSeo title="About" />

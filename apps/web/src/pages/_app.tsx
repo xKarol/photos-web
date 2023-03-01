@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Hydrate, QueryClientProvider, QueryClient } from "react-query";
+import {
+  Hydrate,
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
 import { DefaultSeo } from "next-seo";
 import SEO from "../config/next-seo";
 import defaultFont from "../config/font";
 
-const ReactQueryDevtoolsProduction = React.lazy(() =>
-  import("react-query/devtools/development").then((d) => ({
+const ReactQueryDevtools = React.lazy(() =>
+  import("@tanstack/react-query-devtools").then((d) => ({
     default: d.ReactQueryDevtools,
   }))
 );
@@ -43,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           {showDevtools && (
             <React.Suspense fallback={null}>
-              <ReactQueryDevtoolsProduction />
+              <ReactQueryDevtools />
             </React.Suspense>
           )}
         </Hydrate>

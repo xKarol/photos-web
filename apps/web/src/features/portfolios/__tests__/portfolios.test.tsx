@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { rest } from "msw";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
