@@ -6,7 +6,10 @@ import { navbarItems } from "../navbar-items";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
-const setup = () => render(<Header />);
+const setup = () => {
+  window.resizeTo(360, 800);
+  render(<Header />);
+};
 
 const checkNavbarContent = (links: HTMLElement[]) => {
   for (const [index, link] of Object.entries(links)) {
@@ -65,8 +68,8 @@ describe("Header", () => {
     it("hamburger should not be visible", () => {
       setup();
 
-      const hamburger = screen.queryByLabelText(/hamburger/i);
-      expect(hamburger).not.toBeInTheDocument();
+      const hamburger = screen.getByLabelText(/hamburger/i).parentElement;
+      expect(hamburger).not.toBeVisible();
     });
   });
 
@@ -74,16 +77,18 @@ describe("Header", () => {
     beforeAll(() => {
       mockMatchMedia(360);
     });
+
     it("hamburger should be visible", () => {
       setup();
 
       const hamburger = screen.queryByLabelText(/hamburger/i);
       expect(hamburger).toBeInTheDocument();
     });
+
     it("desktop navbar should not be visible", () => {
       setup();
-      const nav = screen.queryByTestId("desktop navbar");
-      expect(nav).not.toBeInTheDocument();
+      const nav = screen.getByTestId("desktop navbar");
+      expect(nav).not.toBeVisible();
     });
 
     it("hamburger menu should not initially be in the document", () => {
@@ -115,18 +120,19 @@ describe("Header", () => {
       expect(hamburger).toBeVisible();
     });
 
-    it("desktop navbar should not be in the document when mobile menu is visible", async () => {
+    it("desktop navbar should not be visible when mobile menu is active", async () => {
       setup();
       const hamburger = screen.getByLabelText(/hamburger/i);
       const { click } = userEvent.setup();
       await click(hamburger);
 
-      const nav = screen.queryByTestId("desktop navbar");
-      expect(nav).not.toBeInTheDocument();
+      const nav = screen.getByTestId("desktop navbar");
+      expect(nav).not.toBeVisible();
     });
 
     it("hamburger menu should contain valid elements", async () => {
       setup();
+
       const hamburger = screen.getByLabelText(/hamburger/i);
       const { click } = userEvent.setup();
       await click(hamburger);

@@ -1,10 +1,14 @@
 import React from "react";
 import HamburgerComponent from "hamburger-react";
 import type { CommonBurgerProps } from "hamburger-react";
+import clsx from "clsx";
 
-const Hamburger = ({ ...props }: CommonBurgerProps) => {
+const Hamburger = ({
+  className,
+  ...props
+}: CommonBurgerProps & { className: string }) => {
   return (
-    <div className="z-20">
+    <div className={clsx("z-20", className)}>
       <HamburgerComponent
         label="hamburger menu"
         size={25}

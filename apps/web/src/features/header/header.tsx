@@ -5,12 +5,10 @@ import Hamburger from "./components/hamburger";
 import NavbarMobile from "./components/navbar-mobile";
 import Layout from "../../components/layout";
 import Logo from "../../components/logo";
-import useScreen from "../../hooks/use-screen";
+import clsx from "clsx";
 
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const isMobile = useScreen("sm");
-  const showHamburger = isMobile || showNavbar;
   useLockBodyScroll(showNavbar);
 
   return (
@@ -19,12 +17,16 @@ const Header = () => {
       className="my-10 flex items-center justify-between lg:my-20"
     >
       <Logo />
-      {showHamburger ? (
-        <Hamburger toggled={showNavbar} toggle={setShowNavbar} />
-      ) : (
-        <Navbar />
-      )}
-      {showNavbar ? <NavbarMobile /> : null}
+      <Hamburger
+        className={clsx("sm:hidden", showNavbar && "!block")}
+        toggled={showNavbar}
+        toggle={setShowNavbar}
+      />
+      <Navbar
+        className={clsx("hidden sm:block", showNavbar && "!hidden")}
+        data-testid="desktop navbar"
+      />
+      {showNavbar ? <NavbarMobile data-testid="mobile navbar" /> : null}
     </Layout>
   );
 };
