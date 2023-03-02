@@ -6,7 +6,7 @@ import {
   Portfolios,
 } from "backend/src/lib/prisma";
 
-type Pagination<T> = {
+export type Pagination<T> = {
   data: T;
   nextPage: number | undefined;
   limit: number;
