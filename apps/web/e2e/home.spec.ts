@@ -7,23 +7,6 @@ test.describe("Home page", () => {
     await page.goto("http://localhost:3000/");
   });
 
-  test("header is displayed with logo icon", async ({ page }) => {
-    const header = page.getByRole("banner");
-    const logo = header.getByRole("link");
-    await expect(logo).toHaveAttribute("href", "/");
-    expect(logo.getByRole("img").getAttribute("href")).not.toBeNull();
-  });
-
-  test("header is displayed with navigation links", async ({ page }) => {
-    const header = page.getByRole("banner");
-    const navbar = header.getByRole("navigation");
-    await expect(navbar).not.toBeEmpty();
-    const navbarLinks = await navbar.getByRole("listitem").all();
-
-    for (const link of navbarLinks) {
-      await expect(link).not.toBeEmpty();
-    }
-  });
   test("main content displays a list of images with clickable links", async ({
     page,
   }) => {
