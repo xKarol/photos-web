@@ -12,7 +12,8 @@
     "format:fix": "prettier --write . --ignore-path .gitignore",
     "type-check": "npx tsc --noEmit",
     "test": "jest --watch",
-    "e2e": "npx playwright test"
+    "e2e": "npx playwright test",
+    "e2e:headed": "npx playwright test --headed"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
