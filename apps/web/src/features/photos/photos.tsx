@@ -19,7 +19,7 @@ const Photos = () => {
 
   return (
     <>
-      <section className="flex flex-col">
+      <section className="flex flex-col" aria-label="images gallery">
         {isEmptyState ? (
           <EmptyState
             text="No images found"

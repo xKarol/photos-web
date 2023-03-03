@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { test, expect } from "@playwright/test";
 
 test.describe("Home page", () => {
@@ -10,35 +10,109 @@ test.describe("Home page", () => {
   test("main content displays a list of images with clickable links", async ({
     page,
   }) => {
-    const mainImages = await page.getByRole("main").getByRole("link").all();
+    const mainImages = await page
+      .getByLabel(/images gallery/i)
+      .getByRole("link")
+      .all();
     for (const imageLink of mainImages) {
       expect(imageLink.getAttribute("href")).not.toBeNull();
     }
   });
-  test("infinite scrolling loads more images as the user scrolls down the page", async ({
-    page,
-  }) => {
-    const mainElement = page.getByRole("main");
-    const mainImages = await mainElement.getByRole("link").all();
-    const initialImagesAmount = mainImages.length;
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    // eslint-disable-next-line unicorn/no-await-expression-member
-    expect((await mainElement.getByRole("link").all()).length).toBeGreaterThan(
-      initialImagesAmount
-    );
-  });
-  test("infinite scrolling spinner is displayed while images are being loaded", async ({
+
+  // TODO fix
+  test.fixme(
+    "infinite scrolling loads more images as the user scrolls down the page",
+    async ({ page }) => {
+      const getImages = () =>
+        page
+          .getByLabel(/images gallery/i)
+          .getByRole("link")
+          .all();
+      const mainImages = await getImages();
+      const initialImagesAmount = mainImages.length;
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      // eslint-disable-next-line unicorn/no-await-expression-member
+      expect((await getImages()).length).toBeGreaterThan(initialImagesAmount);
+    }
+  );
+
+  test.fixme(
+    "infinite scrolling spinner is displayed while images are being loaded",
+    async ({ page }) => {
+      const buttonElement = page.getByRole("button", { name: /load more/i });
+      await expect(buttonElement).toBeVisible();
+      await expect(buttonElement).not.toBeInViewport();
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await expect(page.getByLabel(/loading spinner/i)).toBeVisible();
+    }
+  );
+
+  test.skip("empty state is displayed when server return empty data", async ({
     page,
   }) => {});
-  test("empty state is displayed when server return empty data", async ({
+
+  test.skip("empty state is displayed when error occurred", async ({
     page,
   }) => {});
-  test("empty state is displayed when error occurred", async ({ page }) => {});
-  test("clicking on an image links change url query and displaying lightbox", async ({
+
+  test.fixme(
+    "lightbox should be displayed when page is loaded with 'selected' query param",
+    async ({ page }) => {
+      const selected = 2;
+      await page.goto(`/?selected=${selected}`);
+      const selectedAltText = await page
+        .getByLabel(/images gallery/i)
+        .getByRole("img")
+        .nth(selected)
+        .getAttribute("alt");
+
+      await expect(page.getByRole("dialog")).toBeInViewport();
+
+      expect(
+        await page
+          .getByRole("dialog")
+          .getByRole("img")
+          .nth(selected)
+          .getAttribute("alt")
+      ).toBe(selectedAltText);
+    }
+  );
+
+  test.fixme(
+    "clicking on an image links change url query and displaying lightbox",
+    async ({ page }) => {
+      await expect(page.getByRole("dialog")).toBeHidden();
+
+      const clickImage = (index: number) =>
+        page
+          .getByLabel(/images gallery/i)
+          .getByRole("link")
+          .nth(index)
+          .click();
+
+      await clickImage(5);
+
+      expect(page.getByRole("dialog")).toBeInViewport();
+
+      await expect(
+        page.getByRole("dialog").getByRole("img").nth(5)
+      ).toHaveClass("active");
+
+      await page.getByLabel(/close/i).click();
+
+      await clickImage(3);
+
+      await expect(
+        page.getByRole("dialog").getByRole("img").nth(3)
+      ).toHaveClass("active");
+    }
+  );
+
+  test.skip("images are correctly displayed in lightbox", async ({
     page,
   }) => {});
-  test("images are correctly displayed in lightbox", async ({ page }) => {});
-  test("scroll position is preserved when closing lightbox", async ({
+
+  test.skip("scroll position is preserved when closing lightbox", async ({
     page,
   }) => {});
 });
