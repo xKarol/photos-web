@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { test, expect } from "@playwright/test";
 
-test.describe("Home page", () => {
+test.describe("Footer", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/");
+    await page.goto("/");
   });
   test("footer contains valid socials links", async ({ page }) => {});
   test("entering a valid email address in the newsletter signup form and submitting displays a confirmation message", async ({

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Portfolios page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/portfolio");
+    await page.goto("/portfolio");
   });
 
   test("should contain heading", async ({ page }) => {

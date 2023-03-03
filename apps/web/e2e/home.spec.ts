@@ -4,7 +4,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Home page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/");
+    await page.goto("/");
   });
 
   test("main content displays a list of images with clickable links", async ({
