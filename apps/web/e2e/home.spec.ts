@@ -1,27 +1,27 @@
-/* eslint-disable testing-library/prefer-screen-queries */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { test, expect } from "@playwright/test";
 
 test.describe("Home page", () => {
   test.beforeEach(async ({ page }) => {
-    page.setDefaultTimeout(55_555);
-    await page.goto("/");
+    await page.goto("http://localhost:3000/");
   });
 
   test("header is displayed with logo icon", async ({ page }) => {
     const header = page.getByRole("banner");
     const logo = header.getByRole("link");
-    expect(logo).toHaveAttribute("href", "/");
+    await expect(logo).toHaveAttribute("href", "/");
     expect(logo.getByRole("img").getAttribute("href")).not.toBeNull();
   });
 
   test("header is displayed with navigation links", async ({ page }) => {
     const header = page.getByRole("banner");
     const navbar = header.getByRole("navigation");
-    expect(navbar).not.toBeEmpty();
+    await expect(navbar).not.toBeEmpty();
     const navbarLinks = await navbar.getByRole("listitem").all();
 
     for (const link of navbarLinks) {
-      expect(link).not.toBeEmpty();
+      await expect(link).not.toBeEmpty();
     }
   });
   test("main content displays a list of images with clickable links", async ({
