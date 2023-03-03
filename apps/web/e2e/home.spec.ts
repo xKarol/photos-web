@@ -41,24 +41,4 @@ test.describe("Home page", () => {
   test("scroll position is preserved when closing lightbox", async ({
     page,
   }) => {});
-  test("footer is displayed with newsletter form", async ({ page }) => {});
-  test("footer is displayed with socials icons", async ({ page }) => {});
-  test("entering a valid email address in the newsletter signup form and submitting displays a confirmation message", async ({
-    page,
-  }) => {});
-  test("entering an invalid email address in the newsletter signup form and submitting displays an error message", async ({
-    page,
-  }) => {});
-  test("leaving the email field blank in the newsletter signup form and submitting displays an error messages", async ({
-    page,
-  }) => {});
-  test("loading spinner is displayed while the newsletter form is submitting", async ({
-    page,
-  }) => {});
-  test("success message is displayed after the newsletter form is submitted successfully", async ({
-    page,
-  }) => {});
-  test("error message is displayed if the is a problem submitting the newsletter form", async ({
-    page,
-  }) => {});
 });
