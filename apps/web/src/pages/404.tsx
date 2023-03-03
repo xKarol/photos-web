@@ -19,6 +19,7 @@ const Page404: NextPage = () => {
         </Heading>
         <Lottie
           className="my-5 mx-auto max-w-[500px]"
+          aria-label="no data animation"
           animationData={animation404}
           loop={true}
         />
