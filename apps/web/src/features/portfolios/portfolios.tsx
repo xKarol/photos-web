@@ -30,7 +30,10 @@ const Portfolios = () => {
   return (
     <>
       <Heading className="mb-5">Portfolios</Heading>
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <section
+        className="grid grid-cols-1 gap-5 md:grid-cols-2"
+        aria-label="portfolio gallery"
+      >
         {portfolios.map(({ id, slug, name, images }) => {
           const thumbnail = images[0];
           return (
