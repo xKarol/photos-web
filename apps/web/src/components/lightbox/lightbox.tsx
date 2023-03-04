@@ -10,6 +10,7 @@ import Photo from "../../features/photos/components/photo"; //TODO export this c
 import { getImageUrl } from "../../utils/misc";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getImagePlaceholder } from "../../utils/placeholder";
+import useScreen from "../../hooks/use-screen";
 
 type Props = {
   isOpen?: boolean;
@@ -33,6 +34,7 @@ const Lightbox = ({
   className,
 }: Props) => {
   const active = useRef<number>(initialIndex);
+  const isMobile = useScreen("sm", true);
 
   const handleClose = () => {
     onClose?.();
@@ -59,13 +61,13 @@ const Lightbox = ({
       >
         <Dialog.Overlay
           className="fixed inset-0 bg-black"
-          aria-label="dialog overlay"
+          aria-label="lightbox overlay"
         />
 
         <button
           className="fixed top-5 right-5 z-[60] cursor-pointer text-3xl text-white"
           onClick={handleClose}
-          aria-label="close"
+          aria-label="close the lightbox"
         >
           <VscClose />
         </button>
@@ -73,9 +75,10 @@ const Lightbox = ({
           showArrows
           showIndicators={false}
           showThumbs={false}
-          swipeable={false}
+          swipeable={isMobile}
+          useKeyboardArrows
           showStatus={false}
-          animationHandler="fade"
+          animationHandler={isMobile ? "slide" : "fade"}
           className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
           selectedItem={initialIndex}
           onChange={handleChange}
@@ -84,7 +87,7 @@ const Lightbox = ({
               <button
                 type="button"
                 onClick={onClickHandler}
-                aria-label="next photo"
+                aria-label="next image"
                 className="absolute inset-y-0 right-0 z-[2] hidden w-1/2 items-center justify-end p-5 text-3xl text-white sm:flex"
               >
                 <TfiAngleRight />
@@ -96,7 +99,7 @@ const Lightbox = ({
               <button
                 type="button"
                 onClick={onClickHandler}
-                aria-label="previous photo"
+                aria-label="previous image"
                 className="absolute inset-y-0 left-0 z-[2] hidden w-1/2 items-center justify-start p-5 text-3xl text-white sm:flex"
               >
                 <TfiAngleLeft />
