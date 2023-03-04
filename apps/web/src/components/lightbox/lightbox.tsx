@@ -5,6 +5,7 @@ import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 import type { Image } from "types";
 import clsx from "clsx";
 import { Carousel } from "react-responsive-carousel";
+import { NextSeo } from "next-seo";
 import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
 import { getImageUrl } from "../../utils/misc";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -47,79 +48,82 @@ const Lightbox = ({
   };
 
   return (
-    <Dialog
-      as="div"
-      className={clsx("relative z-50", className)}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onClose={() => {}}
-      open={isOpen}
-    >
-      <Dialog.Overlay
-        className="fixed inset-0 bg-black"
-        aria-label="dialog overlay"
-      />
+    <>
+      <NextSeo themeColor="#000" />
+      <Dialog
+        as="div"
+        className={clsx("relative z-50", className)}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onClose={() => {}}
+        open={isOpen}
+      >
+        <Dialog.Overlay
+          className="fixed inset-0 bg-black"
+          aria-label="dialog overlay"
+        />
 
-      <button
-        className="fixed top-5 right-5 z-[60] cursor-pointer text-3xl text-white"
-        onClick={handleClose}
-        aria-label="close"
-      >
-        <VscClose />
-      </button>
-      <Carousel
-        showArrows
-        showIndicators={false}
-        showThumbs={false}
-        swipeable={false}
-        showStatus={false}
-        animationHandler="fade"
-        className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
-        selectedItem={initialIndex}
-        onChange={handleChange}
-        renderArrowNext={(onClickHandler, hasNext) =>
-          hasNext && (
-            <button
-              type="button"
-              onClick={onClickHandler}
-              aria-label="next photo"
-              className="absolute inset-y-0 right-0 z-[2] flex w-1/2 items-center justify-end p-5 text-3xl text-white"
-            >
-              <TfiAngleRight />
-            </button>
-          )
-        }
-        renderArrowPrev={(onClickHandler, hasPrev) =>
-          hasPrev && (
-            <button
-              type="button"
-              onClick={onClickHandler}
-              aria-label="previous photo"
-              className="absolute inset-y-0 left-0 z-[2] flex w-1/2 items-center justify-start p-5 text-3xl text-white"
-            >
-              <TfiAngleLeft />
-            </button>
-          )
-        }
-      >
-        {photos.map(({ height, width, alt, id }) => (
-          <div key={id}>
-            <Photo
-              src={getImageUrl(id)}
-              alt={alt}
-              width={width}
-              height={height}
-              blurDataURL={getImagePlaceholder(id)}
-              style={{
-                width: "100%",
-                height: "auto",
-                maxHeight: "80vh",
-                objectFit: "contain",
-              }}
-            />
-          </div>
-        ))}
-      </Carousel>
-    </Dialog>
+        <button
+          className="fixed top-5 right-5 z-[60] cursor-pointer text-3xl text-white"
+          onClick={handleClose}
+          aria-label="close"
+        >
+          <VscClose />
+        </button>
+        <Carousel
+          showArrows
+          showIndicators={false}
+          showThumbs={false}
+          swipeable={false}
+          showStatus={false}
+          animationHandler="fade"
+          className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
+          selectedItem={initialIndex}
+          onChange={handleChange}
+          renderArrowNext={(onClickHandler, hasNext) =>
+            hasNext && (
+              <button
+                type="button"
+                onClick={onClickHandler}
+                aria-label="next photo"
+                className="absolute inset-y-0 right-0 z-[2] hidden w-1/2 items-center justify-end p-5 text-3xl text-white sm:flex"
+              >
+                <TfiAngleRight />
+              </button>
+            )
+          }
+          renderArrowPrev={(onClickHandler, hasPrev) =>
+            hasPrev && (
+              <button
+                type="button"
+                onClick={onClickHandler}
+                aria-label="previous photo"
+                className="absolute inset-y-0 left-0 z-[2] hidden w-1/2 items-center justify-start p-5 text-3xl text-white sm:flex"
+              >
+                <TfiAngleLeft />
+              </button>
+            )
+          }
+        >
+          {photos.map(({ height, width, alt, id }) => (
+            <div key={id}>
+              <Photo
+                src={getImageUrl(id)}
+                alt={alt}
+                width={width}
+                height={height}
+                blurDataURL={getImagePlaceholder(id)}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  maxHeight: "80vh",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
+          ))}
+        </Carousel>
+      </Dialog>
+    </>
   );
 };
 
