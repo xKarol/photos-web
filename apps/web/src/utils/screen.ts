@@ -38,9 +38,7 @@ export const calculateContainerPadding = (screenWidth: number) => {
   const paddingValues = getContainerPaddingValues();
   if (screenWidth < screensValues[screenName])
     return paddingValues["DEFAULT"] * 2;
-  return (
-    (screenWidth - screensValues[screenName] + paddingValues[screenName]) * 2
-  );
+  return paddingValues[screenName] * 2;
 };
 
 function transformObjectValuesToNumbers<T>(screens: T, replaceString = "px") {

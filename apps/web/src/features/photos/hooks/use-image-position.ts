@@ -1,20 +1,32 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useWindowSize } from "react-use";
 import type { Image } from "types";
 
 export type Options = {
   gap?: number;
   columns?: 1 | 2;
-  elementWidth?: number;
 };
 
 const useImagePositions = (images: Image[], options: Options = {}) => {
-  const { gap, columns, elementWidth } = {
+  const { gap, columns } = {
     columns: 2,
     gap: 20,
-    elementWidth: 300,
     ...options,
   };
   const columnHeights = useRef<number[]>();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [elementWidth, setElementWidth] = useState(500);
+  const { width } = useWindowSize();
+
+  const calculateElementWidth = useCallback(() => {
+    const elementWidth = containerRef.current?.clientWidth;
+    if (columns === 2) return (elementWidth - gap) / 2;
+    return elementWidth;
+  }, [columns, gap]);
+
+  useEffect(() => {
+    setElementWidth(calculateElementWidth());
+  }, [width, calculateElementWidth]);
 
   const calculatePositions = useCallback(() => {
     const heights = Array.from({ length: columns }).fill(0) as number[];
@@ -51,6 +63,7 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
   }, [gap, columns, images.length]);
 
   return {
+    ref: containerRef,
     getMaxHeight: getMaxHeight,
     positions: calculatePositions(),
   };
