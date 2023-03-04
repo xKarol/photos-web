@@ -102,7 +102,7 @@ const Lightbox = ({
         }
       >
         {photos.map(({ height, width, alt, id }) => (
-          <div key={id} className="flex h-screen items-center justify-center">
+          <div key={id}>
             <Photo
               src={getImageUrl(id)}
               alt={alt}
