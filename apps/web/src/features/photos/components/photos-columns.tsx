@@ -12,7 +12,7 @@ type Props = {
 } & React.ComponentPropsWithoutRef<"div">;
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
-  const isMobile = useScreen("sm");
+  const isMobile = useScreen("sm", true);
 
   const { positions, getMaxHeight, ref } = useImagePositions(photos, {
     gap: 50,
