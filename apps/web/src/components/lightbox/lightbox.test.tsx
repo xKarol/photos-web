@@ -20,7 +20,6 @@ const photos: API["Photos"]["GetOne"][] = [
     id: "32435",
     src: getImageUrl("32435"),
     alt: "",
-    type: "DEFAULT",
     mimeType: "image/webp",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -31,7 +30,6 @@ const photos: API["Photos"]["GetOne"][] = [
     id: "32436",
     src: getImageUrl("32436"),
     alt: "",
-    type: "DEFAULT",
     mimeType: "image/webp",
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -75,7 +73,7 @@ const setup = ({
 describe("Lightbox", () => {
   it("close button should be visible", () => {
     setup();
-    const closeButton = screen.getByLabelText("close");
+    const closeButton = screen.getByLabelText(/close/i);
     expect(closeButton).toBeInTheDocument();
   });
 
@@ -88,24 +86,24 @@ describe("Lightbox", () => {
   it("next button should not be visible when current index is last", () => {
     setup({ initialIndex: getInitialIndex(photos.length - 1) });
 
-    const nextButton = screen.queryByLabelText("next photo");
+    const nextButton = screen.queryByLabelText("next image");
     expect(nextButton).not.toBeInTheDocument();
   });
 
   it("prev button should not be visible when current index is first", () => {
     setup();
 
-    const prevButton = screen.queryByLabelText("previous photo");
+    const prevButton = screen.queryByLabelText("previous image");
     expect(prevButton).not.toBeInTheDocument();
   });
 
   it("next and prev buttons should not be visible when photos length = 0", () => {
     setup();
 
-    const nextButton = screen.queryByLabelText("next photo");
+    const nextButton = screen.queryByLabelText("next image");
     expect(nextButton).not.toBeInTheDocument();
 
-    const prevButton = screen.queryByLabelText("previous photo");
+    const prevButton = screen.queryByLabelText("previous image");
     expect(prevButton).not.toBeInTheDocument();
   });
 
@@ -116,7 +114,7 @@ describe("Lightbox", () => {
     expect(dialogElement).toBeInTheDocument();
 
     const { click } = userEvent.setup();
-    const closeButton = screen.getByLabelText("close");
+    const closeButton = screen.getByLabelText(/close/i);
     await click(closeButton);
 
     expect(dialogElement).not.toBeInTheDocument();
@@ -128,7 +126,7 @@ describe("Lightbox", () => {
     const dialogElement = screen.getByRole("dialog");
     expect(dialogElement).toBeInTheDocument();
 
-    const overlayElement = screen.getByLabelText("dialog overlay");
+    const overlayElement = screen.getByLabelText("lightbox overlay");
     expect(overlayElement).toBeInTheDocument();
 
     fireEvent.click(overlayElement);
@@ -149,7 +147,7 @@ describe("Lightbox", () => {
       imageElements[initialIndex + 1].classList.contains("selected")
     ).toBeFalsy();
 
-    const nextButton = screen.getByLabelText("next photo");
+    const nextButton = screen.getByLabelText("next image");
 
     const { click } = userEvent.setup();
     await click(nextButton);
@@ -173,7 +171,7 @@ describe("Lightbox", () => {
       imageElements[initialIndex - 1].classList.contains("selected")
     ).toBeFalsy();
 
-    const prevButton = screen.getByLabelText("previous photo");
+    const prevButton = screen.getByLabelText("previous image");
 
     const { click } = userEvent.setup();
     await click(prevButton);
@@ -197,7 +195,7 @@ describe("Lightbox", () => {
     setup({ photos, initialIndex: getInitialIndex(0) });
     const imageElements = screen.getAllByRole("img");
     const { click } = userEvent.setup();
-    const nextButton = screen.getByLabelText("next photo");
+    const nextButton = screen.getByLabelText("next image");
 
     // @ts-expect-error
     for (const [index] of photos.entries()) {
@@ -219,7 +217,7 @@ describe("Lightbox", () => {
     const onClickNext = jest.fn();
     setup({ photos, onClickNext: onClickNext });
 
-    const nextButton = screen.getByLabelText("next photo");
+    const nextButton = screen.getByLabelText("next image");
 
     const { click } = userEvent.setup();
     await click(nextButton);
@@ -235,7 +233,7 @@ describe("Lightbox", () => {
       onClickPrev: onClickPrev,
     });
 
-    const prevButton = screen.getByLabelText("previous photo");
+    const prevButton = screen.getByLabelText("previous image");
 
     const { click } = userEvent.setup();
     await click(prevButton);
@@ -248,7 +246,7 @@ describe("Lightbox", () => {
     const onClickPrev = jest.fn();
     setup({ photos, onClickNext: onClickNext, onClickPrev: onClickPrev });
 
-    const nextButton = screen.getByLabelText("next photo");
+    const nextButton = screen.getByLabelText("next image");
 
     const { click } = userEvent.setup();
     await click(nextButton);
@@ -266,7 +264,7 @@ describe("Lightbox", () => {
       onClickPrev: onClickPrev,
     });
 
-    const prevButton = screen.getByLabelText("previous photo");
+    const prevButton = screen.getByLabelText("previous image");
 
     const { click } = userEvent.setup();
     await click(prevButton);
