@@ -3,14 +3,14 @@ import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { faker } from "@faker-js/faker";
 import { rest } from "msw";
-import { Contact } from "../index";
+import ContactForm from "../components/form";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 
 const setup = () =>
   render(
     <QueryClientProvider client={queryClient}>
-      <Contact />
+      <ContactForm />
     </QueryClientProvider>
   );
 
@@ -68,9 +68,9 @@ describe("Contact", () => {
 
     const { type, click } = userEvent.setup();
 
+    await click(getSubmitElement());
     const inputElements = getInputElements();
     await type(inputElements[0], faker.name.firstName());
-    await click(getSubmitElement());
 
     const errors = await screen.findAllByRole("alert");
     expect(errors.length).toBe(inputElements.length - 1);
