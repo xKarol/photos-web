@@ -1,19 +1,12 @@
+/* eslint-disable jest/no-mocks-import */
+import "../../__mocks__/next-image";
+import "../../__mocks__/intersection-observer";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { API } from "types";
 import { getImageUrl } from "../../utils/misc";
-// eslint-disable-next-line jest/no-mocks-import
-import "../../__mocks__/intersection-observer";
 import Lightbox from "./index";
-
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: ({ src, alt }: { src: string; alt: string }) => {
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-    return <img src={src} alt={alt} />;
-  },
-})); //TODO move this mock to mocks folder
 
 const photos: API["Photos"]["GetOne"][] = [
   {
