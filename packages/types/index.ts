@@ -30,8 +30,8 @@ export type API = {
     GetPlaceholder: ArrayBuffer;
   };
   Newsletter: {
-    Subscribe: NewsletterSubscriber;
-    CreateTemplate: NewsletterTemplate;
+    Subscribe: ReturnStatus;
+    Unsubscribe: ReturnStatus;
   };
   Photos: {
     Create: Image;

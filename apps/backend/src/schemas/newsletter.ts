@@ -6,9 +6,3 @@ export const subscribeNewsletter = z.object({
 });
 
 export type SubscribeNewsletter = z.infer<typeof subscribeNewsletter>;
-
-export const createNewsletterTemplate = z.object({
-  body: Schema.createNewsletterTemplate,
-});
-
-export type CreateNewsletterTemplate = z.infer<typeof createNewsletterTemplate>;
