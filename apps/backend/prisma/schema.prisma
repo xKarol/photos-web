@@ -7,34 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model NewsletterSubscriber {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model NewsletterTemplate {
-  id        String   @id @default(cuid())
-  subject   String
-  content   String
-  delivered Boolean  @default(false)
-  sendAt    DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Image {
-  id          String       @id @unique
-  src         String       @unique
-  alt         String
-  mimeType    String
-  height      Int
-  width       Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  Portfolios  Portfolios[]
-  Photos      Photos[]
+  id         String       @id @unique
+  src        String       @unique
+  alt        String
+  mimeType   String
+  height     Int
+  width      Int
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Portfolios Portfolios[]
+  Photos     Photos[]
 }
 
 model Photos {
