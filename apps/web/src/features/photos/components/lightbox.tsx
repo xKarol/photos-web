@@ -1,17 +1,16 @@
-import { useRouter } from "next/router";
 import React from "react";
 import LightboxComponent from "../../../components/lightbox";
 import { usePhotos } from "../hooks/use-photos";
+import useLightbox from "../../../hooks/use-lightbox";
 
 const Lightbox = () => {
-  const { query, push } = useRouter();
   const { fetchNextPage, data: photos } = usePhotos();
-  const selectedIndex = Number(query?.selected);
+  const { selectedIndex, handleClose } = useLightbox();
 
   if (selectedIndex)
     return (
       <LightboxComponent
-        setIsOpen={() => push("/", undefined, { shallow: true })}
+        onClose={handleClose}
         initialIndex={selectedIndex - 1}
         isOpen={true}
         photos={photos}

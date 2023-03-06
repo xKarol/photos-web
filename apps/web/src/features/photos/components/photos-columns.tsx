@@ -6,6 +6,7 @@ import { getImageUrl } from "../../../utils/misc";
 import useImagePositions from "../hooks/use-image-position";
 import { getImagePlaceholder } from "../../../utils/placeholder";
 import useScreen from "../../../hooks/use-screen";
+import useLightbox from "../../../hooks/use-lightbox";
 
 type Props = {
   photos?: ImageType[];
@@ -13,11 +14,11 @@ type Props = {
 
 const PhotosColumns = ({ photos = [], ...props }: Props) => {
   const isMobile = useScreen("sm", true);
-
   const { positions, getMaxHeight, ref } = useImagePositions(photos, {
     gap: 50,
     columns: isMobile ? 1 : 2,
   });
+  const { getLinkProps } = useLightbox();
 
   return (
     <div
@@ -29,8 +30,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       {photos.map(({ id, alt }, index) => (
         <Link
           key={id}
-          href={`?selected=${index + 1}`}
-          shallow={true}
+          {...getLinkProps(index)}
           className="absolute"
           style={positions[index]}
         >
