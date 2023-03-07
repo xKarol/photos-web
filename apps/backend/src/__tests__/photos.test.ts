@@ -3,15 +3,16 @@ import app from "../app";
 import { prisma } from "../lib/prisma";
 import "../mocks/cloudinary";
 import "../mocks/auth";
+import { createPhoto } from "../services/photos";
+// eslint-disable-next-line import/order
+import { faker } from "@faker-js/faker";
 
 jest.mock("../middlewares/require-auth");
 
 const request = supertest(app);
 
 describe("Photos", () => {
-  let id: string;
-
-  beforeAll(async () => {
+  afterAll(async () => {
     await prisma.photos.deleteMany({});
   });
 
@@ -24,13 +25,29 @@ describe("Photos", () => {
         .expect(200);
 
       // TODO zod parse
-      id = body.id;
       expect(body).not.toBeEmptyObject();
     });
-    // TODO testing when file or alt was not provided
+    it("should return error when alt and file was not provided", async () => {
+      await request.post("/photos").expect(400);
+      //TODO error object parse with zod
+    });
+    it("should return error when file was not provided", async () => {
+      await request.post("/photos").field("alt", "test").expect(400);
+      //TODO error object parse with zod
+    });
+    it("should return error when alt was not provided", async () => {
+      await request
+        .post("/photos")
+        .attach("image", Buffer.from("test", "base64"), "test.jpg")
+        .expect(400);
+      //TODO error object parse with zod
+    });
   });
   describe("GET /photos/:photoId", () => {
     it("should return valid photo data", async () => {
+      const id = faker.database.mongodbObjectId();
+      await createPhotoRecord(id);
+
       const { body } = await request.get(`/photos/${id}`).expect(200);
 
       // TODO zod parse
@@ -55,6 +72,8 @@ describe("Photos", () => {
   });
   describe("DELETE /photos/:photoId", () => {
     it("should delete photo", async () => {
+      const id = faker.database.mongodbObjectId();
+      await createPhotoRecord(id);
       const { body } = await request.delete(`/photos/${id}`).expect(200);
       expect(body).toBeEmptyObject();
 
@@ -69,3 +88,14 @@ describe("Photos", () => {
     });
   });
 });
+
+async function createPhotoRecord(id: string) {
+  await createPhoto({
+    id: id,
+    src: faker.internet.url(),
+    alt: faker.lorem.word(),
+    height: 100,
+    width: 100,
+    mimeType: "image/webp",
+  });
+}
