@@ -25,14 +25,17 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
   }, [columns, gap]);
 
   useEffect(() => {
-    setElementWidth(calculateElementWidth());
+    if (containerRef.current) {
+      setElementWidth(calculateElementWidth());
+    }
   }, [width, calculateElementWidth]);
 
   const calculatePositions = useCallback(() => {
     const heights = Array.from({ length: columns }).fill(0) as number[];
 
-    return images.map((image) => {
-      const columnIndex = heights.indexOf(Math.min(...heights));
+    return images.map((image, index) => {
+      const columnIndex = index % heights.length;
+
       const top = heights[columnIndex];
       const height = adjustHeight(image.width, image.height, elementWidth);
       heights[columnIndex] += height + gap;
