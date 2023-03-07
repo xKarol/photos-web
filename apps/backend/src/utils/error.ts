@@ -1,5 +1,6 @@
 import createError from "http-errors";
 import { ZodError } from "zod";
+import { ErrorSchema } from "../schemas/error";
 
 function getErrorMessage(error: unknown) {
   if (error instanceof ZodError) return error.errors[0].message;
@@ -12,7 +13,7 @@ export type ReportError = {
   message: string;
 };
 
-export const reportError = (error: unknown) => {
+export const reportError = (error: unknown): ErrorSchema => {
   const message = getErrorMessage(error);
   const status: number =
     error instanceof createError.HttpError ? error.statusCode : 400;
