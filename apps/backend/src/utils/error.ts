@@ -15,10 +15,12 @@ export type ReportError = {
 
 export const reportError = (error: unknown): ErrorSchema => {
   const message = getErrorMessage(error);
-  const status: number =
-    error instanceof createError.HttpError ? error.statusCode : 400;
+  const errorData = error instanceof createError.HttpError ? error : undefined;
+  const status: number = errorData ? errorData.statusCode : 400;
+  const stack = errorData ? errorData.stack : undefined;
   return {
     status,
     message,
+    ...(process.env.NODE_ENV !== "production" && { stack }),
   };
 };
