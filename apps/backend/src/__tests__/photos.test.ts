@@ -1,12 +1,11 @@
+import { faker } from "@faker-js/faker";
 import supertest from "supertest";
 import app from "../app";
 import { prisma } from "../lib/prisma";
 import "../mocks/cloudinary";
 import "../mocks/auth";
 import { createPhoto } from "../services/photos";
-// eslint-disable-next-line import/order
-import { faker } from "@faker-js/faker";
-import { errorSchema } from "../schemas/error";
+import { parseError } from "./utils";
 
 jest.mock("../middlewares/require-auth");
 
@@ -107,8 +106,4 @@ async function createPhotoRecord() {
     mimeType: "image/webp",
   });
   return id;
-}
-
-function parseError(body: unknown) {
-  return errorSchema.safeParse(body).success;
 }
