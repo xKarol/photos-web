@@ -6,6 +6,7 @@ import "../mocks/auth";
 import { createPhoto } from "../services/photos";
 // eslint-disable-next-line import/order
 import { faker } from "@faker-js/faker";
+import { errorSchema } from "../schemas/error";
 
 jest.mock("../middlewares/require-auth");
 
@@ -24,40 +25,45 @@ describe("Photos", () => {
         .field("alt", "test")
         .expect(200);
 
-      // TODO zod parse
       expect(body).not.toBeEmptyObject();
     });
+
     it("should return error when alt and file was not provided", async () => {
-      await request.post("/photos").expect(400);
-      //TODO error object parse with zod
+      const { body } = await request.post("/photos").expect(400);
+      expect(parseError(body)).toBe(true);
     });
+
     it("should return error when file was not provided", async () => {
-      await request.post("/photos").field("alt", "test").expect(400);
-      //TODO error object parse with zod
+      const { body } = await request
+        .post("/photos")
+        .field("alt", "test")
+        .expect(400);
+      expect(parseError(body)).toBe(true);
     });
+
     it("should return error when alt was not provided", async () => {
-      await request
+      const { body } = await request
         .post("/photos")
         .attach("image", Buffer.from("test", "base64"), "test.jpg")
         .expect(400);
-      //TODO error object parse with zod
+
+      expect(parseError(body)).toBe(true);
     });
   });
+
   describe("GET /photos/:photoId", () => {
     it("should return valid photo data", async () => {
-      const id = faker.database.mongodbObjectId();
-      await createPhotoRecord(id);
-
+      const id = await createPhotoRecord();
       const { body } = await request.get(`/photos/${id}`).expect(200);
-
-      // TODO zod parse
       expect(body).not.toBeEmptyObject();
     });
+
     it("should throw error when photo not exist", async () => {
       const { body } = await request.get("/photos/invalidPhotoId").expect(404);
-      expect(body).toMatchObject({ message: /photo not found/i });
+      expect(parseError(body)).toBe(true);
     });
   });
+
   describe("GET /photos", () => {
     it("should return valid photos data", async () => {
       const { body } = await request.get(`/photos`).expect(200);
@@ -70,26 +76,28 @@ describe("Photos", () => {
     });
     // TODO add more pagination tests
   });
+
   describe("DELETE /photos/:photoId", () => {
     it("should delete photo", async () => {
-      const id = faker.database.mongodbObjectId();
-      await createPhotoRecord(id);
+      const id = await createPhotoRecord();
       const { body } = await request.delete(`/photos/${id}`).expect(200);
       expect(body).toBeEmptyObject();
 
       const isExist = !!(await prisma.photos.count({ where: { imageId: id } }));
       expect(isExist).toBe(false);
     });
+
     it("should throw error when photo not exist", async () => {
       const { body } = await request
         .delete("/photos/invalidPhotoId")
         .expect(404);
-      expect(body).toMatchObject({ message: /photo not found/i });
+      expect(parseError(body)).toBe(true);
     });
   });
 });
 
-async function createPhotoRecord(id: string) {
+async function createPhotoRecord() {
+  const id = faker.database.mongodbObjectId();
   await createPhoto({
     id: id,
     src: faker.internet.url(),
@@ -98,4 +106,9 @@ async function createPhotoRecord(id: string) {
     width: 100,
     mimeType: "image/webp",
   });
+  return id;
+}
+
+function parseError(body: unknown) {
+  return errorSchema.safeParse(body).success;
 }
