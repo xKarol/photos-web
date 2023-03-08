@@ -24,7 +24,6 @@ test.describe("Portfolios page", () => {
       .getByRole("link")
       .first();
     await linkElement.click();
-    await page.getByRole("link", { name: "repellat" }).click();
     await page.waitForURL(`**${await linkElement.getAttribute("href")}`);
   });
 });
