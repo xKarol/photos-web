@@ -4,10 +4,12 @@ import Heading from "../../components/heading";
 import ImagesList from "./components/images-list";
 import usePortfolio from "./hooks/use-portfolio";
 import usePortfolioPage from "./hooks/use-portfolio-page";
+import useLightbox from "../../hooks/use-lightbox";
 
 const PortfolioImages = () => {
   const { slug } = usePortfolioPage();
   const { data, isError, isFetching, refetch } = usePortfolio(slug);
+  const { Lightbox } = useLightbox();
 
   return (
     <>
@@ -22,6 +24,7 @@ const PortfolioImages = () => {
         <>
           <Heading className="mb-5">{data.name}</Heading>
           <ImagesList />
+          <Lightbox photos={data.images} />;
         </>
       )}
     </>

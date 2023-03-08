@@ -6,7 +6,6 @@ import { Footer } from "../features/footer";
 import Layout from "../components/layout";
 import { getPortfolio, getPortfolios } from "../services/portfolios";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
-import Lightbox from "../features/portfolios/components/lightbox";
 import { PortfolioImages } from "../features/portfolios";
 import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
 
@@ -49,7 +48,6 @@ const PortfolioIndexPage: NextPage = () => {
       <Layout>
         <PortfolioImages />
       </Layout>
-      <Lightbox />
       <Footer />
     </>
   );

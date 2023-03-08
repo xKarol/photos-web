@@ -2,8 +2,8 @@ import React from "react";
 import Spinner from "../../components/spinner";
 import PhotosColumns from "./components/photos-columns";
 import EmptyState from "../../components/empty-state";
-import Lightbox from "./components/lightbox";
 import { usePhotosRef } from "./hooks/use-photos-ref";
+import useLightbox from "../../hooks/use-lightbox";
 
 const Photos = () => {
   const {
@@ -15,6 +15,7 @@ const Photos = () => {
     isLoading,
     refetch,
   } = usePhotosRef();
+  const { Lightbox } = useLightbox();
   const isEmptyState = !photos?.[0]?.id;
 
   return (
@@ -48,7 +49,13 @@ const Photos = () => {
           </>
         )}
       </section>
-      <Lightbox />
+
+      <Lightbox
+        photos={photos}
+        onClickNext={(currentIndex, lastIndex) => {
+          if (lastIndex - currentIndex <= 1) fetchNextPage();
+        }}
+      />
     </>
   );
 };

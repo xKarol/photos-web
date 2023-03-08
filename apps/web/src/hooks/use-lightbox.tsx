@@ -1,6 +1,7 @@
 import type { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+import { default as LightboxComponent } from "../components/lightbox";
 
 const useLightbox = () => {
   const router = useRouter();
@@ -37,7 +38,30 @@ const useLightbox = () => {
     [router.query]
   );
 
-  return { selectedIndex, handleClose, getLinkProps };
+  const Lightbox = useCallback(
+    (props: React.ComponentProps<typeof LightboxComponent>) => {
+      return (
+        <>
+          {selectedIndex ? (
+            <LightboxComponent
+              onClose={handleClose}
+              initialIndex={selectedIndex - 1}
+              isOpen={true}
+              {...props}
+            />
+          ) : null}
+        </>
+      );
+    },
+    [handleClose, selectedIndex]
+  );
+
+  return {
+    selectedIndex,
+    handleClose,
+    getLinkProps,
+    Lightbox,
+  };
 };
 
 export default useLightbox;
