@@ -8,6 +8,7 @@ import { getPortfolio, getPortfolios } from "../services/portfolios";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 import { PortfolioImages } from "../features/portfolios";
 import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
+import { portfolioKeys } from "../features/portfolios/queries";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -23,7 +24,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const queryClient = new QueryClient();
   const slug = ctx.params?.portfolioSlug as string;
   try {
-    await queryClient.fetchQuery(["portfolio", slug], () => getPortfolio(slug));
+    await queryClient.fetchQuery(portfolioKeys.one(slug), () =>
+      getPortfolio(slug)
+    );
   } catch {
     return {
       notFound: true,

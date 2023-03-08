@@ -6,12 +6,13 @@ import { Footer } from "../features/footer";
 import { getPortfolios } from "../services/portfolios";
 import Layout from "../components/layout";
 import { Portfolios } from "../features/portfolios";
+import { portfolioKeys } from "../features/portfolios/queries";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["portfolio"],
+    queryKey: portfolioKeys.all,
     queryFn: ({ pageParam = 1 }) => getPortfolios(pageParam),
     getNextPageParam: ({ nextPage }) => nextPage,
   });

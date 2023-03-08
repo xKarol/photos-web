@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPortfolio } from "../../../services/portfolios";
+import { portfolioKeys } from "../queries";
 
 const usePortfolio = (slug: string) => {
-  const { data, ...rest } = useQuery(["portfolio", slug], () =>
+  const { data, ...rest } = useQuery(portfolioKeys.one(slug), () =>
     getPortfolio(slug)
   );
   const { images = [], ...restData } = data || {};

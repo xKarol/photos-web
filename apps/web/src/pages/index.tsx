@@ -6,12 +6,13 @@ import { Footer } from "../features/footer";
 import { Photos } from "../features/photos";
 import { getPhotos } from "../services/photos";
 import Layout from "../components/layout";
+import { photoKeys } from "../features/photos/queries";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["photos"],
+    queryKey: photoKeys.all,
     queryFn: ({ pageParam = 1 }) => getPhotos(pageParam),
     getNextPageParam: ({ nextPage }) => nextPage,
   });

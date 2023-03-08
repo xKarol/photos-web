@@ -1,6 +1,7 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { Image, Pagination, Portfolios } from "types";
 import { getPortfolios } from "../../../services/portfolios";
+import { portfolioKeys } from "../queries";
 
 const transformData = (
   data: InfiniteData<
@@ -16,7 +17,7 @@ const transformData = (
 
 const usePortfolios = () => {
   const response = useInfiniteQuery({
-    queryKey: ["portfolio"],
+    queryKey: portfolioKeys.all,
     queryFn: ({ pageParam = 1 }) => getPortfolios(pageParam ?? 1),
     getNextPageParam: ({ nextPage }) => nextPage,
   });
