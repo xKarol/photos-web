@@ -2,8 +2,6 @@ import Link from "next/link";
 import React from "react";
 import EmptyState from "../../components/empty-state";
 import Heading from "../../components/heading";
-import { getImageUrl } from "../../utils/misc";
-import { getImagePlaceholder } from "../../utils/placeholder";
 import ImageCaption from "./components/image-caption";
 import usePortfolios from "./hooks/use-portfolios";
 
@@ -39,11 +37,10 @@ const Portfolios = () => {
           return (
             <Link key={id} href={`/${slug}`}>
               <ImageCaption
-                className=" h-[450px] w-full md:h-[250px]"
+                id={thumbnail.id}
+                className="h-[450px] w-full md:h-[250px]"
                 caption={name}
                 alt={thumbnail.alt}
-                src={getImageUrl(thumbnail.id)}
-                blurDataURL={getImagePlaceholder(thumbnail.id)}
               />
             </Link>
           );

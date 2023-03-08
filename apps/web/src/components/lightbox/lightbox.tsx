@@ -6,11 +6,9 @@ import type { Image } from "types";
 import clsx from "clsx";
 import { Carousel } from "react-responsive-carousel";
 import { NextSeo } from "next-seo";
-import Photo from "../../features/photos/components/photo"; //TODO export this component to /components dir
-import { getImageUrl } from "../../utils/misc";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { getImagePlaceholder } from "../../utils/placeholder";
 import useScreen from "../../hooks/use-screen";
+import { Photo } from "../photo";
 
 type Props = {
   isOpen?: boolean;
@@ -110,11 +108,10 @@ const Lightbox = ({
           {photos.map(({ height, width, alt, id }) => (
             <div key={id}>
               <Photo
-                src={getImageUrl(id)}
+                id={id}
                 alt={alt}
                 width={width}
                 height={height}
-                blurDataURL={getImagePlaceholder(id)}
                 style={{
                   width: "100%",
                   height: "auto",

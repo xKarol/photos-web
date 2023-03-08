@@ -1,11 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import Photo from "../../../features/photos/components/photo";
-import { getImageUrl } from "../../../utils/misc";
-import { getImagePlaceholder } from "../../../utils/placeholder";
 import usePortfolio from "../hooks/use-portfolio";
 import usePortfolioPage from "../hooks/use-portfolio-page";
 import useLightbox from "../../../hooks/use-lightbox";
+import { Photo } from "../../../components/photo";
 
 const ImagesList = () => {
   const { slug } = usePortfolioPage();
@@ -17,16 +15,14 @@ const ImagesList = () => {
       {data.images.map(({ id, alt, height, width }, index) => (
         <Link key={id} {...getLinkProps(index)}>
           <Photo
+            id={id}
             alt={alt}
-            src={getImageUrl(id)}
             height={height}
             width={width}
-            blurDataURL={getImagePlaceholder(id)}
             style={{
               width: "100%",
               maxHeight: "1200px",
               objectFit: "cover",
-              cursor: "pointer",
             }}
           />
         </Link>

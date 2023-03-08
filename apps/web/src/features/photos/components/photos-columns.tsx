@@ -1,12 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import type { Image as ImageType } from "types";
-import Image from "next/image";
-import { getImageUrl } from "../../../utils/misc";
 import useImagePositions from "../hooks/use-image-position";
-import { getImagePlaceholder } from "../../../utils/placeholder";
 import useScreen from "../../../hooks/use-screen";
 import useLightbox from "../../../hooks/use-lightbox";
+import { Photo } from "../../../components/photo";
 
 type Props = {
   photos?: ImageType[];
@@ -34,11 +32,9 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
           className="absolute"
           style={positions[index]}
         >
-          <Image
-            src={getImageUrl(id)}
+          <Photo
+            id={id}
             alt={alt}
-            placeholder="blur"
-            blurDataURL={getImagePlaceholder(id)}
             fill
             sizes="(max-width: 768px) 95vw,
               40vw"
