@@ -6,7 +6,7 @@ declare global {
 }
 
 const isProduction = (process.env.NODE_ENV as string) === "production";
-const isDevelopment = (process.env.NODE_ENV as string) === "dev";
+const isDevelopment = (process.env.NODE_ENV as string) === "development";
 
 export const prisma =
   global.prisma ||

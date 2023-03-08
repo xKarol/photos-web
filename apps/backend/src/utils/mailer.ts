@@ -27,7 +27,7 @@ export const sendEmail = async (options: SendMailOptions) => {
         if (error) return reject(error);
         resolve(info);
 
-        if (process.env.NODE_ENV === "dev") {
+        if (process.env.NODE_ENV === "development") {
           console.log(
             `Send Mail -> [${
               info.messageId
