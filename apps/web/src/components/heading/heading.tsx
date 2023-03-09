@@ -1,16 +1,29 @@
 import React from "react";
 import clsx from "clsx";
 
-type Props = React.ComponentPropsWithoutRef<"h1">;
+type AllowedElements = keyof Pick<
+  HTMLElementTagNameMap,
+  "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+>;
 
-const Heading = ({ children, className, ...props }: Props) => {
+export type HeadingProps<C extends AllowedElements> = {
+  as?: C;
+} & React.ComponentPropsWithoutRef<C>;
+
+const Heading = <C extends AllowedElements = "h1">({
+  as,
+  children,
+  className,
+  ...props
+}: HeadingProps<C>) => {
+  const Component = as || "h1";
   return (
-    <h1
+    <Component
       className={clsx("text-4xl font-light uppercase text-black", className)}
       {...props}
     >
       {children}
-    </h1>
+    </Component>
   );
 };
 
