@@ -4,7 +4,7 @@ import { NextSeo } from "next-seo";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
-import { getPortfolios } from "../services/portfolios";
+import { getPortfolios } from "../features/portfolios/services/portfolios";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 import { PortfolioImages } from "../features/portfolios";
 import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";

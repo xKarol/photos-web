@@ -3,7 +3,7 @@ import type {
   UseQueryOptions,
 } from "@tanstack/react-query";
 import type { API } from "types";
-import { getPortfolio, getPortfolios } from "../../../services/portfolios";
+import { getPortfolio, getPortfolios } from "../services/portfolios";
 import { queryKeys } from "./query-keys";
 
 const portfoliosOptions: FetchInfiniteQueryOptions<API["Portfolios"]["Get"]> = {

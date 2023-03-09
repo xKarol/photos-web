@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { newsletter as Schema } from "schemas";
-import { newsletterSubscribe } from "../../../services/newsletter";
+import { newsletterSubscribe } from "../services/newsletter";
 
 const useNewsletter = () => {
   const [email, setEmail] = useState("");
