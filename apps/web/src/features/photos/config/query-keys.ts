@@ -1,3 +1,3 @@
-export const photoKeys = {
+export const queryKeys = {
   all: ["photos"] as const,
 };
