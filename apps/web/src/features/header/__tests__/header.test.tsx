@@ -68,7 +68,7 @@ describe("Header", () => {
     it("hamburger should not be visible", () => {
       setup();
 
-      const hamburger = screen.getByLabelText(/hamburger/i).parentElement;
+      const hamburger = screen.getByLabelText(/hamburger/i);
       expect(hamburger).not.toBeVisible();
     });
   });
