@@ -1,26 +1,13 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-import { Image, Pagination, Portfolios } from "types";
-import { getPortfolios } from "../../../services/portfolios";
-import { portfolioKeys } from "../queries";
+import { API } from "types";
+import { queryOptions } from "../config/query-options";
 
-const transformData = (
-  data: InfiniteData<
-    Pagination<
-      (Portfolios & {
-        images: Image[];
-      })[]
-    >
-  >
-) => {
+const transformData = (data: InfiniteData<API["Portfolios"]["Get"]>) => {
   return data?.pages.flatMap(({ data }) => data) || [];
 };
 
 const usePortfolios = () => {
-  const response = useInfiniteQuery({
-    queryKey: portfolioKeys.all,
-    queryFn: ({ pageParam = 1 }) => getPortfolios(pageParam ?? 1),
-    getNextPageParam: ({ nextPage }) => nextPage,
-  });
+  const response = useInfiniteQuery(queryOptions.all);
   return { ...response, data: transformData(response.data) };
 };
 

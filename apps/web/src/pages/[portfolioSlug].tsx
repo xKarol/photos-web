@@ -4,11 +4,11 @@ import { NextSeo } from "next-seo";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import Layout from "../components/layout";
-import { getPortfolio, getPortfolios } from "../services/portfolios";
+import { getPortfolios } from "../services/portfolios";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 import { PortfolioImages } from "../features/portfolios";
 import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
-import { portfolioKeys } from "../features/portfolios/queries";
+import { queryOptions } from "../features/portfolios/config/query-options";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();
@@ -24,9 +24,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const queryClient = new QueryClient();
   const slug = ctx.params?.portfolioSlug as string;
   try {
-    await queryClient.fetchQuery(portfolioKeys.one(slug), () =>
-      getPortfolio(slug)
-    );
+    await queryClient.fetchQuery(queryOptions.one(slug));
   } catch {
     return {
       notFound: true,
