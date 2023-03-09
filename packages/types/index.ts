@@ -1,10 +1,4 @@
-import {
-  Contact,
-  Image,
-  NewsletterSubscriber,
-  NewsletterTemplate,
-  Portfolios,
-} from "backend/src/lib/prisma";
+import { Contact, Image, Portfolios } from "backend/src/lib/prisma";
 
 export type Pagination<T> = {
   data: T;
@@ -31,7 +25,6 @@ export type API = {
   };
   Newsletter: {
     Subscribe: ReturnStatus;
-    Unsubscribe: ReturnStatus;
   };
   Photos: {
     Create: Image;
