@@ -4,18 +4,12 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { Header } from "../features/header";
 import { Footer } from "../features/footer";
 import { Photos } from "../features/photos";
-import { getPhotos } from "../services/photos";
 import Layout from "../components/layout";
-import { photoKeys } from "../features/photos/queries";
+import { queryOptions } from "../features/photos/config/query-options";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
-
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: photoKeys.all,
-    queryFn: ({ pageParam = 1 }) => getPhotos(pageParam),
-    getNextPageParam: ({ nextPage }) => nextPage,
-  });
+  await queryClient.prefetchInfiniteQuery(queryOptions.all);
 
   return {
     props: {
