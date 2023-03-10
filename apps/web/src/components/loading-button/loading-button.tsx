@@ -10,7 +10,7 @@ export type LoadingButtonProps = {
 const LoadingButton = ({
   children,
   className,
-  LoadingComponent = <Spinner color="black" />,
+  LoadingComponent = <Spinner color="white" />,
   isLoading = false,
   ...rest
 }: LoadingButtonProps) => {
