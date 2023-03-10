@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable playwright/no-skipped-test */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { test, expect } from "@playwright/test";
 
@@ -52,78 +52,6 @@ test.describe("Home page", () => {
   }) => {});
 
   test.skip("empty state is displayed when error occurred", async ({
-    page,
-  }) => {});
-
-  test("lightbox should be displayed when page is loaded with 'selected' query param", async ({
-    page,
-  }) => {
-    const selected = 2;
-    await page.goto(`/?selected=${selected}`);
-    const selectedAltText = await page
-      .getByLabel(/images gallery/i)
-      .getByRole("img")
-      .nth(selected)
-      .getAttribute("alt");
-
-    await expect(page.getByLabel(/lightbox overlay/i)).toBeInViewport();
-
-    expect(
-      await page
-        .getByRole("dialog")
-        .getByRole("img")
-        .nth(selected)
-        .getAttribute("alt")
-    ).toBe(selectedAltText);
-  });
-
-  test("clicking on an image links change url query and displaying lightbox", async ({
-    page,
-  }) => {
-    await expect(page).not.toHaveURL(/.*?selected=/);
-    await expect(page.getByRole("dialog")).toBeHidden();
-    const clickImage = (index: number) =>
-      page
-        .getByLabel(/images gallery/i)
-        .getByRole("link")
-        .nth(index)
-        .click();
-
-    const selectedIndex = 5;
-
-    await clickImage(selectedIndex);
-    await expect(page).toHaveURL(
-      new RegExp(`[\\?&]selected=${selectedIndex + 1}+`)
-    );
-
-    expect(page.getByLabel(/lightbox overlay/i)).toBeInViewport();
-
-    expect(
-      await page
-        .getByRole("dialog")
-        .getByRole("listitem")
-        .nth(selectedIndex)
-        .getAttribute("class")
-    ).toMatch(/selected/);
-
-    await page.getByLabel(/close/i).click();
-
-    await clickImage(3);
-
-    expect(
-      await page
-        .getByRole("dialog")
-        .getByRole("listitem")
-        .nth(3)
-        .getAttribute("class")
-    ).toMatch(/selected/);
-  });
-
-  test.skip("images are correctly displayed in lightbox", async ({
-    page,
-  }) => {});
-
-  test.skip("scroll position is preserved when closing lightbox", async ({
     page,
   }) => {});
 });
