@@ -24,6 +24,7 @@ const ContactForm = (props: Props) => {
     <form
       className="relative flex flex-col space-y-[25px]"
       onSubmit={handleSubmit}
+      aria-label="contact us form"
       {...props}
     >
       <div className="mb-3">
