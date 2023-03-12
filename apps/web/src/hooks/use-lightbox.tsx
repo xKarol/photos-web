@@ -1,7 +1,11 @@
+import dynamic from "next/dynamic";
 import type { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { default as LightboxComponent } from "../components/lightbox";
+
+const LazyLightboxComponent = dynamic(() => import("../components/lightbox"), {
+  ssr: false,
+});
 
 const useLightbox = () => {
   const router = useRouter();
@@ -39,11 +43,11 @@ const useLightbox = () => {
   );
 
   const Lightbox = useCallback(
-    (props: React.ComponentProps<typeof LightboxComponent>) => {
+    (props: React.ComponentProps<typeof LazyLightboxComponent>) => {
       return (
         <>
           {selectedIndex ? (
-            <LightboxComponent
+            <LazyLightboxComponent
               onClose={handleClose}
               initialIndex={selectedIndex - 1}
               isOpen={true}
