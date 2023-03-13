@@ -5,7 +5,7 @@ import { getPhotos } from "../services/photos";
 
 const portfoliosOptions: FetchInfiniteQueryOptions<API["Photos"]["Get"]> = {
   queryKey: queryKeys.all,
-  queryFn: ({ pageParam = 1 }) => getPhotos(pageParam ?? 1),
+  queryFn: ({ pageParam = 1 }) => getPhotos(pageParam ?? 1, 5),
   getNextPageParam: ({ nextPage }) => nextPage,
 };
 
