@@ -37,7 +37,7 @@ const Portfolios = () => {
           return (
             <Link key={id} href={`/${slug}`}>
               <ImageCaption
-                id={thumbnail.id}
+                src={thumbnail.src}
                 className="h-[450px] w-full md:h-[250px]"
                 caption={name}
                 alt={thumbnail.alt}

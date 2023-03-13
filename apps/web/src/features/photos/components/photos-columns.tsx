@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import type { Image as ImageType } from "types";
+import Image from "next/image";
 import useImagePositions from "../hooks/use-image-position";
 import useScreen from "../../../hooks/use-screen";
 import useLightbox from "../../../hooks/use-lightbox";
-import { Photo } from "../../../components/photo";
 
 type Props = {
   photos?: ImageType[];
@@ -25,15 +25,15 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       ref={ref}
       {...props}
     >
-      {photos.map(({ id, alt, placeholder }, index) => (
+      {photos.map(({ id, src, alt, placeholder }, index) => (
         <Link
           key={id}
           {...getLinkProps(index)}
           className="absolute"
           style={positions[index]}
         >
-          <Photo
-            id={id}
+          <Image
+            src={src}
             alt={alt}
             fill
             sizes="(max-width: 768px) 95vw,

@@ -1,20 +1,20 @@
 import React, { useRef } from "react";
+import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
-import type { Image } from "types";
+import type { Image as ImageType } from "types";
 import clsx from "clsx";
 import { Carousel } from "react-responsive-carousel";
 import { NextSeo } from "next-seo";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useScreen from "../../hooks/use-screen";
-import { Photo } from "../photo";
 
 type Props = {
   isOpen?: boolean;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   initialIndex?: number;
-  photos: Image[];
+  photos: ImageType[];
   onClickNext?: (currentIndex: number, lastIndex: number) => void;
   onClickPrev?: (currentIndex: number, lastIndex: number) => void;
   onClose?: () => void;
@@ -105,10 +105,10 @@ const Lightbox = ({
             )
           }
         >
-          {photos.map(({ height, width, alt, id, placeholder }) => (
+          {photos.map(({ height, width, src, alt, id, placeholder }) => (
             <div key={id}>
-              <Photo
-                id={id}
+              <Image
+                src={src}
                 alt={alt}
                 width={width}
                 height={height}
