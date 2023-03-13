@@ -3,19 +3,25 @@ import sharp from "sharp";
 import type { Image } from "@prisma/client";
 import { cloudinaryConfig } from "../config/cloudinary";
 import { uploadFromBuffer } from "../utils/upload";
+import { getPlaceholderString, getPlaceholderURL } from "../utils/buffer";
+import { getBufferFromUrl } from "../utils/misc";
 
 cloudinaryConfig();
 
 export const uploadPhoto = async (
   buffer: Buffer,
   folder = "images"
-): Promise<Pick<Image, "id" | "src" | "width" | "height" | "mimeType">> => {
+): Promise<
+  Pick<Image, "id" | "src" | "width" | "height" | "mimeType" | "placeholder">
+> => {
   const sharpImg = await sharp(buffer).webp({ quality: 100 }).toBuffer();
 
-  const { asset_id, url, width, height, format } = await uploadFromBuffer(
-    sharpImg,
-    folder
-  );
+  const { asset_id, url, width, height, format, public_id } =
+    await uploadFromBuffer(sharpImg, folder);
+
+  const placeholderUrl = getPlaceholderURL(public_id);
+  const placeholderBuffer = await getBufferFromUrl(placeholderUrl);
+  const placeholder = getPlaceholderString(placeholderBuffer);
 
   return {
     id: asset_id,
@@ -23,6 +29,7 @@ export const uploadPhoto = async (
     width,
     height,
     mimeType: format,
+    placeholder,
   };
 };
 

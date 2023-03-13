@@ -18,6 +18,8 @@ import {
 import { createPhoto } from "../src/services/photos";
 import { createPortfolio } from "../src/services/portfolios";
 import type { ResourceType } from "../src/services/cloudinary";
+import { getBufferFromUrl } from "../src/utils/misc";
+import { getPlaceholderString, getPlaceholderURL } from "../src/utils/buffer";
 
 program.option("--clear");
 program.parse();
@@ -125,11 +127,15 @@ async function getRandomCloudinaryImage(cloudinaryImages: ResourceType[] = []) {
     const randomIndex = Math.floor(Math.random() * cloudinaryImages.length);
     const {
       asset_id,
+      public_id,
       url,
       width,
       height,
       format: mimeType,
     } = cloudinaryImages.splice(randomIndex, 1)[0];
+    const placeholderUrl = getPlaceholderURL(public_id);
+    const placeholderBuffer = await getBufferFromUrl(placeholderUrl);
+    const placeholder = getPlaceholderString(placeholderBuffer);
 
     return {
       id: asset_id,
@@ -137,6 +143,7 @@ async function getRandomCloudinaryImage(cloudinaryImages: ResourceType[] = []) {
       width,
       height,
       mimeType,
+      placeholder,
     };
   }
 
