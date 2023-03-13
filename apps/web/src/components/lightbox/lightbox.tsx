@@ -105,7 +105,7 @@ const Lightbox = ({
             )
           }
         >
-          {photos.map(({ height, width, alt, id }) => (
+          {photos.map(({ height, width, alt, id, placeholder }) => (
             <div key={id}>
               <Photo
                 id={id}
@@ -118,6 +118,8 @@ const Lightbox = ({
                   maxHeight: "80vh",
                   objectFit: "contain",
                 }}
+                placeholder="blur"
+                blurDataURL={placeholder}
               />
             </div>
           ))}
