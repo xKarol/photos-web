@@ -25,7 +25,7 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
       ref={ref}
       {...props}
     >
-      {photos.map(({ id, alt }, index) => (
+      {photos.map(({ id, alt, placeholder }, index) => (
         <Link
           key={id}
           {...getLinkProps(index)}
@@ -38,6 +38,8 @@ const PhotosColumns = ({ photos = [], ...props }: Props) => {
             fill
             sizes="(max-width: 768px) 95vw,
               40vw"
+            placeholder="blur"
+            blurDataURL={placeholder}
             style={{ objectFit: "cover" }}
           />
         </Link>

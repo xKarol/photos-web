@@ -12,7 +12,7 @@ const ImagesList = () => {
 
   return (
     <section className="flex flex-col gap-10">
-      {data.images.map(({ id, alt, height, width }, index) => (
+      {data.images.map(({ id, alt, height, width, placeholder }, index) => (
         <Link key={id} {...getLinkProps(index)}>
           <Photo
             id={id}
@@ -24,6 +24,8 @@ const ImagesList = () => {
               maxHeight: "1200px",
               objectFit: "cover",
             }}
+            placeholder="blur"
+            blurDataURL={placeholder}
           />
         </Link>
       ))}

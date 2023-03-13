@@ -41,6 +41,8 @@ const Portfolios = () => {
                 className="h-[450px] w-full md:h-[250px]"
                 caption={name}
                 alt={thumbnail.alt}
+                placeholder="blur"
+                blurDataURL={thumbnail.placeholder}
               />
             </Link>
           );
