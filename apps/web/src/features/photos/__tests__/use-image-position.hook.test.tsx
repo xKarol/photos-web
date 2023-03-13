@@ -173,6 +173,7 @@ function generateImageData(
     width: faker.datatype.number({ min: 600, max: 800 }),
     mimeType: "webp",
     src: faker.image.imageUrl(),
+    placeholder: "...",
   };
 }
 
