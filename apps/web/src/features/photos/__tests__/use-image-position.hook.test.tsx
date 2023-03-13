@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { render, renderHook } from "@testing-library/react";
 import type { Image } from "types";
 import useImagePositions from "../hooks/use-image-position";
+import { getFakeImageData, getMany } from "../../../utils/test";
 
 const CONTAINER_WIDTH = faker.datatype.number({ min: 500, max: 2000 });
 
@@ -155,26 +156,7 @@ describe("useImagePosition hook", () => {
 type ImageProp = Parameters<typeof useImagePositions>[0][0];
 
 function generateImagesData(): ImageProp[] {
-  return Array.from(
-    { length: faker.datatype.number({ min: 10, max: 25 }) },
-    generateImageData
-  );
-}
-
-function generateImageData(
-  height: number = faker.datatype.number({ min: 500, max: 1200 })
-): ImageProp {
-  return {
-    id: faker.database.mongodbObjectId(),
-    alt: faker.lorem.words(2),
-    createdAt: faker.date.past(1),
-    updatedAt: faker.date.recent(),
-    height,
-    width: faker.datatype.number({ min: 600, max: 800 }),
-    mimeType: "webp",
-    src: faker.image.imageUrl(),
-    placeholder: "...",
-  };
+  return getMany(getFakeImageData, { min: 10, max: 25 });
 }
 
 function calcMaxHeight(data: Image[], gap: number, columns: number) {

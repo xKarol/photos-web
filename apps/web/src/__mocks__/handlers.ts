@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import type { Portfolios } from "types";
+import type { API } from "types";
+import { getFakePortfolioData, getMany } from "../utils/test";
 
 export const handlers = [
   rest.post(`/newsletter/subscribe`, (_req, res, ctx) => {
@@ -11,22 +12,11 @@ export const handlers = [
   rest.get(`/portfolios`, (_req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json<Portfolios[]>([
-        {
-          id: "12122",
-          name: "test",
-          slug: "test",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          id: "122122",
-          name: "test1",
-          slug: "test1",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ])
+      ctx.json<API["Portfolios"]["Get"]>({
+        limit: 5,
+        nextPage: 2,
+        data: getMany(getFakePortfolioData, { min: 5, max: 20 }),
+      })
     );
   }),
 ];

@@ -7,10 +7,11 @@ import { useState } from "react";
 import { API } from "types";
 import { faker } from "@faker-js/faker";
 import Lightbox from "./index";
+import { getFakeImageData } from "../../utils/test";
 
 const photos: API["Photos"]["GetOne"][] = Array.from(
   { length: faker.datatype.number({ min: 5, max: 25 }) },
-  generateImageData
+  getFakeImageData
 );
 
 type LightboxProps = React.ComponentProps<typeof Lightbox>;
@@ -247,20 +248,3 @@ describe("Lightbox", () => {
     expect(onClickNext).not.toHaveBeenCalled();
   });
 });
-
-function generateImageData(): API["Photos"]["GetOne"] {
-  return {
-    id: faker.database.mongodbObjectId(),
-    src: faker.image.cats(
-      faker.datatype.number({ min: 480, max: 800 }),
-      faker.datatype.number({ min: 400, max: 800 })
-    ),
-    alt: faker.lorem.word(),
-    mimeType: "image/webp",
-    createdAt: faker.date.past(1),
-    updatedAt: faker.date.recent(),
-    height: faker.datatype.number({ min: 300, max: 800 }),
-    width: faker.datatype.number({ min: 400, max: 800 }),
-    placeholder: "...",
-  };
-}
