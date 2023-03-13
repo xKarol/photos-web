@@ -21,5 +21,6 @@ export default jest.spyOn(upload, "uploadPhoto").mockImplementation(() => {
     width: 500,
     height: 500,
     mimeType: "image/webp",
+    placeholder: "...",
   });
 });
