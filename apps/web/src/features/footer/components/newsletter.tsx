@@ -37,6 +37,7 @@ const Newsletter = () => {
           isLoading={isLoading}
           disabled={email.length <= 0}
           className="btn-3d"
+          loadingComponentProps={{ color: "white" }}
         >
           Submit
         </LoadingButton>

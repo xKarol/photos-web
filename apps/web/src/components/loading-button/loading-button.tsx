@@ -5,13 +5,15 @@ import Spinner from "../spinner";
 export type LoadingButtonProps = {
   isLoading?: boolean;
   LoadingComponent?: JSX.Element;
+  loadingComponentProps?: React.ComponentProps<typeof Spinner>;
 } & React.ComponentPropsWithoutRef<"button">;
 
 const LoadingButton = ({
   children,
   className,
-  LoadingComponent = <Spinner color="white" />,
+  LoadingComponent = <Spinner color="black" />,
   isLoading = false,
+  loadingComponentProps,
   ...rest
 }: LoadingButtonProps) => {
   return (
@@ -27,6 +29,7 @@ const LoadingButton = ({
       </span>
       {isLoading
         ? cloneElement(LoadingComponent, {
+            ...loadingComponentProps,
             ["aria-live"]: "polite",
             className:
               "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",

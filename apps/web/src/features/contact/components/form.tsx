@@ -39,6 +39,7 @@ const ContactForm = (props: Props) => {
       <LoadingButton
         isLoading={isLoading}
         className="btn-3d ml-auto py-2 text-sm"
+        loadingComponentProps={{ color: "white" }}
       >
         Submit
       </LoadingButton>
