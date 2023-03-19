@@ -3,7 +3,7 @@ import {
   ROUTE_PORTFOLIO,
   ROUTE_ABOUT,
   ROUTE_CONTACT,
-} from "../../constants/routes";
+} from "../../../constants/routes";
 
 export const navbarItems: { text: string; href: string }[] = [
   { href: ROUTE_HOME, text: "Home" },

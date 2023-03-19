@@ -1,5 +1,5 @@
 import { test, expect, Locator } from "@playwright/test";
-import { navbarItems } from "../src/features/header/navbar-items";
+import { navbarItems } from "../src/features/header/constants/navbar-items";
 
 test.describe("Header", () => {
   test.beforeEach(async ({ page }) => {

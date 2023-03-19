@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { navbarItems } from "../navbar-items";
+import { navbarItems } from "../constants/navbar-items";
 import NavbarLink from "./navbar-link";
 
 type Props = React.ComponentPropsWithoutRef<"nav">;
