@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import {
@@ -9,30 +9,11 @@ import {
 import { DefaultSeo } from "next-seo";
 import SEO from "../config/next-seo";
 import defaultFont from "../config/font";
-
-const ReactQueryDevtools = React.lazy(() =>
-  import("@tanstack/react-query-devtools").then((d) => ({
-    default: d.ReactQueryDevtools,
-  }))
-);
-
-declare global {
-  interface Window {
-    toggleQueryDevtools: (toggle: boolean) => void;
-  }
-}
+import useReactQueryDevtools from "../hooks/use-react-query-devtools";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-
-  const [showDevtools, setShowDevtools] = useState(false);
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production") {
-      window.toggleQueryDevtools = (toggle: boolean) => setShowDevtools(toggle);
-      window.toggleQueryDevtools(true);
-    }
-  }, []);
+  const ReactQueryDevtools = useReactQueryDevtools();
 
   return (
     <>
@@ -45,11 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <Component {...pageProps} />
-          {showDevtools && (
-            <React.Suspense fallback={null}>
-              <ReactQueryDevtools />
-            </React.Suspense>
-          )}
+          <ReactQueryDevtools />
         </Hydrate>
       </QueryClientProvider>
     </>
