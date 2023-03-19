@@ -32,12 +32,15 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
 
   const calculatePositions = useCallback(() => {
     const heights = Array.from({ length: columns }).fill(0) as number[];
+    let leftColumnsHeights = 0;
+    let rightColumnsHeights = 0;
 
-    return images.map((image, index) => {
-      const columnIndex = index % heights.length;
-
-      const top = heights[columnIndex];
+    return images.map((image) => {
       const height = adjustHeight(image.width, image.height, elementWidth);
+      const columnIndex = leftColumnsHeights < rightColumnsHeights ? 0 : 1;
+      const top = heights[columnIndex];
+      if (columnIndex === 0) leftColumnsHeights += height + gap;
+      else rightColumnsHeights += height + gap;
       heights[columnIndex] += height + gap;
       columnHeights.current = heights;
 
