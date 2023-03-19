@@ -32,15 +32,11 @@ const Photos = () => {
           <>
             {isLoading ? null : <PhotosColumns photos={photos} />}
             {hasNextPage ? (
-              <div className="mx-auto mt-[2.5rem]">
+              <div className="mx-auto mt-[2.5rem]" ref={ref}>
                 {isFetching ? (
                   <Spinner color="black" />
                 ) : (
-                  <button
-                    className="btn"
-                    onClick={() => fetchNextPage()}
-                    ref={ref}
-                  >
+                  <button className="btn" onClick={() => fetchNextPage()}>
                     Load More
                   </button>
                 )}
