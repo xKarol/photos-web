@@ -113,7 +113,7 @@ const Lightbox = ({
                 width={width}
                 height={height}
                 style={{
-                  width: "100%",
+                  width: "auto",
                   height: "auto",
                   maxHeight: "80vh",
                   objectFit: "contain",
