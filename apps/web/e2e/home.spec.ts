@@ -19,33 +19,44 @@ test.describe("Home page", () => {
     }
   });
 
-  // TODO fix
-  test.fixme(
-    "infinite scrolling loads more images as the user scrolls down the page",
-    async ({ page }) => {
-      const getImages = () =>
-        page
-          .getByLabel(/images gallery/i)
-          .getByRole("link")
-          .all();
-      const mainImages = await getImages();
-      const initialImagesAmount = mainImages.length;
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      // eslint-disable-next-line unicorn/no-await-expression-member
-      expect((await getImages()).length).toBeGreaterThan(initialImagesAmount);
-    }
-  );
+  test("infinite scrolling loads more images when the user scrolls down the page", async ({
+    page,
+  }) => {
+    const getImages = () =>
+      page
+        .getByLabel(/images gallery/i)
+        .getByRole("link")
+        .all();
+    const mainImages = await getImages();
+    const initialImagesAmount = mainImages.length;
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(page.getByLabel(/loading spinner/i)).toBeHidden();
+    // eslint-disable-next-line unicorn/no-await-expression-member
+    expect((await getImages()).length).toBeGreaterThan(initialImagesAmount);
+  });
 
-  test.fixme(
-    "infinite scrolling spinner is displayed while images are being loaded",
-    async ({ page }) => {
-      const buttonElement = page.getByRole("button", { name: /load more/i });
-      await expect(buttonElement).toBeVisible();
-      await expect(buttonElement).not.toBeInViewport();
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-      await expect(page.getByLabel(/loading spinner/i)).toBeVisible();
-    }
-  );
+  test("infinite scrolling spinner is displayed when user scrolls to bottom", async ({
+    page,
+  }) => {
+    const buttonElement = page.getByText(/load more/i);
+    await expect(buttonElement).toBeVisible();
+    await expect(buttonElement).not.toBeInViewport();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(buttonElement).toBeHidden();
+    await expect(page.getByLabel(/loading spinner/i)).toBeVisible();
+  });
+
+  test("fetch more is not called after load the page ", async ({ page }) => {
+    const buttonElement = page.getByText(/load more/i);
+    const imagesLinks = await page
+      .getByLabel(/images gallery/i)
+      .getByRole("link")
+      .all();
+    expect(imagesLinks.length).toBeGreaterThan(0);
+    await expect(buttonElement).toBeVisible();
+
+    await expect(page.getByLabel(/loading spinner/i)).toBeHidden();
+  });
 
   test.skip("empty state is displayed when server return empty data", async ({
     page,
