@@ -79,9 +79,11 @@ describe("useImagePosition hook", () => {
   it("should contain valid gap", () => {
     const gap = 50;
     const { result } = setup(generateImagesData(), { gap });
-    for (const { width, left } of result.current.positions) {
+    for (const { width, transform } of result.current.positions) {
       expect(width.includes(`${gap / 2}`)).toBe(true);
-      expect(left.includes(`${gap / 2}`) || left.includes("0px")).toBe(true);
+      expect(
+        transform.includes(`+ ${gap}px`) || transform.includes("translate(0px,")
+      ).toBe(true);
     }
   });
 
@@ -114,14 +116,18 @@ describe("useImagePosition hook", () => {
     // horizontal
     expect(result.current.positions[0].top).toBe("0px");
     expect(result.current.positions[1].top).toBe("0px");
-    expect(result.current.positions[0].left).toBe("0px");
+    expect(result.current.positions[0].transform).toMatch("translate(0px,");
     expect(result.current.positions[0].width).toMatch(`50% - ${gap / 2}px`);
-    expect(result.current.positions[1].left).toMatch(`50% + ${gap / 2}px`);
+    expect(result.current.positions[1].transform).toMatch(
+      `translate(50% + ${gap / 2}px,`
+    );
     // vertical
     expect(result.current.positions[2].top).toBe(data[0].height + gap + "px");
     expect(result.current.positions[3].top).toBe(data[1].height + gap + "px");
-    expect(result.current.positions[2].left).toBe("0px");
-    expect(result.current.positions[3].left).toMatch(`50% + ${gap / 2}px`);
+    expect(result.current.positions[2].transform).toMatch("translate(0px");
+    expect(result.current.positions[3].transform).toMatch(
+      `translate(50% + ${gap / 2}px,`
+    );
   });
 
   it("all elements should have left: 0px value when max columns = 1", () => {
@@ -132,25 +138,27 @@ describe("useImagePosition hook", () => {
     }
   });
 
-  it.failing(
-    "elements should have valid left value depending on the side of the column",
-    () => {
-      const options = {
-        gap: 20,
-        columns: 2,
-      } as const;
-      const { result } = setup(generateImagesData(), options);
+  it("not all elements should have the same column", () => {
+    const data = generateImagesData();
+    const options = {
+      gap: 20,
+      columns: 2,
+    } as const;
+    const { result } = setup(data, options);
 
-      // @ts-expect-error
-      for (const [index, position] of result.current.positions.entries()) {
-        expect(position.left).toBe(
-          index % options.columns === 0
-            ? "0px"
-            : `calc(50% + ${options.gap / 2}px)`
-        );
-      }
+    const columns = [[], []];
+    const LEFT_COLUMN = 0;
+    const RIGHT_COLUMN = 1;
+
+    // @ts-expect-error
+    for (const [index, position] of result.current.positions.entries()) {
+      if (position.transform.includes("translate(0px,"))
+        columns[LEFT_COLUMN].push(index);
+      else columns[RIGHT_COLUMN].push(index);
     }
-  );
+    expect(columns[LEFT_COLUMN].length).toBeLessThan(data.length);
+    expect(columns[RIGHT_COLUMN].length).toBeLessThan(data.length);
+  });
 });
 
 type ImageProp = Parameters<typeof useImagePositions>[0][0];
