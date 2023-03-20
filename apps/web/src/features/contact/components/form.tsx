@@ -19,6 +19,7 @@ const ContactForm = (props: Props) => {
     errors,
     register,
   } = useContactForm();
+  const showAlert = isError || isSuccess;
 
   return (
     <form
@@ -44,13 +45,15 @@ const ContactForm = (props: Props) => {
         Submit
       </LoadingButton>
 
-      <Alert
-        variant={isError ? "error" : "info"}
-        className="absolute bottom-0 left-0"
-      >
-        {isError ? getErrorMessage(error) : null}
-        {isSuccess ? "Message has been sent." : null}
-      </Alert>
+      {showAlert ? (
+        <Alert
+          variant={isError ? "error" : "info"}
+          className="absolute bottom-0 left-0"
+        >
+          {isError ? getErrorMessage(error) : null}
+          {isSuccess ? "Message has been sent." : null}
+        </Alert>
+      ) : null}
     </form>
   );
 };

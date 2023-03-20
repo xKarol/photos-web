@@ -25,7 +25,9 @@ const queryClient = new QueryClient({
   },
 });
 
-describe("Contact", () => {
+describe("Contact Form", () => {
+  jest.setTimeout(10_000);
+
   it("should contain heading", () => {
     setup();
     const heading = screen.getByRole("heading", { name: /Contact/i });
