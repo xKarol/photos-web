@@ -3,6 +3,7 @@
 This is a backend application built with Express.js framework.
 
 ## Technologies Used
+
 - Express.js
 - Typescript
 - Prisma
@@ -52,5 +53,5 @@ This is a backend application built with Express.js framework.
 - Run setup script `npm run setup`
 
 ## How to Run
-Run the application: `npm run dev`
 
+Run the application: `npm run dev`
