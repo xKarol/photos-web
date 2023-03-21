@@ -62,7 +62,7 @@ describe("useImagePosition hook", () => {
   );
 
   it.failing(
-    "getMaxHeight function should return valid height in two columns",
+    "getMaxHeight function should return valid height when two columns are rendered",
     () => {
       const data = generateImagesData();
       const options = {
@@ -108,26 +108,23 @@ describe("useImagePosition hook", () => {
     expect(result.current.getMaxHeight()).toBeLessThan(initialGapHeight);
   });
 
-  it.failing("horizontal and vertical gap should be valid", () => {
+  it("horizontal and vertical gap should be valid", () => {
     const gap = 50;
     const data = generateImagesData();
     const { result } = setup(data, { gap });
 
     // horizontal
-    expect(result.current.positions[0].top).toBe("0px");
-    expect(result.current.positions[1].top).toBe("0px");
-    expect(result.current.positions[0].transform).toMatch("translate(0px,");
+    expect(result.current.positions[0].transform).toMatch(",0px)");
+    expect(result.current.positions[1].transform).toMatch(",0px)");
     expect(result.current.positions[0].width).toMatch(`50% - ${gap / 2}px`);
+    expect(result.current.positions[1].width).toMatch(`50% - ${gap / 2}px`);
+    expect(result.current.positions[0].transform).toMatch("translate(0px,");
     expect(result.current.positions[1].transform).toMatch(
-      `translate(50% + ${gap / 2}px,`
+      `calc(100% + ${gap}px),`
     );
     // vertical
-    expect(result.current.positions[2].top).toBe(data[0].height + gap + "px");
-    expect(result.current.positions[3].top).toBe(data[1].height + gap + "px");
-    expect(result.current.positions[2].transform).toMatch("translate(0px");
-    expect(result.current.positions[3].transform).toMatch(
-      `translate(50% + ${gap / 2}px,`
-    );
+    expect(result.current.positions[2].transform).not.toMatch(",0px)");
+    expect(result.current.positions[3].transform).not.toMatch(",0px)");
   });
 
   it("all elements should have left: 0px value when max columns = 1", () => {

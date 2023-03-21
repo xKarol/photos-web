@@ -37,7 +37,7 @@ const useImagePositions = (images: Image[], options: Options = {}) => {
 
     return images.map((image) => {
       const height = adjustHeight(image.width, image.height, elementWidth);
-      const columnIndex = leftColumnsHeights < rightColumnsHeights ? 0 : 1;
+      const columnIndex = leftColumnsHeights <= rightColumnsHeights ? 0 : 1;
       const top = heights[columnIndex];
       if (columnIndex === 0) leftColumnsHeights += height + gap;
       else rightColumnsHeights += height + gap;
