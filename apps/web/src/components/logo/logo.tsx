@@ -8,10 +8,10 @@ export type LogoProps = {
   href?: string;
 } & Partial<ImageProps>;
 
-const Logo = ({ href, ...rest }: LogoProps) => {
+const Logo = ({ href = ROUTE_HOME, ...rest }: LogoProps) => {
   return (
     <figure className="w-[40px]">
-      <Link href={href || ROUTE_HOME}>
+      <Link href={href}>
         <Image {...rest} src={logoSrc} alt="logo" />
       </Link>
     </figure>
