@@ -73,33 +73,31 @@ test.describe("Lightbox", () => {
   test.fixme(
     "images are correctly displayed in the lightbox",
     async ({ page }) => {
-      await clickImage(page, 3);
       const images = await page
         .getByLabel(/images gallery/i)
-        .getByRole("link")
+        .getByRole("img")
         .all();
-      expect(
-        await page.getByRole("dialog").getByRole("listitem").all()
-      ).toHaveLength(images.length);
-    }
-  );
-
-  test.fixme(
-    "scroll position is preserved when closing lightbox",
-    async ({ page }) => {
-      let initialScroll = await scrollToImage(page, 3);
       await clickImage(page, 3);
-      expect(page.evaluate(() => window.scrollY)).toBe(initialScroll);
-
-      initialScroll = await scrollToImage(page, 8);
-      await clickImage(page, 8);
-      expect(page.evaluate(() => window.scrollY)).toBe(initialScroll);
-
-      initialScroll = await scrollToImage(page, 2);
-      await clickImage(page, 2);
-      expect(page.evaluate(() => window.scrollY)).toBe(initialScroll);
+      expect(
+        // eslint-disable-next-line unicorn/no-await-expression-member
+        (await page.getByRole("dialog").getByRole("listitem").all()).length
+      ).toBe(images.length);
     }
   );
+
+  test("scroll position is preserved when closing lightbox", async ({
+    page,
+  }) => {
+    const testScrollPosition = async (imageIndex: number) => {
+      const initialScroll = await scrollToImage(page, imageIndex);
+      await clickImage(page, imageIndex);
+      await page.getByLabel(/close the lightbox/i).click();
+      expect(await page.evaluate(() => window.scrollY)).toBe(initialScroll);
+    };
+    await testScrollPosition(0);
+    await testScrollPosition(4);
+    await testScrollPosition(2);
+  });
 
   test.skip("arrows are not rendered on mobile", () => {});
   test.skip("user can swipe images", () => {});
@@ -114,10 +112,13 @@ async function clickImage(page: Page, index: number) {
 }
 
 async function scrollToImage(page: Page, selectedIndex: number) {
-  await page
+  const linksElements = await page
     .getByLabel(/images gallery/i)
     .getByRole("link")
-    .nth(selectedIndex)
-    .scrollIntoViewIfNeeded();
+    .all();
+
+  if (!linksElements[selectedIndex])
+    throw new Error(`Image with index: ${selectedIndex} not exist.`);
+  await linksElements[selectedIndex].scrollIntoViewIfNeeded();
   return await page.evaluate(() => window.scrollY);
 }
