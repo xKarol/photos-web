@@ -15,4 +15,4 @@ jobs:
         run: npm run format
 
       - name: Type Check
-        run: npm run type-check
+        run: cd apps/backend && npx prisma generate && cd ../../ && npm run type-check
