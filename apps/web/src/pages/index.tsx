@@ -23,7 +23,7 @@ const Home: NextPage = () => {
     <>
       <NextSeo title="Home" />
       <Header />
-      <Layout>
+      <Layout as="main">
         <Photos />
       </Layout>
       <Footer />

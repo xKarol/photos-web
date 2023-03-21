@@ -46,7 +46,7 @@ const PortfolioIndexPage: NextPage = () => {
     <>
       <NextSeo title={data.name} />
       <Header />
-      <Layout>
+      <Layout as="main">
         <PortfolioImages />
       </Layout>
       <Footer />

@@ -23,7 +23,7 @@ const PortfolioPage: NextPage = () => {
     <>
       <NextSeo title="Portfolio" />
       <Header />
-      <Layout>
+      <Layout as="main">
         <Portfolios />
       </Layout>
       <Footer />

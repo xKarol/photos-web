@@ -13,7 +13,7 @@ const Page404: NextPage = () => {
     <>
       <NextSeo title="404" noindex={true} />
       <Header />
-      <Layout className="flex flex-col items-center">
+      <Layout as="main" className="flex flex-col items-center">
         <Heading className="mb-5 text-center">
           This page is not available.
         </Heading>
