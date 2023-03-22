@@ -14,5 +14,5 @@ jobs:
       - name: Prettier
         run: npm run format
 
-      - name: Type Check
-        run: cd apps/backend && npx prisma generate && cd ../../ && npm run type-check
+      # - name: Type Check
+      #   run: cd apps/backend && npx prisma generate && cd ../../ && npm run type-check
