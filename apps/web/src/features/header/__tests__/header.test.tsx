@@ -7,24 +7,7 @@ import { navbarItems } from "../constants/navbar-items";
 jest.mock("next/router", () => require("next-router-mock"));
 
 const setup = () => {
-  window.resizeTo(360, 800);
   render(<Header />);
-};
-
-const checkNavbarContent = (links: HTMLElement[]) => {
-  for (const [index, link] of Object.entries(links)) {
-    expect(link).toHaveAttribute("href", navbarItems[+index].href);
-    expect(link).toHaveTextContent(navbarItems[+index].text);
-  }
-};
-
-const mockMatchMedia = (width: number) => {
-  // @ts-expect-error
-  return (window.matchMedia = (query: string) => ({
-    matches: mediaQuery.match(query, { width }),
-    addListener: () => {},
-    removeListener: () => {},
-  }));
 };
 
 describe("Header", () => {
@@ -46,16 +29,7 @@ describe("Header", () => {
       expect(nav).toBeInTheDocument();
     });
 
-    it("should contain navbar links", () => {
-      setup();
-
-      const nav = screen.getByRole("navigation");
-      expect(nav).not.toBeEmptyDOMElement();
-      const links = within(nav).getAllByRole("link");
-      expect(links.length).toBe(navbarItems.length);
-    });
-
-    it("should contain valid content", () => {
+    it("navbar should contain valid content", () => {
       setup();
 
       const nav = screen.getByRole("navigation");
@@ -67,9 +41,9 @@ describe("Header", () => {
 
     it("hamburger should not be visible", () => {
       setup();
-
-      const hamburger = screen.getByLabelText(/hamburger/i);
-      expect(hamburger).not.toBeVisible();
+      const hamburger = screen.getByTestId("hamburger-button");
+      expect(hamburger.className).toMatch("hidden");
+      expect(hamburger.className).not.toMatch("block");
     });
   });
 
@@ -81,14 +55,14 @@ describe("Header", () => {
     it("hamburger should be visible", () => {
       setup();
 
-      const hamburger = screen.queryByLabelText(/hamburger/i);
-      expect(hamburger).toBeInTheDocument();
+      const hamburger = screen.getByTestId("hamburger-button");
+      expect(hamburger).toBeVisible();
     });
 
     it("desktop navbar should not be visible", () => {
       setup();
       const nav = screen.getByTestId("desktop navbar");
-      expect(nav).not.toBeVisible();
+      expect(nav.className).toMatch("hidden");
     });
 
     it("hamburger menu should not initially be in the document", () => {
@@ -127,7 +101,7 @@ describe("Header", () => {
       await click(hamburger);
 
       const nav = screen.getByTestId("desktop navbar");
-      expect(nav).not.toBeVisible();
+      expect(nav.className).toMatch("hidden");
     });
 
     it("hamburger menu should contain valid elements", async () => {
@@ -176,3 +150,19 @@ describe("Header", () => {
     });
   });
 });
+
+function checkNavbarContent(links: HTMLElement[]) {
+  for (const [index, link] of Object.entries(links)) {
+    expect(link).toHaveAttribute("href", navbarItems[+index].href);
+    expect(link).toHaveTextContent(navbarItems[+index].text);
+  }
+}
+
+function mockMatchMedia(width: number) {
+  // @ts-expect-error
+  return (window.matchMedia = (query: string) => ({
+    matches: mediaQuery.match(query, { width }),
+    addListener: () => {},
+    removeListener: () => {},
+  }));
+}

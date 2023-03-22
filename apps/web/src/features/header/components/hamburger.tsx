@@ -8,9 +8,9 @@ const Hamburger = ({
   ...props
 }: CommonBurgerProps & { className: string }) => {
   return (
-    <div className={clsx("z-20", className)}>
+    <div className={clsx("z-20", className)} data-testid="hamburger-button">
       <HamburgerComponent
-        label="hamburger menu"
+        label="hamburger menu button"
         size={25}
         rounded={true}
         distance="sm"
