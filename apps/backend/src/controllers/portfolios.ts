@@ -61,8 +61,13 @@ export const Get = async (
     });
 
     const nextPage = getPaginationNextPage(portfolios, limit, page);
+    const data = portfolios.map((portfolio) => ({
+      ...portfolio,
+      // TODO add thumbnail field to prisma schema
+      images: [portfolio.images[0]],
+    }));
 
-    return res.send({ data: portfolios.slice(0, limit), nextPage, limit });
+    return res.send({ data: data.slice(0, limit), nextPage, limit });
   } catch (error) {
     next(error);
   }
