@@ -28,29 +28,33 @@ const Portfolios = () => {
   return (
     <>
       <Heading className="mb-5">Portfolios</Heading>
-      <section
-        className="grid grid-cols-1 gap-5 md:grid-cols-2"
-        aria-label="portfolio gallery"
-      >
-        {portfolios.map(({ id, slug, name, images }) => {
-          const thumbnail = images[0];
-          return (
-            <Link key={id} href={`/${slug}`}>
-              <ImageCaption
-                src={thumbnail.src}
-                className="h-[450px] w-full md:h-[250px]"
-                caption={name}
-                alt={thumbnail.alt}
-                placeholder="blur"
-                blurDataURL={thumbnail.placeholder}
-              />
-            </Link>
-          );
-        })}
-      </section>
-      {hasNextPage ? (
-        <button onClick={() => fetchNextPage()}>Load More</button>
-      ) : null}
+      <div className="flex flex-col">
+        <section
+          className="grid grid-cols-1 gap-5 md:grid-cols-2"
+          aria-label="portfolio gallery"
+        >
+          {portfolios.map(({ id, slug, name, images }) => {
+            const thumbnail = images[0];
+            return (
+              <Link key={id} href={`/${slug}`}>
+                <ImageCaption
+                  src={thumbnail.src}
+                  className="h-[450px] w-full md:h-[250px]"
+                  caption={name}
+                  alt={thumbnail.alt}
+                  placeholder="blur"
+                  blurDataURL={thumbnail.placeholder}
+                />
+              </Link>
+            );
+          })}
+        </section>
+        {hasNextPage ? (
+          <button className="btn mx-auto mt-10" onClick={() => fetchNextPage()}>
+            Load More
+          </button>
+        ) : null}
+      </div>
     </>
   );
 };
