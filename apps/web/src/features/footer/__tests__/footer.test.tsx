@@ -1,22 +1,14 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Footer } from "../index";
+import ReactQueryProvider from "../../../tests/react-query";
 
 const setup = () =>
   render(
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <Footer />
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 describe("Footer", () => {
   it("should contain newsletter", () => {

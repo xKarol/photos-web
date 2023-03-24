@@ -2,25 +2,17 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { faker } from "@faker-js/faker";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import Newsletter from "../components/newsletter";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
+import ReactQueryProvider from "../../../tests/react-query";
 
 const setup = () =>
   render(
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <Newsletter />
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
 
 const getInputElement = () => screen.getByRole("textbox");

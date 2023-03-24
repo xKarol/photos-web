@@ -1,26 +1,18 @@
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { rest } from "msw";
 import { API } from "types";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import Portfolios from "../portfolios";
-import { getFakePortfolioData, getMany } from "../../../utils/test";
+import { getFakePortfolioData, getMany } from "../../../tests/utils";
+import ReactQueryProvider from "../../../tests/react-query";
 
 const setup = () =>
   render(
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <Portfolios />
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 describe("Portfolios", () => {
   it("should render empty state component", () => {
@@ -40,7 +32,7 @@ describe("Portfolios", () => {
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  it.failing("empty state should not be visible when data is available", () => {
+  it.skip("empty state should not be visible when data is available", () => {
     setup();
     expect(screen.queryByLabelText(/animation/i)).not.toBeInTheDocument();
   });

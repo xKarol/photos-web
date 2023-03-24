@@ -7,7 +7,7 @@ import { useState } from "react";
 import { API } from "types";
 import { faker } from "@faker-js/faker";
 import Lightbox from "./index";
-import { getFakeImageData } from "../../utils/test";
+import { getFakeImageData } from "../../tests/utils";
 
 const photos: API["Photos"]["GetOne"][] = Array.from(
   { length: faker.datatype.number({ min: 5, max: 25 }) },

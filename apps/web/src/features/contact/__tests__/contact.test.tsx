@@ -1,29 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { faker } from "@faker-js/faker";
 import { rest } from "msw";
 import ContactForm from "../components/form";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
+import ReactQueryProvider from "../../../tests/react-query";
 
 const setup = () =>
   render(
-    <QueryClientProvider client={queryClient}>
+    <ReactQueryProvider>
       <ContactForm />
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
 
 const getSubmitElement = () => screen.getByRole("button");
 const getInputElements = () => screen.getAllByRole("textbox");
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 describe("Contact Form", () => {
   jest.setTimeout(10_000);
