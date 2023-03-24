@@ -14,7 +14,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "e2e": "npx playwright test",
-    "e2e:headed": "npx playwright test --headed"
+    "e2e:headed": "npx playwright test --headed",
+    "e2e:ui": "npx playwright test --ui"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
@@ -43,7 +44,7 @@
     "@axe-core/playwright": "^4.6.0",
     "@faker-js/faker": "^7.6.0",
     "@jest/types": "^29.3.1",
-    "@playwright/test": "^1.31.2",
+    "@playwright/test": "^1.32.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
