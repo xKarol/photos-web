@@ -2,7 +2,7 @@ name: Main
 on: [push]
 
 jobs:
-  code-quality:
+  testing:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
