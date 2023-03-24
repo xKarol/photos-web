@@ -10,9 +10,10 @@ import { DefaultSeo } from "next-seo";
 import SEO from "../config/next-seo";
 import defaultFont from "../config/font";
 import useReactQueryDevtools from "../hooks/use-react-query-devtools";
+import { queryClientConfig } from "../config/query-client";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient(queryClientConfig));
   const ReactQueryDevtools = useReactQueryDevtools();
 
   return (
