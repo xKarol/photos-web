@@ -11,7 +11,8 @@
     "format": "prettier --check . --ignore-path .gitignore",
     "format:fix": "prettier --write . --ignore-path .gitignore",
     "type-check": "npx tsc --noEmit",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "e2e": "npx playwright test",
     "e2e:headed": "npx playwright test --headed"
   },
