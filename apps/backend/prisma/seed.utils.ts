@@ -40,3 +40,14 @@ export async function getRandomPhoto() {
   );
   return buffer;
 }
+
+export function measureTime() {
+  const start = performance.now();
+
+  return {
+    end: () => {
+      const end = performance.now();
+      return +(end - start).toFixed(0) / 1000;
+    },
+  };
+}

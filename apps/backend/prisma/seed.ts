@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable unicorn/no-process-exit */
 import { faker } from "@faker-js/faker";
 import ora from "ora";
 import { program } from "commander";
@@ -14,6 +16,7 @@ import {
   getFakePortfolioData,
   getRandomPortfolioPhotos,
   getRandomPhoto,
+  measureTime,
 } from "./seed.utils";
 import { createPhoto } from "../src/services/photos";
 import { createPortfolio } from "../src/services/portfolios";
@@ -32,37 +35,45 @@ const MAX_IMAGES = 50;
 let cloudinaryImages: ResourceType[] = [];
 
 const main = async () => {
+  const globalTime = measureTime();
+
   if (!options?.clear) cloudinaryImages = await getCloudinaryImages();
 
   const steps: Record<string, () => Promise<unknown>> = {
     ...(options?.clear && {
       "Removing images from cloud": deleteAllCloudinaryImages,
     }),
-    "Deleting all records": deleteAllRecords,
+    "Clearing Database": deleteAllRecords,
     "Seeding main photos": seedMainPhotos,
     "Seeding images": seedImages,
     "Seeding portfolios": seedPortfolios,
   };
 
+  console.log(""); //one line space;
+
   for await (const [key, value] of Object.entries(steps)) {
     const spinner = ora(key).start();
     try {
+      const time = measureTime();
       await value();
-      spinner.succeed(key);
+      spinner.succeed(`${key} (${time.end()}s)`);
     } catch (e) {
       spinner.fail(e instanceof Error ? e.message : "Unknown error");
       throw e;
     }
   }
+  console.log(""); //one line space;
+  ora(`The database has been seeded in ${globalTime.end()}s.`).succeed();
 };
 
 main()
   .then(async () => {
-    return await prisma.$disconnect();
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
+    console.error(e);
     await prisma.$disconnect();
-    throw e;
+    process.exit(1);
   });
 
 async function deleteAllRecords() {
