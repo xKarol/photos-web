@@ -4,6 +4,7 @@ import EmptyState from "../../components/empty-state";
 import Heading from "../../components/heading";
 import ImageCaption from "./components/image-caption";
 import usePortfolios from "./hooks/use-portfolios";
+import routes from "../../config/routes";
 
 const Portfolios = () => {
   const {
@@ -36,7 +37,7 @@ const Portfolios = () => {
           {portfolios.map(({ id, slug, name, images }) => {
             const thumbnail = images[0];
             return (
-              <Link key={id} href={`/${slug}`}>
+              <Link key={id} href={routes.portfolio(slug)}>
                 <ImageCaption
                   src={thumbnail.src}
                   className="h-[450px] w-full md:h-[250px]"

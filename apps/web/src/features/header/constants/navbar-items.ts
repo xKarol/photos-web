@@ -1,13 +1,8 @@
-import {
-  ROUTE_HOME,
-  ROUTE_PORTFOLIO,
-  ROUTE_ABOUT,
-  ROUTE_CONTACT,
-} from "../../../constants/routes";
+import routes from "../../../config/routes";
 
 export const navbarItems: { text: string; href: string }[] = [
-  { href: ROUTE_HOME, text: "Home" },
-  { href: ROUTE_PORTFOLIO, text: "Portfolio" },
-  { href: ROUTE_ABOUT, text: "About" },
-  { href: ROUTE_CONTACT, text: "Contact" },
+  { href: routes.HOME, text: "Home" },
+  { href: routes.PORTFOLIOS, text: "Portfolio" },
+  { href: routes.ABOUT, text: "About" },
+  { href: routes.CONTACT, text: "Contact" },
 ];

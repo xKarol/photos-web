@@ -7,6 +7,7 @@ import { Footer } from "../features/footer";
 import Layout from "../components/layout";
 import Heading from "../components/heading";
 import animation404 from "../../public/assets/animations/404.json";
+import routes from "../config/routes";
 
 const Page404: NextPage = () => {
   return (
@@ -24,7 +25,7 @@ const Page404: NextPage = () => {
           animationData={animation404}
           loop={true}
         />
-        <Link className="btn" href="/">
+        <Link className="btn" href={routes.HOME}>
           Go back
         </Link>
       </Layout>
