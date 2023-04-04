@@ -3,7 +3,7 @@ import passport from "passport";
 
 export const Login = (req: Request, res: Response, next: NextFunction) => {
   try {
-    passport.authenticate("local", (err) => {
+    passport.authenticate("local", (err: unknown) => {
       if (err) throw err;
       return res.send(200);
     })(req, res, next);
@@ -14,7 +14,7 @@ export const Login = (req: Request, res: Response, next: NextFunction) => {
 
 export const Logout = (req: Request, res: Response, next: NextFunction) => {
   try {
-    req.logOut((err) => {
+    req.logOut((err: unknown) => {
       if (err) throw err;
       res.send(200);
     });
