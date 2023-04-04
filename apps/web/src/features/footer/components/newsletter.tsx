@@ -41,7 +41,7 @@ const Newsletter = () => {
         >
           Submit
         </LoadingButton>
-        <div className="absolute left-0 -bottom-6 text-xs">
+        <div className="absolute -bottom-6 left-0 text-xs">
           {isError ? (
             <Alert variant="error">{getErrorMessage(error)}</Alert>
           ) : null}

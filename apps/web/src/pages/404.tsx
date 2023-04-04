@@ -19,7 +19,7 @@ const Page404: NextPage = () => {
           This page is not available.
         </Heading>
         <Lottie
-          className="my-5 mx-auto max-w-[500px]"
+          className="mx-auto my-5 max-w-[500px]"
           aria-label="no data animation"
           role="alert"
           animationData={animation404}

@@ -9,7 +9,7 @@ const SocialLinks = ({ className, ...rest }: Props) => {
   return (
     <section
       className={clsx(
-        "flex items-center gap-5 text-3xl text-black [&_>*]:transition-colors [&_>*:hover]:opacity-50",
+        "flex items-center gap-5 text-3xl text-black [&_>*:hover]:opacity-50 [&_>*]:transition-colors",
         className
       )}
       {...rest}

@@ -5,7 +5,7 @@ import ContactForm from "./components/form";
 
 const Contact = () => {
   return (
-    <div className="flex columns-2 flex-col space-y-20 md:flex-row md:space-y-0 md:space-x-10 lg:space-x-20">
+    <div className="flex columns-2 flex-col space-y-20 md:flex-row md:space-x-10 md:space-y-0 lg:space-x-20">
       <div className="flex-1">
         <Image
           src={aboutImg}
