@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { render, renderHook } from "@testing-library/react";
-import type { Image } from "types";
+import type { Image } from "@app/types";
 import useImagePositions from "../hooks/use-image-position";
 import { getFakeImageData, getMany } from "../../../tests/utils";
 

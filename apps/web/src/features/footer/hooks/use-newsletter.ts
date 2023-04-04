@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { newsletter as Schema } from "schemas";
+import { newsletter as Schema } from "@app/schemas";
 import { newsletterSubscribe } from "../services/newsletter";
 
 const useNewsletter = () => {

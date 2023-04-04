@@ -1,4 +1,4 @@
-import { portfolio as Schema } from "schemas";
+import { portfolio as Schema } from "@app/schemas";
 import { z } from "zod";
 import { paginationSchema } from "./pagination";
 

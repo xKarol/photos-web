@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "react-use";
-import type { Image } from "types";
+import type { Image } from "@app/types";
 
 export type Options = {
   gap?: number;

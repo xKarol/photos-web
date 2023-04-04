@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import type { API } from "types";
+import type { API } from "@app/types";
 import { prisma } from "../lib/prisma";
 import type { CreatePortfolio } from "../schemas/portfolios";
 

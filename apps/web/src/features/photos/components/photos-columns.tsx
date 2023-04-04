@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import type { Image as ImageType } from "types";
+import type { Image as ImageType } from "@app/types";
 import Image from "next/image";
 import useImagePositions from "../hooks/use-image-position";
 import useScreen from "../../../hooks/use-screen";

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { API } from "types";
+import type { API } from "@app/types";
 
 export type CreatePortfolio = Pick<API["Portfolios"]["Create"], "name"> & {
   images: string[];

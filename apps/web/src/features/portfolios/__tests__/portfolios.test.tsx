@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { rest } from "msw";
-import { API } from "types";
+import { API } from "@app/types";
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import Portfolios from "../portfolios";

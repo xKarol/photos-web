@@ -18,7 +18,11 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/@app/eslint-config",
+    "packages/@app/prettier-config",
+    "packages/@app/schemas",
+    "packages/@app/tsconfig",
+    "packages/@app/types"
   ],
   "repository": {
     "type": "git",

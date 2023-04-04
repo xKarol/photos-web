@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contact as Schema } from "schemas";
+import { contact as Schema } from "@app/schemas";
 import type { FormValues } from "../types";
 import useContact from "./use-contact";
 

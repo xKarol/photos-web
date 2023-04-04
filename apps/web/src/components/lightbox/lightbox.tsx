@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Dialog } from "@headlessui/react";
 import { VscClose } from "react-icons/vsc";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
-import type { Image as ImageType } from "types";
+import type { Image as ImageType } from "@app/types";
 import clsx from "clsx";
 import { Carousel } from "react-responsive-carousel";
 import { NextSeo } from "next-seo";
@@ -63,7 +63,7 @@ const Lightbox = ({
         />
 
         <button
-          className="fixed top-5 right-5 z-[60] cursor-pointer text-3xl text-white"
+          className="fixed right-5 top-5 z-[60] cursor-pointer text-3xl text-white"
           onClick={handleClose}
           aria-label="close the lightbox"
         >
@@ -77,7 +77,7 @@ const Lightbox = ({
           useKeyboardArrows
           showStatus={false}
           animationHandler={isMobile ? "slide" : "fade"}
-          className="fixed top-1/2 left-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
+          className="fixed left-1/2 top-1/2 z-50 w-full -translate-x-1/2 -translate-y-1/2"
           selectedItem={initialIndex}
           onChange={handleChange}
           renderArrowNext={(onClickHandler, hasNext) =>

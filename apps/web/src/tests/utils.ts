@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import type { Image, Portfolios } from "types";
+import type { Image, Portfolios } from "@app/types";
 
 export function getFakeImageData<T extends Image>(props?: T): T {
   return {

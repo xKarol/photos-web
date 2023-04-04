@@ -1,5 +1,5 @@
 import type { FetchInfiniteQueryOptions } from "@tanstack/react-query";
-import type { API } from "types";
+import type { API } from "@app/types";
 import { queryKeys } from "./query-keys";
 import { getPhotos } from "../services/photos";
 

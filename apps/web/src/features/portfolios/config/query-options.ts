@@ -2,7 +2,7 @@ import type {
   FetchInfiniteQueryOptions,
   UseQueryOptions,
 } from "@tanstack/react-query";
-import type { API } from "types";
+import type { API } from "@app/types";
 import { getPortfolio, getPortfolios } from "../services/portfolios";
 import { queryKeys } from "./query-keys";
 
