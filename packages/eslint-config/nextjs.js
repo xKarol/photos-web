@@ -4,9 +4,9 @@ module.exports = {
     browser: true,
   },
   extends: [
-    "../../node_modules/eslint-config/common",
-    "../../node_modules/eslint-config/nextjs.jest",
-    "../../node_modules/eslint-config/e2e",
+    "../../node_modules/@app/eslint-config/common",
+    "../../node_modules/@app/eslint-config/nextjs.jest",
+    "../../node_modules/@app/eslint-config/e2e",
     "plugin:tailwindcss/recommended",
   ],
   rules: {

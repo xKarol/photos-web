@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const nextConfig = require("eslint-config/nextjs");
+const nextConfig = require("@app/eslint-config/nextjs");
 
 module.exports = {
   ...nextConfig,
