@@ -18,21 +18,9 @@ export const getFakePortfolioData = (
   };
 };
 
-const randomArrayItem = <T>(items: T[]) => {
-  return items[Math.floor(Math.random() * items.length)];
-};
-
 export function randomBetween(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  return faker.datatype.number({ min, max });
 }
-
-export const getRandomPortfolioPhotos = (photos: Image[]): string[] => {
-  const itemsInPortfolio = randomBetween(5, 30);
-  const randomPhotos = Array.from({ length: itemsInPortfolio }, () =>
-    randomArrayItem(photos)
-  );
-  return randomPhotos.map((photo) => photo.id);
-};
 
 export async function getRandomPhoto() {
   const buffer = await getBufferFromUrl(

@@ -14,7 +14,6 @@ import {
   randomBetween,
   getFakePhotoData,
   getFakePortfolioData,
-  getRandomPortfolioPhotos,
   getRandomPhoto,
   measureTime,
 } from "./seed.utils";
@@ -30,8 +29,6 @@ const options = program.opts();
 
 cloudinaryConfig();
 
-const MAX_MAIN_PHOTOS = 25;
-const MAX_IMAGES = 50;
 let cloudinaryImages: ResourceType[] = [];
 
 const main = async () => {
@@ -44,8 +41,7 @@ const main = async () => {
       "Removing images from cloud": deleteAllCloudinaryImages,
     }),
     "Clearing Database": deleteAllRecords,
-    "Seeding main photos": seedMainPhotos,
-    "Seeding images": seedImages,
+    "Seeding photos": seedMainPhotos,
     "Seeding portfolios": seedPortfolios,
   };
 
@@ -77,14 +73,16 @@ main()
   });
 
 async function deleteAllRecords() {
-  await prisma.photos.deleteMany({});
-  await prisma.image.deleteMany({});
-  await prisma.portfolios.deleteMany({});
+  await prisma.$transaction([
+    prisma.photos.deleteMany({}),
+    prisma.image.deleteMany({}),
+    prisma.portfolios.deleteMany({}),
+  ]);
 }
 
 async function seedMainPhotos() {
   const photos = await Promise.all(
-    Array.from({ length: MAX_MAIN_PHOTOS }, async () => {
+    Array.from({ length: randomBetween(20, 25) }, async () => {
       const data = await getRandomCloudinaryImage(cloudinaryImages);
       const photo = await createPhoto({
         ...data,
@@ -96,9 +94,9 @@ async function seedMainPhotos() {
   return photos;
 }
 
-async function seedImages() {
+async function seedImages(length: number) {
   const images = await Promise.all(
-    Array.from({ length: MAX_IMAGES }, async () => {
+    Array.from({ length }, async () => {
       const data = await getRandomCloudinaryImage(cloudinaryImages);
 
       const photo = await prisma.image.create({
@@ -114,7 +112,6 @@ async function seedImages() {
 }
 
 async function seedPortfolios() {
-  const photos = await prisma.image.findMany({});
   const MAX_PORTFOLIOS = randomBetween(4, 8);
   const uniqueNames = faker.helpers.uniqueArray(
     () => faker.lorem.words(randomBetween(1, 2)),
@@ -123,8 +120,9 @@ async function seedPortfolios() {
   await Promise.all(
     Array.from({ length: MAX_PORTFOLIOS }, async (_, index) => {
       const { name, slug } = getFakePortfolioData(uniqueNames[index]);
+      const photos = await seedImages(randomBetween(5, 10));
       const portfolio = await createPortfolio({
-        images: getRandomPortfolioPhotos(photos),
+        images: photos.map(({ id }) => id),
         name,
         slug,
       });
