@@ -86,7 +86,7 @@ export const Delete = async (
 
     cache.del(photoId);
 
-    return res.send(200);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }

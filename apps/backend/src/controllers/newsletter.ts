@@ -10,7 +10,7 @@ export const Subscribe = async (
 ) => {
   try {
     await subscribeToNewsletter(req.body);
-    return res.send(200);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }

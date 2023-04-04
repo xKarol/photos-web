@@ -5,7 +5,7 @@ export const Login = (req: Request, res: Response, next: NextFunction) => {
   try {
     passport.authenticate("local", (err: unknown) => {
       if (err) throw err;
-      return res.send(200);
+      return res.sendStatus(200);
     })(req, res, next);
   } catch (e) {
     next(e);

@@ -32,7 +32,7 @@ export const Delete = async (
     const { contactId } = req.params;
     await deleteContact({ contactId });
 
-    return res.send(200);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }
