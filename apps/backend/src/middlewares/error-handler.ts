@@ -12,5 +12,9 @@ export const errorHandler = (
   const e = reportError(error);
   const status = e.status || 400;
   logger.error(e);
-  res.status(status).send({ status: status, message: e.message });
+  res.status(status).send({
+    status: status,
+    message: e.message,
+    ...(process.env.NODE_ENV !== "production" && { stack: e.stack }),
+  });
 };
