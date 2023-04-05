@@ -10,3 +10,13 @@ services:
       - PORT=8001
     env_file:
       - ./apps/backend/.env
+  web:
+    build:
+      context: ./
+      dockerfile: ./apps/web/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    env_file:
+      - ./apps/web/.env.local
