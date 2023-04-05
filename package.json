@@ -32,10 +32,12 @@
   },
   "homepage": "https://github.com/xKarol/photos-web#readme",
   "devDependencies": {
+    "eslint": "8.37.0",
     "husky": "^8.0.0",
     "lerna": "^6.4.1",
     "lint-staged": "^13.1.0",
-    "typescript": "^4.9.4"
+    "prettier": "2.8.7",
+    "typescript": "4.9.4"
   },
   "lint-staged": {
     "apps/**/*.{js,ts,jsx,tsx}": [
