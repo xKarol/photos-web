@@ -60,7 +60,7 @@ COPY --from=builder /app/apps/web/node_modules /tmp/node_modules
 RUN cp -R /tmp/node_modules/* /app/node_modules/ && rm -Rf /tmp/node_modules
 
 COPY --from=builder /app/apps/web/package.json ./package.json
-COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/apps/web/next.config.js ./next.config.js
 
 USER nextjs
 
