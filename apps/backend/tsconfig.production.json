@@ -1,5 +1,5 @@
 {
-  "extends": "./@app/tsconfig",
+  "extends": "./tsconfig",
   "compilerOptions": {
     "declarationMap": false
   },
