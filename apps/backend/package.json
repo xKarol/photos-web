@@ -17,7 +17,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "seed": "npx prisma db seed",
-    "seed:clear": "ts-node prisma/seed.ts --clear"
+    "seed:clear": "ts-node prisma/seed.ts --clear",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
