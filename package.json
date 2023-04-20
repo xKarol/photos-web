@@ -14,7 +14,8 @@
     "format": "npx lerna run format",
     "format:fix": "npx lerna run format:fix",
     "type-check": "npx lerna run type-check",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "npx lerna run postinstall"
   },
   "workspaces": [
     "apps/*",
