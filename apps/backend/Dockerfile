@@ -9,6 +9,9 @@ COPY ./apps/backend/package*.json ./apps/backend/
 COPY ./packages/schemas/package*.json ./packages/schemas/
 COPY ./packages/types/package*.json ./packages/types/
 
+# required for postinstall
+COPY ./lerna.json ./lerna.json 
+
 RUN npm install
 
 FROM base as builder 
