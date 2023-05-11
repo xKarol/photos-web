@@ -1,4 +1,5 @@
 import express from "express";
+import healthCheckRoute from "./health-check";
 import notFoundRoutes from "./404";
 import contactRoutes from "./contact";
 import imageRoutes from "./images";
@@ -9,6 +10,7 @@ import authRoutes from "./auth";
 
 const router = express.Router();
 
+router.use(healthCheckRoute);
 router.use(authRoutes);
 router.use(imageRoutes);
 router.use(photoRoutes);
