@@ -1,4 +1,4 @@
-import { Contact } from "@app/types";
+import type { Contact } from "@app/types";
 
 export type FormValues = Pick<
   Contact,

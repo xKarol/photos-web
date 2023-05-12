@@ -1,4 +1,4 @@
-import React from "react";
+import type { FunctionComponent } from "react";
 import {
   IoLogoInstagram,
   IoLogoPinterest,
@@ -8,7 +8,7 @@ import {
 export type SocialMediaType = {
   name: string;
   url: string;
-  icon: React.FunctionComponent;
+  icon: FunctionComponent;
 };
 
 const socialMediaLinks = [

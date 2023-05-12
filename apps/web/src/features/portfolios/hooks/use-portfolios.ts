@@ -1,5 +1,5 @@
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-import { API } from "@app/types";
+import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import type { API } from "@app/types";
 import { queryOptions } from "../config/query-options";
 
 const transformData = (data: InfiniteData<API["Portfolios"]["Get"]>) => {

@@ -1,6 +1,6 @@
 import createError from "http-errors";
 import { ZodError } from "zod";
-import { ErrorSchema } from "../schemas/error";
+import type { ErrorSchema } from "../schemas/error";
 
 function getErrorMessage(error: unknown) {
   if (error instanceof ZodError) return error.errors[0].message;

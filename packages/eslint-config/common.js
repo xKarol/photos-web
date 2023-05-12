@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     "no-console": 1,
     "prettier/prettier": "error",
+    "@typescript-eslint/consistent-type-imports": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/no-null": "off",
