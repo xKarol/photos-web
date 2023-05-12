@@ -24,7 +24,7 @@ const PortfolioImages = () => {
         <>
           <Heading className="mb-5">{data.name}</Heading>
           <ImagesList />
-          <Lightbox photos={data.images} />;
+          <Lightbox photos={data.images} />
         </>
       )}
     </>
