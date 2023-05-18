@@ -10,8 +10,8 @@ const NavbarLink = ({ isActive, href, className, children }: Props) => {
       <Link
         href={href}
         className={clsx(
-          "relative transition-all before:absolute before:left-1/2 before:top-5 before:h-[3px] before:w-[3px] before:rounded-full before:bg-font",
-          isActive ? "before:opacity-1" : "before:opacity-0",
+          "relative transition-all before:absolute before:left-1/2 before:top-5 before:h-[3px] before:w-[3px] before:rounded-full before:bg-black",
+          !isActive && "before:opacity-0",
           className
         )}
       >
