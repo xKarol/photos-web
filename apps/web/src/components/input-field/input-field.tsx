@@ -26,7 +26,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           aria-describedby={id}
           aria-invalid={error ? "true" : "false"}
           className={clsx(
-            "border-zinc-300 border p-2",
+            "border border-gray-300 p-2",
             textarea && "min-h-[50px]"
           )}
           {...rest}
