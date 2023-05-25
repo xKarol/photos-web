@@ -10,7 +10,7 @@ import Lightbox from "./index";
 import { getFakeImageData } from "../../tests/utils";
 
 const photos: API["Photos"]["GetOne"][] = Array.from(
-  { length: faker.datatype.number({ min: 5, max: 25 }) },
+  { length: faker.number.int({ min: 5, max: 25 }) },
   getFakeImageData
 );
 

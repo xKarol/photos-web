@@ -64,7 +64,7 @@ describe("Contact Form", () => {
 
     await click(getSubmitElement());
     const inputElements = getInputElements();
-    await type(inputElements[0], faker.name.firstName());
+    await type(inputElements[0], faker.person.firstName());
 
     const errors = await screen.findAllByRole("alert");
     expect(errors.length).toBe(inputElements.length - 1);
@@ -114,8 +114,8 @@ describe("Contact Form", () => {
 
 async function fillForm() {
   const formData = [
-    faker.name.firstName(),
-    faker.name.lastName(),
+    faker.person.firstName(),
+    faker.person.lastName(),
     faker.internet.email(),
     faker.lorem.words(10),
     faker.lorem.words(30),

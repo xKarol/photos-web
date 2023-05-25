@@ -45,7 +45,7 @@
     "@app/tsconfig": "*",
     "@app/types": "*",
     "@axe-core/playwright": "^4.6.1",
-    "@faker-js/faker": "^7.6.0",
+    "@faker-js/faker": "^8.0.1",
     "@jest/types": "^29.5.0",
     "@playwright/test": "^1.32.0",
     "@testing-library/jest-dom": "^5.16.5",

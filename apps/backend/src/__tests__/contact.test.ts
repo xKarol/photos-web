@@ -74,8 +74,8 @@ describe("Contact", () => {
 function createFakeContactData() {
   const input: Schema.CreateContact["body"] = {
     email: faker.internet.email(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.firstName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.firstName(),
     message: faker.lorem.words(50),
     subject: faker.lorem.words(7),
   };

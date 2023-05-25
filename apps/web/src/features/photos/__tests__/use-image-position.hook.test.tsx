@@ -4,7 +4,7 @@ import type { Image } from "@app/types";
 import useImagePositions from "../hooks/use-image-position";
 import { getFakeImageData, getMany } from "../../../tests/utils";
 
-const CONTAINER_WIDTH = faker.datatype.number({ min: 500, max: 2000 });
+const CONTAINER_WIDTH = faker.number.int({ min: 500, max: 2000 });
 
 const setup = (...args: Parameters<typeof useImagePositions>) => {
   const [images, options] = args;

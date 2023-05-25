@@ -34,8 +34,8 @@ test.describe("Contact page", () => {
 async function fillForm(formElement: Locator) {
   const inputs = await formElement.getByRole("textbox").all();
   const inputValues = [
-    faker.name.firstName(),
-    faker.name.lastName(),
+    faker.person.firstName(),
+    faker.person.lastName(),
     faker.internet.email(),
     faker.lorem.words(10),
     faker.lorem.words(30),

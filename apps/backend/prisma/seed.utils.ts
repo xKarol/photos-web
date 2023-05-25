@@ -19,12 +19,15 @@ export const getFakePortfolioData = (
 };
 
 export function randomBetween(min: number, max: number) {
-  return faker.datatype.number({ min, max });
+  return faker.number.int({ min, max });
 }
 
 export async function getRandomPhoto() {
   const buffer = await getBufferFromUrl(
-    faker.image.unsplash.nature(1280, randomBetween(1280, 2560))
+    faker.image.urlPicsumPhotos({
+      height: 1280,
+      width: randomBetween(1280, 2560),
+    })
   );
   return buffer;
 }
