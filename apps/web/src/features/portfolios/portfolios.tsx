@@ -5,6 +5,7 @@ import Heading from "../../components/heading";
 import ImageCaption from "./components/image-caption";
 import usePortfolios from "./hooks/use-portfolios";
 import routes from "../../config/routes";
+import { Button } from "../../components/button";
 
 const Portfolios = () => {
   const {
@@ -51,9 +52,13 @@ const Portfolios = () => {
           })}
         </section>
         {hasNextPage ? (
-          <button className="btn mx-auto mt-10" onClick={() => fetchNextPage()}>
+          <Button
+            variant="outline"
+            className="mx-auto mt-10"
+            onClick={() => fetchNextPage()}
+          >
             Load More
-          </button>
+          </Button>
         ) : null}
       </div>
     </>

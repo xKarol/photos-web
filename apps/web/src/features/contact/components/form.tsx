@@ -38,8 +38,9 @@ const ContactForm = (props: Props) => {
         register={register}
       />
       <LoadingButton
+        variant="3d"
         isLoading={isLoading}
-        className="btn-3d ml-auto py-2 text-sm"
+        className="ml-auto py-2 text-sm"
         loadingComponentProps={{ color: "white" }}
       >
         Submit

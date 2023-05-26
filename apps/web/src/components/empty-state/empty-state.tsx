@@ -32,7 +32,8 @@ const EmptyState = ({
       <Heading className="!text-xl capitalize">{text}</Heading>
       {showButton ? (
         <LoadingButton
-          className="btn mt-3"
+          variant="outline"
+          className="mt-3"
           isLoading={isLoading}
           onClick={handleRefresh}
         >

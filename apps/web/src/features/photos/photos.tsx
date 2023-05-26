@@ -4,6 +4,7 @@ import PhotosColumns from "./components/photos-columns";
 import EmptyState from "../../components/empty-state";
 import { usePhotosRef } from "./hooks/use-photos-ref";
 import useLightbox from "../../hooks/use-lightbox";
+import { Button } from "../../components/button";
 
 const Photos = () => {
   const {
@@ -36,9 +37,9 @@ const Photos = () => {
                 {isFetching ? (
                   <Spinner color="black" />
                 ) : (
-                  <button className="btn" onClick={() => fetchNextPage()}>
+                  <Button variant="outline" onClick={() => fetchNextPage()}>
                     Load More
-                  </button>
+                  </Button>
                 )}
               </div>
             ) : null}

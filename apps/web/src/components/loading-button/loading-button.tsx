@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import React, { cloneElement } from "react";
 import Spinner from "../spinner";
+import { Button } from "../button";
 
 export type LoadingButtonProps = {
   isLoading?: boolean;
   LoadingComponent?: JSX.Element;
   loadingComponentProps?: React.ComponentProps<typeof Spinner>;
-} & React.ComponentPropsWithoutRef<"button">;
+} & React.ComponentProps<typeof Button>;
 
 const LoadingButton = ({
   children,
@@ -17,7 +18,7 @@ const LoadingButton = ({
   ...rest
 }: LoadingButtonProps) => {
   return (
-    <button
+    <Button
       className={clsx("relative", className)}
       disabled={isLoading}
       aria-busy={isLoading}
@@ -35,7 +36,7 @@ const LoadingButton = ({
               "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
           })
         : null}
-    </button>
+    </Button>
   );
 };
 
