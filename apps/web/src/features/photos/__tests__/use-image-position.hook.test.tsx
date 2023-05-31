@@ -142,7 +142,6 @@ describe("useImagePosition hook", () => {
     const LEFT_COLUMN = 0;
     const RIGHT_COLUMN = 1;
 
-    // @ts-expect-error
     for (const [index, position] of result.current.positions.entries()) {
       if (position.transform.includes("translate(0px,"))
         columns[LEFT_COLUMN].push(index);
