@@ -1,6 +1,4 @@
-import defaultConfig from "tailwindcss/defaultConfig";
-
-const defaultScreens = defaultConfig.theme.screens;
+import { breakpoints } from "../styles/breakpoints";
 
 export const getScreenSizes = ({
   asNumbers = false,
@@ -8,11 +6,11 @@ export const getScreenSizes = ({
   asNumbers?: boolean;
 } = {}) => {
   if (asNumbers)
-    return transformObjectValuesToNumbers(defaultScreens) as Record<
+    return transformObjectValuesToNumbers(breakpoints) as Record<
       "sm" | "md" | "lg" | "xl" | "2xl",
       number
     >;
-  return defaultScreens as Record<"sm" | "md" | "lg" | "xl" | "2xl", string>;
+  return breakpoints as Record<"sm" | "md" | "lg" | "xl" | "2xl", string>;
 };
 
 function transformObjectValuesToNumbers<T>(screens: T, replaceString = "px") {
