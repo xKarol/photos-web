@@ -14,7 +14,9 @@ export const useImagesColumns = (
     { breakpoint: "md", amount: 2 },
   ]
 ) => {
-  const [columns, setColumns] = useState<ImageType[][][]>([]);
+  const [columns, setColumns] = useState<
+    (ImageType & { initialIndex: number })[][][]
+  >([]);
 
   useEffect(() => {
     const getColumnsData = (colsAmount: number, breakpoint: Breakpoints) => {
@@ -28,7 +30,11 @@ export const useImagesColumns = (
           image.height,
           +breakpoints[breakpoint].replace("px", "")
         );
-        columnsItems[columnId].push({ ...image, height: imageHeight });
+        columnsItems[columnId].push({
+          ...image,
+          height: imageHeight,
+          initialIndex: index,
+        });
       }
       return columnsItems;
     };

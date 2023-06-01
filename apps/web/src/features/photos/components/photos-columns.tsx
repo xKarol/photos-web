@@ -29,7 +29,7 @@ const RenderColumns = ({
   gap = "50px",
   ...rest
 }: {
-  columns: ImageType[][];
+  columns: (ImageType & { initialIndex: number })[][];
   gap?: string;
 } & React.ComponentPropsWithoutRef<"div">) => {
   const { getLinkProps } = useLightbox();
@@ -40,16 +40,16 @@ const RenderColumns = ({
         className={clsx("relative flex w-full space-x-[--gap]", className)}
         {...rest}
       >
-        {columns.map((columnItems, columnsIndex) => (
+        {columns.map((columnItems, columnIndex) => (
           <div
-            key={columnsIndex}
+            key={columnIndex}
             className="flex flex-1 flex-col space-y-[--gap]"
           >
             {columnItems.map(
-              ({ id, src, height, alt, placeholder }, itemIndex) => (
+              ({ id, src, height, alt, placeholder, initialIndex }) => (
                 <Link
                   key={id}
-                  {...getLinkProps(itemIndex)}
+                  {...getLinkProps(initialIndex)}
                   className="w-full"
                   style={{ height }}
                 >
