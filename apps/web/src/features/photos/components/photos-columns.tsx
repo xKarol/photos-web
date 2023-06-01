@@ -2,50 +2,74 @@ import Link from "next/link";
 import React from "react";
 import type { Image as ImageType } from "@app/types";
 import Image from "next/image";
-import useImagePositions from "../hooks/use-image-position";
-import useScreen from "../../../hooks/use-screen";
+import clsx from "clsx";
 import useLightbox from "../../../hooks/use-lightbox";
+import { useImagesColumns } from "../hooks/use-images-columns";
 
 type Props = {
   photos?: ImageType[];
-} & React.ComponentPropsWithoutRef<"div">;
+};
 
-const PhotosColumns = ({ photos = [], ...props }: Props) => {
-  const isMobile = useScreen("sm", true);
-  const { positions, getMaxHeight, ref } = useImagePositions(photos, {
-    gap: 50,
-    columns: isMobile ? 1 : 2,
-  });
-  const { getLinkProps } = useLightbox();
+const PhotosColumns = ({ photos = [] }: Props) => {
+  const [mobileColumns = [], desktopColumns = []] = useImagesColumns(photos);
 
   return (
-    <div
-      className="relative w-full"
-      style={{ height: getMaxHeight() }}
-      ref={ref}
-      {...props}
-    >
-      {photos.map(({ id, src, alt, placeholder }, index) => (
-        <Link
-          key={id}
-          {...getLinkProps(index)}
-          className="absolute"
-          style={positions[index]}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            sizes="(max-width: 768px) 95vw,
-              40vw"
-            placeholder="blur"
-            blurDataURL={placeholder}
-            style={{ objectFit: "cover" }}
-          />
-        </Link>
-      ))}
-    </div>
+    <>
+      <RenderColumns columns={mobileColumns} className="flex md:hidden" />
+      <RenderColumns columns={desktopColumns} className="hidden md:flex" />
+    </>
   );
 };
 
 export default PhotosColumns;
+
+const RenderColumns = ({
+  columns,
+  className,
+  gap = "50px",
+  ...rest
+}: {
+  columns: ImageType[][];
+  gap?: string;
+} & React.ComponentPropsWithoutRef<"div">) => {
+  const { getLinkProps } = useLightbox();
+
+  return (
+    <div style={{ "--gap": gap } as unknown}>
+      <div
+        className={clsx("relative flex w-full space-x-[--gap]", className)}
+        {...rest}
+      >
+        {columns.map((columnItems, columnsIndex) => (
+          <div
+            key={columnsIndex}
+            className="flex flex-1 flex-col space-y-[--gap]"
+          >
+            {columnItems.map(
+              ({ id, src, height, alt, placeholder }, itemIndex) => (
+                <Link
+                  key={id}
+                  {...getLinkProps(itemIndex)}
+                  className="w-full"
+                  style={{ height }}
+                >
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={src}
+                      alt={alt}
+                      fill
+                      sizes="(max-width: 768px) 95vw, 40vw"
+                      placeholder="blur"
+                      blurDataURL={placeholder}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                </Link>
+              )
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
