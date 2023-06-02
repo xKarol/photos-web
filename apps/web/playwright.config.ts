@@ -91,7 +91,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: "npx lerna run dev --scope='backend'",
+      command: "cd ../../ && npx lerna run dev --scope='backend'",
       port: 4000,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
