@@ -15,8 +15,16 @@ const PhotosColumns = ({ photos = [] }: Props) => {
 
   return (
     <>
-      <RenderColumns columns={mobileColumns} className="flex md:hidden" />
-      <RenderColumns columns={desktopColumns} className="hidden md:flex" />
+      <RenderColumns
+        columns={mobileColumns}
+        className="flex md:hidden"
+        gap="32px"
+      />
+      <RenderColumns
+        columns={desktopColumns}
+        className="hidden md:flex"
+        gap="38px"
+      />
     </>
   );
 };

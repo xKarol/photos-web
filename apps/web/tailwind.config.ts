@@ -14,11 +14,8 @@ export default {
       container: {
         padding: {
           DEFAULT: "16px",
-          sm: "32px",
           md: "32px",
-          lg: "64px",
-          xl: "80px",
-          "2xl": "96px",
+          xl: "128px",
         },
       },
     },
