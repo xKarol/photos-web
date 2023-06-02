@@ -1,6 +1,7 @@
 /* eslint-disable playwright/no-skipped-test */
+
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Home page", () => {
   test.beforeEach(async ({ page }) => {

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 import { fontFamily } from "tailwindcss/defaultTheme";
+
 import { breakpoints } from "./src/styles/breakpoints";
 
 export default {

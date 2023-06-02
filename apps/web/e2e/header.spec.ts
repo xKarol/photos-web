@@ -1,5 +1,6 @@
 import type { Locator } from "@playwright/test";
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
 import { navbarItems } from "../src/features/header/constants/navbar-items";
 
 test.describe("Header", () => {

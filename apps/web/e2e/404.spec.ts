@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 const pages404 = ["/404", "/unknown", "/not-found"];
 

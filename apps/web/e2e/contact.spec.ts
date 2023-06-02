@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { test, expect, type Locator } from "@playwright/test";
+import { type Locator, expect, test } from "@playwright/test";
 
 test.describe("Contact page", () => {
   test.beforeEach(async ({ page }) => {

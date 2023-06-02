@@ -1,6 +1,7 @@
 /* eslint-disable playwright/no-skipped-test */
+
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { test, expect, type Page } from "@playwright/test";
+import { type Page, expect, test } from "@playwright/test";
 
 test.describe("Lightbox", () => {
   test.beforeEach(async ({ page }) => {

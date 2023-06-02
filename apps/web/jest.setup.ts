@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+import { QueryCache } from "@tanstack/react-query";
 import "@testing-library/jest-dom/extend-expect";
 import "jest-canvas-mock";
 
-import { QueryCache } from "@tanstack/react-query";
 import { server } from "./src/__mocks__/server";
 
 const queryCache = new QueryCache();
