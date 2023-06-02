@@ -6,6 +6,7 @@ const setup = <C extends React.ElementType = "div">({
   ...props
 }: LayoutProps<C>) => {
   return render(
+    // @ts-expect-error TODO fix
     <Layout data-testid="layout" {...props}>
       {children}
     </Layout>

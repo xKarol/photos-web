@@ -173,7 +173,6 @@ describe("Lightbox", () => {
     const { click } = userEvent.setup();
     const nextButton = screen.getByLabelText("next image");
 
-    // @ts-expect-error
     for (const [index] of photos.entries()) {
       const nextIndex = index + 1;
       if (!photos[nextIndex]) return;

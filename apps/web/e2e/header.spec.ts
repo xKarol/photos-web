@@ -1,4 +1,5 @@
-import { test, expect, Locator } from "@playwright/test";
+import type { Locator } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { navbarItems } from "../src/features/header/constants/navbar-items";
 
 test.describe("Header", () => {
@@ -59,7 +60,7 @@ test.describe("Header", () => {
 async function checkNavbarLinks(navbarElement: Locator) {
   const navbarLinks = await navbarElement.getByRole("link").all();
   expect(navbarLinks).toHaveLength(navbarItems.length);
-  // @ts-expect-error
+
   for (const [index, value] of navbarLinks.entries()) {
     await expect(value).toHaveAttribute("href", navbarItems[index].href);
   }
