@@ -34,7 +34,7 @@ const Newsletter = () => {
           required
         />
         <LoadingButton
-          variant="3d"
+          variant="fill"
           isLoading={isLoading}
           disabled={email.length <= 0}
           loadingComponentProps={{ color: "white" }}
