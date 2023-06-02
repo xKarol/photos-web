@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+
 import { usePhotos } from "./use-photos";
 
 export const usePhotosRef = () => {

@@ -1,9 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+
+import useLightbox from "../../../hooks/use-lightbox";
 import usePortfolio from "../hooks/use-portfolio";
 import usePortfolioPage from "../hooks/use-portfolio-page";
-import useLightbox from "../../../hooks/use-lightbox";
 
 const ImagesList = () => {
   const { slug } = usePortfolioPage();

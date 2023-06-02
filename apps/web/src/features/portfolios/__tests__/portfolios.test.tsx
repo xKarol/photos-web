@@ -1,11 +1,13 @@
+import type { API } from "@app/types";
+
 import { render, screen } from "@testing-library/react";
 import { rest } from "msw";
-import type { API } from "@app/types";
+
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
-import Portfolios from "../portfolios";
-import { getFakePortfolioData, getMany } from "../../../tests/utils";
 import ReactQueryProvider from "../../../tests/react-query";
+import { getFakePortfolioData, getMany } from "../../../tests/utils";
+import Portfolios from "../portfolios";
 
 const setup = () =>
   render(

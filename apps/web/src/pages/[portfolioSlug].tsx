@@ -1,14 +1,15 @@
-import type { GetStaticProps, GetStaticPaths, NextPage } from "next";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { NextSeo } from "next-seo";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
+
 import Layout from "../components/layout";
-import { getPortfolios } from "../features/portfolios/services/portfolios";
-import usePortfolio from "../features/portfolios/hooks/use-portfolio";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
 import { PortfolioImages } from "../features/portfolios";
-import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
 import { queryOptions } from "../features/portfolios/config/query-options";
+import usePortfolio from "../features/portfolios/hooks/use-portfolio";
+import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
+import { getPortfolios } from "../features/portfolios/services/portfolios";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await getPortfolios();

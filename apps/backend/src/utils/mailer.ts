@@ -1,4 +1,5 @@
 import nodemailer, { type SendMailOptions } from "nodemailer";
+
 import { nodemailerConfig } from "../config/nodemailer";
 import logger from "./logger";
 
@@ -28,7 +29,7 @@ export const sendEmail = async (options: SendMailOptions) => {
         resolve(info);
 
         if (process.env.NODE_ENV === "development") {
-          console.log(
+          logger.debug(
             `Send Mail -> [${
               info.messageId
             }] Preview URL: ${nodemailer.getTestMessageUrl(info)}`

@@ -1,4 +1,5 @@
 import type { API } from "@app/types";
+
 import axios from "../../../libs/axios";
 
 export const getPhotos = async (

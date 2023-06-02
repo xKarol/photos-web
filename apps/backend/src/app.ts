@@ -1,14 +1,16 @@
 import "./config/env";
+
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+
 import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
 import routes from "./routes";
+import initAuth from "./utils/auth";
 import logger, { stream } from "./utils/logger";
 import { transporterVerify } from "./utils/mailer";
-import initAuth from "./utils/auth";
 
 const app = express();
 const port = process.env.PORT || 3000;

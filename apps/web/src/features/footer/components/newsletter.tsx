@@ -1,7 +1,8 @@
 import React from "react";
+
+import Alert from "../../../components/alert";
 import LoadingButton from "../../../components/loading-button";
 import { getErrorMessage } from "../../../utils/get-error-message";
-import Alert from "../../../components/alert";
 import useNewsletter from "../hooks/use-newsletter";
 
 const Newsletter = () => {

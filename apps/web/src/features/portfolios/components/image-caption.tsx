@@ -1,6 +1,6 @@
-import React from "react";
-import Image from "next/image";
 import clsx from "clsx";
+import Image from "next/image";
+import React from "react";
 
 type Props = {
   caption: string;

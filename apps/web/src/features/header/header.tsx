@@ -1,11 +1,12 @@
+import clsx from "clsx";
 import React, { useState } from "react";
 import { useLockBodyScroll } from "react-use";
-import clsx from "clsx";
-import Navbar from "./components/navbar";
-import Hamburger from "./components/hamburger";
-import NavbarMobile from "./components/navbar-mobile";
+
 import Layout from "../../components/layout";
 import Logo from "../../components/logo";
+import Hamburger from "./components/hamburger";
+import Navbar from "./components/navbar";
+import NavbarMobile from "./components/navbar-mobile";
 
 const Header = () => {
   const [showNavbar, setShowNavbar] = useState(false);

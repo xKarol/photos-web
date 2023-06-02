@@ -1,5 +1,6 @@
-import React from "react";
 import Image from "next/image";
+import React from "react";
+
 import aboutImg from "../../../public/assets/about.jpg";
 import ContactForm from "./components/form";
 

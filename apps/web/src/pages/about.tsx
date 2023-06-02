@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
-import Layout from "../components/layout";
-import Heading from "../components/heading";
+
 import aboutImg from "../../public/assets/about.jpg";
+import Heading from "../components/heading";
+import Layout from "../components/layout";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
 
 const Home: NextPage = () => {
   return (

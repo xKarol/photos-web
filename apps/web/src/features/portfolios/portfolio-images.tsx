@@ -1,10 +1,11 @@
 import React from "react";
+
 import EmptyState from "../../components/empty-state";
 import Heading from "../../components/heading";
+import useLightbox from "../../hooks/use-lightbox";
 import ImagesList from "./components/images-list";
 import usePortfolio from "./hooks/use-portfolio";
 import usePortfolioPage from "./hooks/use-portfolio-page";
-import useLightbox from "../../hooks/use-lightbox";
 
 const PortfolioImages = () => {
   const { slug } = usePortfolioPage();

@@ -1,5 +1,6 @@
 import type { Image } from "@prisma/client";
 import createError from "http-errors";
+
 import { prisma } from "../lib/prisma";
 
 export const createPhoto = async (

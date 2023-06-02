@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
+
 import socialMediaLinks from "../constants/social-media-links";
 
 type Props = React.ComponentPropsWithoutRef<"section">;

@@ -1,8 +1,9 @@
-import mediaQuery from "css-mediaquery";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Header } from "../index";
+import mediaQuery from "css-mediaquery";
+
 import { navbarItems } from "../constants/navbar-items";
+import { Header } from "../index";
 
 jest.mock("next/router", () => require("next-router-mock"));
 

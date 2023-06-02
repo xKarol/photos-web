@@ -1,10 +1,11 @@
 import React from "react";
-import Spinner from "../../components/spinner";
-import PhotosColumns from "./components/photos-columns";
-import EmptyState from "../../components/empty-state";
-import { usePhotosRef } from "./hooks/use-photos-ref";
-import useLightbox from "../../hooks/use-lightbox";
+
 import { Button } from "../../components/button";
+import EmptyState from "../../components/empty-state";
+import Spinner from "../../components/spinner";
+import useLightbox from "../../hooks/use-lightbox";
+import PhotosColumns from "./components/photos-columns";
+import { usePhotosRef } from "./hooks/use-photos-ref";
 
 const Photos = () => {
   const {

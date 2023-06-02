@@ -21,16 +21,6 @@ module.exports = {
     "unicorn/better-regex": "off",
     "unicorn/catch-error-name": "off",
     "unicorn/prefer-top-level-await": "off",
-    "import/order": [
-      1,
-      {
-        "newlines-between": "never",
-        groups: [
-          ["builtin", "external"],
-          ["internal", "parent", "sibling", "index"],
-        ],
-      },
-    ],
   },
   settings: {
     "import/parsers": {

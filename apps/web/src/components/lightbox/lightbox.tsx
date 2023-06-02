@@ -1,13 +1,15 @@
-import React, { useRef } from "react";
-import Image from "next/image";
-import { Dialog } from "@headlessui/react";
-import { VscClose } from "react-icons/vsc";
-import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 import type { Image as ImageType } from "@app/types";
+
+import { Dialog } from "@headlessui/react";
 import clsx from "clsx";
-import { Carousel } from "react-responsive-carousel";
 import { NextSeo } from "next-seo";
+import Image from "next/image";
+import React, { useRef } from "react";
+import { TfiAngleLeft, TfiAngleRight } from "react-icons/tfi";
+import { VscClose } from "react-icons/vsc";
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 import useScreen from "../../hooks/use-screen";
 
 type Props = {

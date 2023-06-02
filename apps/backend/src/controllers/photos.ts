@@ -1,16 +1,18 @@
+import type { API } from "@app/types";
+
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
-import type { API } from "@app/types";
+
 import cache from "../lib/cache";
 import { prisma } from "../lib/prisma";
 import type {
   DeletePhotoSchema,
-  GetPhotosSchema,
   GetPhotoSchema,
+  GetPhotosSchema,
 } from "../schemas/photos";
 import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
 import { createPhoto, deletePhoto, getPhoto } from "../services/photos";
-import { paginationParams, getPaginationNextPage } from "../utils/misc";
+import { getPaginationNextPage, paginationParams } from "../utils/misc";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;

@@ -1,5 +1,6 @@
-import React from "react";
 import Lottie from "lottie-react";
+import React from "react";
+
 import emptyStateAnimation from "../../../public/assets/animations/empty-state.json";
 import Heading from "../heading";
 import LoadingButton from "../loading-button";

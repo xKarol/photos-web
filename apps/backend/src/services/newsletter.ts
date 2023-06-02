@@ -1,6 +1,6 @@
-import logger from "../utils/logger";
-import type * as Schema from "../schemas/newsletter";
 import mailchimp from "../lib/mailchimp";
+import type * as Schema from "../schemas/newsletter";
+import logger from "../utils/logger";
 
 const newsletterListId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID as string;
 

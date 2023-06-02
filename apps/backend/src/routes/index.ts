@@ -1,12 +1,13 @@
 import express from "express";
-import healthCheckRoute from "./health-check";
+
 import notFoundRoutes from "./404";
+import authRoutes from "./auth";
 import contactRoutes from "./contact";
+import healthCheckRoute from "./health-check";
 import imageRoutes from "./images";
 import newsletterRoutes from "./newsletter";
 import photoRoutes from "./photos";
 import portfoliosRoutes from "./portfolios";
-import authRoutes from "./auth";
 
 const router = express.Router();
 

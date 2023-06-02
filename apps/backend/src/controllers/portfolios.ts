@@ -1,6 +1,8 @@
+import type { API } from "@app/types";
+
 import type { NextFunction, Request, Response } from "express";
 import slugify from "slugify";
-import type { API } from "@app/types";
+
 import { prisma } from "../lib/prisma";
 import type * as Schema from "../schemas/portfolios";
 import { deleteManyCloudinaryImages } from "../services/cloudinary";
@@ -11,7 +13,7 @@ import {
   updateImages,
   updateName,
 } from "../services/portfolios";
-import { paginationParams, getPaginationNextPage } from "../utils/misc";
+import { getPaginationNextPage, paginationParams } from "../utils/misc";
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,

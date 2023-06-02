@@ -1,9 +1,10 @@
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 import type { NextPage } from "next";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { NextSeo } from "next-seo";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
+
 import Layout from "../components/layout";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
 import { Portfolios } from "../features/portfolios";
 import { queryOptions } from "../features/portfolios/config/query-options";
 

@@ -1,7 +1,7 @@
-import React from "react";
+import clsx from "clsx";
 import HamburgerComponent from "hamburger-react";
 import type { CommonBurgerProps } from "hamburger-react";
-import clsx from "clsx";
+import React from "react";
 
 const Hamburger = ({
   className,

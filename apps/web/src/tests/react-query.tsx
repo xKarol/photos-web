@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+
 /* eslint-disable no-console */
-import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+
 import { queryClientConfig } from "../config/query-client";
 
 const queryClient = new QueryClient({

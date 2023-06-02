@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import React, { cloneElement } from "react";
-import Spinner from "../spinner";
+
 import { Button } from "../button";
+import Spinner from "../spinner";
 
 export type LoadingButtonProps = {
   isLoading?: boolean;

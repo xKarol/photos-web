@@ -1,11 +1,12 @@
+import { faker } from "@faker-js/faker";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { faker } from "@faker-js/faker";
 import { rest } from "msw";
-import ContactForm from "../components/form";
+
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
 import ReactQueryProvider from "../../../tests/react-query";
+import ContactForm from "../components/form";
 
 const setup = () =>
   render(

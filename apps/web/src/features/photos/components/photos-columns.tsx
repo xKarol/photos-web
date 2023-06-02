@@ -1,8 +1,10 @@
+import type { Image as ImageType } from "@app/types";
+
+import clsx from "clsx";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import type { Image as ImageType } from "@app/types";
-import Image from "next/image";
-import clsx from "clsx";
+
 import useLightbox from "../../../hooks/use-lightbox";
 import { useImagesColumns } from "../hooks/use-images-columns";
 

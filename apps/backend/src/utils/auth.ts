@@ -1,8 +1,8 @@
+import type { Express } from "express";
+import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import type { VerifyFunction } from "passport-local";
-import type { Express } from "express";
-import session from "express-session";
 
 const sessionConfig: session.SessionOptions = {
   secret: process.env.SESSION_SECRET as string,

@@ -1,5 +1,7 @@
 import type { Image as ImageType } from "@app/types";
+
 import { useEffect, useState } from "react";
+
 import { breakpoints } from "../../../styles/breakpoints";
 
 // TODO import breakpoint union type

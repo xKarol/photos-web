@@ -1,12 +1,13 @@
-import React from "react";
+import { faker } from "@faker-js/faker";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
-import { faker } from "@faker-js/faker";
+import React from "react";
+
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../../__mocks__/server";
-import Newsletter from "../components/newsletter";
 import ReactQueryProvider from "../../../tests/react-query";
+import Newsletter from "../components/newsletter";
 
 const setup = () =>
   render(

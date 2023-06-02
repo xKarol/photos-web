@@ -1,5 +1,7 @@
-import { rest } from "msw";
 import type { API } from "@app/types";
+
+import { rest } from "msw";
+
 import { getFakePortfolioData, getMany } from "../tests/utils";
 
 export const handlers = [

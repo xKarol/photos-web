@@ -1,5 +1,6 @@
-import React from "react";
 import { useRouter } from "next/router";
+import React from "react";
+
 import { navbarItems } from "../constants/navbar-items";
 import NavbarLink from "./navbar-link";
 

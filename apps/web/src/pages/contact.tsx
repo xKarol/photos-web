@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
-import { Contact as ContactContainer } from "../features/contact";
+
 import Layout from "../components/layout";
+import { Contact as ContactContainer } from "../features/contact";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
 
 const Contact: NextPage = () => {
   return (

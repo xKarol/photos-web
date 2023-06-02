@@ -1,10 +1,11 @@
-import { v2 as cloudinary, type AdminAndResourceOptions } from "cloudinary";
-import sharp from "sharp";
 import type { Image } from "@prisma/client";
+import { type AdminAndResourceOptions, v2 as cloudinary } from "cloudinary";
+import sharp from "sharp";
+
 import { cloudinaryConfig } from "../config/cloudinary";
-import { uploadFromBuffer } from "../utils/upload";
 import { getPlaceholderString, getPlaceholderURL } from "../utils/buffer";
 import { getBufferFromUrl } from "../utils/misc";
+import { uploadFromBuffer } from "../utils/upload";
 
 cloudinaryConfig();
 

@@ -1,10 +1,11 @@
+import { QueryClient, dehydrate } from "@tanstack/react-query";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
-import { Photos } from "../features/photos";
+
 import Layout from "../components/layout";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
+import { Photos } from "../features/photos";
 import { queryOptions } from "../features/photos/config/query-options";
 
 export async function getStaticProps() {

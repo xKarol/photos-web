@@ -1,6 +1,7 @@
-import { z } from "zod";
 import axios from "axios";
 import { rest } from "msw";
+import { z } from "zod";
+
 // eslint-disable-next-line jest/no-mocks-import
 import { server } from "../../__mocks__/server";
 import { getErrorMessage } from "../get-error-message";

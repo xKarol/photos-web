@@ -1,7 +1,8 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Footer } from "../index";
+import React from "react";
+
 import ReactQueryProvider from "../../../tests/react-query";
+import { Footer } from "../index";
 
 const setup = () =>
   render(

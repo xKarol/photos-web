@@ -1,9 +1,10 @@
 import { faker } from "@faker-js/faker";
 import supertest from "supertest";
+
 import app from "../app";
 import { prisma } from "../lib/prisma";
-import "../mocks/cloudinary";
 import "../mocks/auth";
+import "../mocks/cloudinary";
 import { createPhoto } from "../services/photos";
 import { parseError } from "./utils";
 

@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import {
   Hydrate,
-  QueryClientProvider,
   QueryClient,
+  QueryClientProvider,
 } from "@tanstack/react-query";
 import { DefaultSeo } from "next-seo";
-import SEO from "../config/next-seo";
+import type { AppProps } from "next/app";
+import React, { useState } from "react";
+
 import defaultFont from "../config/font";
-import useReactQueryDevtools from "../hooks/use-react-query-devtools";
+import SEO from "../config/next-seo";
 import { queryClientConfig } from "../config/query-client";
+import useReactQueryDevtools from "../hooks/use-react-query-devtools";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient(queryClientConfig));

@@ -1,5 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import InputField from "./input-field";
 
 describe("InputField", () => {

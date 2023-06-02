@@ -1,13 +1,14 @@
-import type { NextPage } from "next";
-import Link from "next/link";
-import { NextSeo } from "next-seo";
 import Lottie from "lottie-react";
-import { Header } from "../features/header";
-import { Footer } from "../features/footer";
-import Layout from "../components/layout";
-import Heading from "../components/heading";
+import type { NextPage } from "next";
+import { NextSeo } from "next-seo";
+import Link from "next/link";
+
 import animation404 from "../../public/assets/animations/404.json";
+import Heading from "../components/heading";
+import Layout from "../components/layout";
 import routes from "../config/routes";
+import { Footer } from "../features/footer";
+import { Header } from "../features/header";
 
 const Page404: NextPage = () => {
   return (

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+
 import { navbarItems } from "../constants/navbar-items";
 
 const NavbarMobile = ({ ...props }: React.ComponentPropsWithoutRef<"div">) => {

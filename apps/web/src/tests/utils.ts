@@ -1,5 +1,6 @@
-import { faker } from "@faker-js/faker";
 import type { Image, Portfolios } from "@app/types";
+
+import { faker } from "@faker-js/faker";
 
 export function getFakeImageData<T extends Image>(props?: T): T {
   const createdAt = faker.date.recent();

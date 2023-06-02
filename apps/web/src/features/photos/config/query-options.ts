@@ -1,7 +1,9 @@
-import type { FetchInfiniteQueryOptions } from "@tanstack/react-query";
 import type { API } from "@app/types";
-import { queryKeys } from "./query-keys";
+
+import type { FetchInfiniteQueryOptions } from "@tanstack/react-query";
+
 import { getPhotos } from "../services/photos";
+import { queryKeys } from "./query-keys";
 
 const portfoliosOptions: FetchInfiniteQueryOptions<API["Photos"]["Get"]> = {
   queryKey: queryKeys.all,

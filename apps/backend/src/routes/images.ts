@@ -1,4 +1,5 @@
 import express from "express";
+
 import { cloudinaryConfig } from "../config/cloudinary";
 import * as imageController from "../controllers/image";
 import { validateSchema } from "../middlewares/validate-schema";

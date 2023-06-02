@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import type { UploadApiResponse } from "cloudinary";
+
 import { bufferToStream } from "./buffer";
 
 export const uploadFromBuffer = (

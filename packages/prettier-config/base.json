@@ -5,5 +5,8 @@
   "singleQuote": false,
   "bracketSameLine": false,
   "endOfLine": "auto",
-  "bracketSpacing": true
-}
+  "bracketSpacing": true,
+  "importOrder":["config/env","^@app/(.*)$", "<THIRD_PARTY_MODULES>", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+  }

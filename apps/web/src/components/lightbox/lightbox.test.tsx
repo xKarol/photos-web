@@ -1,13 +1,15 @@
 /* eslint-disable jest/no-mocks-import */
-import "../../__mocks__/next-image";
-import "../../__mocks__/intersection-observer";
+import type { API } from "@app/types";
+
+import { faker } from "@faker-js/faker";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import type { API } from "@app/types";
-import { faker } from "@faker-js/faker";
-import Lightbox from "./index";
+
+import "../../__mocks__/intersection-observer";
+import "../../__mocks__/next-image";
 import { getFakeImageData } from "../../tests/utils";
+import Lightbox from "./index";
 
 const photos: API["Photos"]["GetOne"][] = Array.from(
   { length: faker.number.int({ min: 5, max: 25 }) },

@@ -1,9 +1,10 @@
-import supertest from "supertest";
 import { faker } from "@faker-js/faker";
-import type * as Schema from "../schemas/contact";
+import supertest from "supertest";
+
 import app from "../app";
 import { prisma } from "../lib/prisma";
 import "../mocks/auth";
+import type * as Schema from "../schemas/contact";
 import { createContact } from "../services/contact";
 import { parseError } from "./utils";
 
