@@ -25,7 +25,7 @@
 
 ## ❔ About
 
-This project is a monorepo that contains a frontend and a backend application for a photo portfolio website. The frontend application is built with Next.js. The backend is built with Express.js.
+This project is a web application built with Next.js and Express.js. The Photo Portfolio Page serves as a platform to showcase and highlight photography work. It provides a visually appealing and interactive way for visitors to explore portfolio and get a glimpse into creative vision.
 
 ### 🔍 Prerequisites
 
@@ -74,7 +74,9 @@ cd photos-web
 npm install
 ```
 
-4. Run the app
+4. Set up `.env` file
+
+5. Run the app
 
 ```bash
 npm run dev
