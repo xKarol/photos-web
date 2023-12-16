@@ -9,11 +9,11 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts"
+    "build": "tsup index.ts --target node18 --format cjs,esm --dts"
   },
   "devDependencies": {
     "@app/types": "*",
-    "tsup": "^6.5.0"
+    "tsup": "^8.0.1"
   },
   "keywords": [],
   "author": "",
