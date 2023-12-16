@@ -1,4 +1,3 @@
-import prisma from "@app/prisma";
 import type { Photo } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
@@ -11,8 +10,12 @@ import type {
   GetPhotosSchema,
 } from "../schemas/photos";
 import { deleteCloudinaryImageById, uploadPhoto } from "../services/cloudinary";
-import { createPhoto, deletePhoto, getPhoto } from "../services/photos";
-import { getPaginationNextPage, paginationParams } from "../utils/misc";
+import {
+  createPhoto,
+  deletePhoto,
+  getPhoto,
+  getPhotos,
+} from "../services/photos";
 
 type CreatePhotoBody = {
   image?: Express.Multer.File;
@@ -59,17 +62,13 @@ export const Get = async (
   next: NextFunction
 ) => {
   try {
-    const { page, limit, ...pagination } = paginationParams(req.query);
+    const paginationParams = req.pagination;
 
-    const photos = await prisma.photos.findMany({
-      ...pagination,
-      include: { image: true },
+    const data = await getPhotos({
+      ...paginationParams,
     });
 
-    const data = photos.map(({ image }) => image);
-
-    const nextPage = getPaginationNextPage(photos, limit, page);
-    return res.send({ data: data.slice(0, limit), nextPage });
+    return res.send(data);
   } catch (error) {
     next(error);
   }

@@ -7,6 +7,7 @@ import * as photosController from "../controllers/photos";
 import { upload } from "../middlewares/multer";
 import { requireAuth } from "../middlewares/require-auth";
 import { validateSchema } from "../middlewares/validate-schema";
+import { withPagination } from "../middlewares/with-pagination";
 import {
   deletePhotoSchema,
   getPhotoSchema,
@@ -33,6 +34,7 @@ router.get(
 router.get(
   apiUrls.photo.findAll,
   validateSchema(getPhotosSchema),
+  withPagination,
   photosController.Get
 );
 

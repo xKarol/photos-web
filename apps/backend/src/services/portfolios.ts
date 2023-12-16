@@ -3,6 +3,8 @@ import type { Portfolio } from "@app/types";
 
 import createError from "http-errors";
 
+import { getPaginationData } from "../utils/misc";
+
 export const getPortfolios: Portfolio.Services["findAll"] = async ({
   page = 1,
   skip,
@@ -16,10 +18,7 @@ export const getPortfolios: Portfolio.Services["findAll"] = async ({
     },
   });
 
-  return {
-    data: response.slice(0, limit),
-    nextPage: response.length > limit ? page + 1 : undefined,
-  };
+  return getPaginationData(response, { page, limit });
 };
 
 export const getPortfolio: Portfolio.Services["findOne"] = async (

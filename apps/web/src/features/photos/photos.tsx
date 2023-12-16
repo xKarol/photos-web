@@ -18,6 +18,7 @@ const Photos = () => {
     refetch,
   } = usePhotosRef();
   const { Lightbox } = useLightbox();
+
   const isEmptyState = !photos?.[0]?.id;
 
   return (

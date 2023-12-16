@@ -1,5 +1,5 @@
-import { Pagination, PaginationParams } from "./global";
-import { Image } from "@app/prisma";
+import { Pagination, PaginationParams, ServerPaginationParams } from "./global";
+import { Image, Photos } from "@app/prisma";
 
 type ReturnStatus = void | unknown;
 
@@ -12,6 +12,7 @@ export interface Api {
 
 export interface Services extends Api {
   delete: (photoId: string) => Promise<{ imageId: string }>;
+  findAll: (params: ServerPaginationParams) => Promise<Pagination<Image[]>>;
 }
 
 export type CreatePhotoPayload = Pick<

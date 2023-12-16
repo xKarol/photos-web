@@ -5,6 +5,7 @@ import express from "express";
 import * as portfoliosController from "../controllers/portfolios";
 import { requireAuth } from "../middlewares/require-auth";
 import { validateSchema } from "../middlewares/validate-schema";
+import { withPagination } from "../middlewares/with-pagination";
 import * as Schema from "../schemas/portfolios";
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.get(
   apiUrls.portfolio.findAll,
   validateSchema(Schema.getPortfolios),
+  withPagination,
   portfoliosController.Get
 );
 

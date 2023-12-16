@@ -1,4 +1,3 @@
-import prisma from "@app/prisma";
 import type { Portfolio } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
@@ -10,10 +9,10 @@ import {
   createPortfolio,
   deletePortfolio,
   getPortfolio,
+  getPortfolios,
   updateImages,
   updateName,
 } from "../services/portfolios";
-import { getPaginationNextPage, paginationParams } from "../utils/misc";
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,
@@ -53,23 +52,13 @@ export const Get = async (
   next: NextFunction
 ) => {
   try {
-    const { page, limit, ...pagination } = paginationParams(req.query);
+    const paginationParams = req.pagination;
 
-    const portfolios = await prisma.portfolios.findMany({
-      ...pagination,
-      include: {
-        images: true,
-      },
+    const data = await getPortfolios({
+      ...paginationParams,
     });
 
-    const data = portfolios.map((portfolio) => ({
-      ...portfolio,
-      // TODO add thumbnail field to prisma schema
-      images: [portfolio.images[0]],
-    }));
-
-    const nextPage = getPaginationNextPage(portfolios, limit, page);
-    return res.send({ data: data.slice(0, limit), nextPage });
+    return res.send(data);
   } catch (error) {
     next(error);
   }
