@@ -24,7 +24,7 @@ type CreatePhotoBody = {
 
 export const Create = async (
   req: Request<unknown, unknown, CreatePhotoBody>,
-  res: Response<Awaited<ReturnType<Photo.Api["create"]>>>,
+  res: Response<Photo.ApiResponse["create"]>,
   next: NextFunction
 ) => {
   try {
@@ -44,7 +44,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<GetPhotoSchema["params"]>,
-  res: Response<Awaited<ReturnType<Photo.Api["findOne"]>>>,
+  res: Response<Photo.ApiResponse["findOne"]>,
   next: NextFunction
 ) => {
   try {
@@ -58,7 +58,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<unknown, unknown, unknown, GetPhotosSchema["query"]>,
-  res: Response<Awaited<ReturnType<Photo.Api["findAll"]>>>,
+  res: Response<Photo.ApiResponse["findAll"]>,
   next: NextFunction
 ) => {
   try {
@@ -76,7 +76,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<DeletePhotoSchema["params"]>,
-  res: Response<Awaited<ReturnType<Photo.Api["delete"]>>>,
+  res: Response<Photo.ApiResponse["delete"]>,
   next: NextFunction
 ) => {
   try {

@@ -4,9 +4,7 @@ import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 import { queryOptions } from "../config/react-query";
 
-const transformData = (
-  data: InfiniteData<Awaited<ReturnType<Photo.Api["findAll"]>>>
-) => {
+const transformData = (data: InfiniteData<Photo.ApiResponse["findAll"]>) => {
   return data?.pages.flatMap(({ data }) => data) || [];
 };
 

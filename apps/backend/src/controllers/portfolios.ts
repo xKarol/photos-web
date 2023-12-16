@@ -16,7 +16,7 @@ import {
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,
-  res: Response<Awaited<ReturnType<Portfolio.Api["create"]>>>,
+  res: Response<Portfolio.ApiResponse["create"]>,
   next: NextFunction
 ) => {
   try {
@@ -33,7 +33,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<Schema.GetPortfolio["params"]>,
-  res: Response<Awaited<ReturnType<Portfolio.Api["findOne"]>>>,
+  res: Response<Portfolio.ApiResponse["findOne"]>,
   next: NextFunction
 ) => {
   try {
@@ -48,7 +48,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<unknown, unknown, unknown, Schema.GetPortfolios["query"]>,
-  res: Response<Awaited<ReturnType<Portfolio.Api["findAll"]>>>,
+  res: Response<Portfolio.ApiResponse["findAll"]>,
   next: NextFunction
 ) => {
   try {
@@ -66,7 +66,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<Schema.DeletePortfolio["params"]>,
-  res: Response<Awaited<ReturnType<Portfolio.Api["delete"]>>>,
+  res: Response<Portfolio.ApiResponse["delete"]>,
   next: NextFunction
 ) => {
   try {
@@ -89,7 +89,7 @@ export const UpdateName = async (
     unknown,
     Schema.UpdatePortfolioName["body"]
   >,
-  res: Response<Awaited<ReturnType<Portfolio.Api["updateName"]>>>,
+  res: Response<Portfolio.ApiResponse["updateName"]>,
   next: NextFunction
 ) => {
   try {
@@ -110,7 +110,7 @@ export const UpdateImages = async (
     unknown,
     Schema.UpdatePortfolioImages["body"]
   >,
-  res: Response<Awaited<ReturnType<Portfolio.Api["updateImages"]>>>,
+  res: Response<Portfolio.ApiResponse["updateImages"]>,
   next: NextFunction
 ) => {
   try {

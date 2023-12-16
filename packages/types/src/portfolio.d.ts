@@ -4,32 +4,36 @@ import type { Image, Portfolios } from "@app/prisma";
 type ReturnStatus = void | unknown;
 
 export interface Api {
-  create: (
-    payload: CreatePortfolioPayload
-  ) => Promise<Portfolios & { images: Image[] }>;
-  findOne: (slug: string) => Promise<Portfolios & { images: Image[] }>;
-  findAll: (
-    params?: PaginationParams
-  ) => Promise<Pagination<(Portfolios & { images: Image[] })[]>>;
-  delete: (portfolioSlug: string) => Promise<ReturnStatus>;
-  updateName: (portfolioSlug: string) => Promise<Portfolios>;
-  updateImages: (
-    portfolioSlug: string
-  ) => Promise<Portfolios & { images: Image[] }>;
+  create: (payload: CreatePortfolioPayload) => Promise<ApiResponse["create"]>;
+  findOne: (slug: string) => Promise<ApiResponse["findOne"]>;
+  findAll: (params?: PaginationParams) => Promise<ApiResponse["findAll"]>;
+  delete: (portfolioSlug: string) => Promise<ApiResponse["delete"]>;
+  updateName: (portfolioSlug: string) => Promise<ApiResponse["updateName"]>;
+  updateImages: (portfolioSlug: string) => Promise<ApiResponse["updateImages"]>;
 }
 
 // @ts-expect-error
 export interface Services extends Api {
-  findAll: (
-    params: ServerPaginationParams
-  ) => Promise<Pagination<(Portfolios & { images: Image[] })[]>>;
-  updateName: (portfolioSlug: string, newName: string) => Promise<Portfolios>;
+  findAll: (params: ServerPaginationParams) => Promise<ApiResponse["findAll"]>;
+  updateName: (
+    portfolioSlug: string,
+    newName: string
+  ) => Promise<ApiResponse["updateName"]>;
   updateImages: (
     portfolioSlug: string,
     newIages: string[]
-  ) => Promise<Portfolios & { images: Image[] }>;
+  ) => Promise<ApiResponse["updateImages"]>;
   delete: (portfolioSlug: string) => Promise<Portfolios>;
 }
+
+export type ApiResponse = {
+  create: Portfolios & { images: Image[] };
+  findOne: Portfolios & { images: Image[] };
+  findAll: Pagination<(Portfolios & { images: Image[] })[]>;
+  delete: ReturnStatus;
+  updateName: Portfolios;
+  updateImages: Portfolios & { images: Image[] };
+};
 
 export type CreatePortfolioPayload = {
   slug: string;

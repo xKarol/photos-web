@@ -8,7 +8,7 @@ import { sendEmail } from "../utils/mailer";
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreateContact["body"]>,
-  res: Response<Awaited<ReturnType<Contact.Api["create"]>>>,
+  res: Response<Contact.ApiResponse["create"]>,
   next: NextFunction
 ) => {
   try {
@@ -27,7 +27,7 @@ export const Create = async (
 
 export const Delete = async (
   req: Request<Schema.DeleteContact["params"]>,
-  res: Response<Awaited<ReturnType<Contact.Api["delete"]>>>,
+  res: Response<Contact.ApiResponse["delete"]>,
   next: NextFunction
 ) => {
   try {

@@ -7,7 +7,7 @@ import { subscribeToNewsletter } from "../services/newsletter";
 
 export const Subscribe = async (
   req: Request<unknown, unknown, Schema.SubscribeNewsletter["body"]>,
-  res: Response<Awaited<ReturnType<Newsletter.Api["subscribe"]>>>,
+  res: Response<Newsletter.ApiResponse["subscribe"]>,
   next: NextFunction
 ) => {
   try {

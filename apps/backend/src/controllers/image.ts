@@ -15,7 +15,7 @@ type CacheType = {
 
 export const GetOne = async (
   req: Request<Schema.GetImageSchema["params"]>,
-  res: Response<Awaited<ReturnType<Image.Api["findOne"]>>>,
+  res: Response<Image.ApiResponse["findOne"]>,
   next: NextFunction
 ) => {
   try {

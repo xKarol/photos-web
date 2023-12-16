@@ -11,7 +11,7 @@ import "../../__mocks__/next-image";
 import { getFakeImageData } from "../../tests/utils";
 import Lightbox from "./index";
 
-const photos: Awaited<ReturnType<Photo.Api["findOne"]>>[] = Array.from(
+const photos: Photo.ApiResponse["findOne"][] = Array.from(
   { length: faker.number.int({ min: 5, max: 25 }) },
   getFakeImageData
 );
