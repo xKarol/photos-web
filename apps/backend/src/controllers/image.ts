@@ -1,10 +1,10 @@
+import prisma from "@app/prisma";
 import type { API } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
 
 import cache from "../lib/cache";
-import { prisma } from "../lib/prisma";
 import type * as Schema from "../schemas/images";
 import { getBufferFromUrl } from "../utils/misc";
 

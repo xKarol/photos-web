@@ -1,22 +1,21 @@
 /* eslint-disable no-console */
 
 /* eslint-disable unicorn/no-process-exit */
-import { faker } from "@faker-js/faker";
-import { program } from "commander";
-import ora from "ora";
-
-import { cloudinaryConfig } from "../src/config/cloudinary";
-import { prisma } from "../src/lib/prisma";
+import { cloudinaryConfig } from "../../apps/backend/src/config/cloudinary";
 import {
   deleteAllCloudinaryImages,
   getCloudinaryImages,
   uploadPhoto,
-} from "../src/services/cloudinary";
-import type { ResourceType } from "../src/services/cloudinary";
-import { createPhoto } from "../src/services/photos";
-import { createPortfolio } from "../src/services/portfolios";
-import { getPlaceholderString, getPlaceholderURL } from "../src/utils/buffer";
-import { getBufferFromUrl } from "../src/utils/misc";
+} from "../../apps/backend/src/services/cloudinary";
+import type { ResourceType } from "../../apps/backend/src/services/cloudinary";
+import { createPhoto } from "../../apps/backend/src/services/photos";
+import { createPortfolio } from "../../apps/backend/src/services/portfolios";
+import {
+  getPlaceholderString,
+  getPlaceholderURL,
+} from "../../apps/backend/src/utils/buffer";
+import { getBufferFromUrl } from "../../apps/backend/src/utils/misc";
+import prisma from "./";
 import {
   getFakePhotoData,
   getFakePortfolioData,
@@ -24,6 +23,9 @@ import {
   measureTime,
   randomBetween,
 } from "./seed.utils";
+import { faker } from "@faker-js/faker";
+import { program } from "commander";
+import ora from "ora";
 
 program.option("--clear");
 program.parse();

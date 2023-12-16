@@ -1,23 +1,9 @@
 {
   "name": "@app/types",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**"
-  ],
-  "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "0.0.0",
+  "private": true,
+  "types": "index.d.ts",
   "devDependencies": {
-    "tsup": "^6.7.0"
-  },
-  "dependencies": {
-    "backend": "*"
+    "@app/prisma": "*"
   }
 }

@@ -1,0 +1,33 @@
+{
+  "name": "@app/prisma",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup index.ts --target node18 --format cjs,esm --dts",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:seed:clear": "ts-node prisma/seed.ts --clear",
+    "post-install": "prisma generate"
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only ./seed.ts"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "prisma": "^4.12.0",
+    "ts-node": "^10.9.1",
+    "tsup": "^7.1.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.12.0",
+    "ora": "5.4.1"
+  }
+}

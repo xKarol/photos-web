@@ -1,10 +1,10 @@
+import prisma from "@app/prisma";
 import type { API } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
 import cache from "../lib/cache";
-import { prisma } from "../lib/prisma";
 import type {
   DeletePhotoSchema,
   GetPhotoSchema,

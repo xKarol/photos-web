@@ -35,7 +35,7 @@
     "format:fix": "npx lerna run format:fix",
     "type-check": "npx lerna run type-check",
     "prepare": "npx husky install",
-    "postinstall": "npx lerna run postinstall"
+    "postinstall": "npx lerna run post-install"
   },
   "devDependencies": {
     "eslint": "8.37.0",

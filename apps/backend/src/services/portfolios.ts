@@ -1,8 +1,8 @@
+import prisma from "@app/prisma";
 import type { API } from "@app/types";
 
 import createError from "http-errors";
 
-import { prisma } from "../lib/prisma";
 import type { CreatePortfolio } from "../schemas/portfolios";
 
 export const createPortfolio = async ({

@@ -1,4 +1,4 @@
-import { Contact, Image, Portfolios } from "backend/src/lib/prisma";
+import { Contact, Image, Portfolios } from "@app/prisma";
 
 export type Pagination<T> = {
   data: T;
@@ -6,7 +6,7 @@ export type Pagination<T> = {
   limit: number;
 };
 
-export * from "backend/src/lib/prisma";
+export * from "@app/prisma";
 
 type ReturnStatus = void | unknown;
 
