@@ -4,6 +4,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xKarol/photos-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xKarol/photos-web/issues"
+  },
+  "homepage": "https://github.com/xKarol/photos-web#readme",
+  "engines": {
+    "node": ">=18.x",
+    "npm": ">=7.0.0",
+    "yarn": ">=1.19.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "npx lerna run dev --parallel",
     "build": "npx lerna run build",
@@ -17,21 +37,6 @@
     "prepare": "npx husky install",
     "postinstall": "npx lerna run postinstall"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xKarol/photos-web.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/xKarol/photos-web/issues"
-  },
-  "homepage": "https://github.com/xKarol/photos-web#readme",
   "devDependencies": {
     "eslint": "8.37.0",
     "husky": "^8.0.0",
