@@ -6,7 +6,7 @@ import Layout from "../components/layout";
 import { Footer } from "../features/footer";
 import { Header } from "../features/header";
 import { PortfolioImages } from "../features/portfolios";
-import { queryOptions } from "../features/portfolios/config/query-options";
+import { queryOptions } from "../features/portfolios/config/react-query";
 import usePortfolio from "../features/portfolios/hooks/use-portfolio";
 import usePortfolioPage from "../features/portfolios/hooks/use-portfolio-page";
 import { getPortfolios } from "../features/portfolios/services/portfolios";
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const queryClient = new QueryClient();
   const slug = ctx.params?.portfolioSlug as string;
   try {
-    await queryClient.fetchQuery(queryOptions.one(slug));
+    await queryClient.fetchQuery(queryOptions.findOne(slug));
   } catch {
     return {
       notFound: true,

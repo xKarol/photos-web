@@ -2,13 +2,13 @@ import type { API } from "@app/types";
 
 import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
-import { queryOptions } from "../config/query-options";
+import { queryOptions } from "../config/react-query";
 
 const transformData = (data: InfiniteData<API["Photos"]["Get"]>) => {
   return data?.pages.flatMap(({ data }) => data) || [];
 };
 
-export const usePhotos = () => {
-  const response = useInfiniteQuery(queryOptions.all);
+export const usePhotos = (...args: Parameters<typeof queryOptions.findAll>) => {
+  const response = useInfiniteQuery(queryOptions.findAll(...args));
   return { ...response, data: transformData(response.data) };
 };
