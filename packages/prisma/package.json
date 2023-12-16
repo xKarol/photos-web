@@ -22,12 +22,12 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
-    "prisma": "^4.12.0",
+    "prisma": "^5.7.0",
     "ts-node": "^10.9.1",
     "tsup": "^8.0.1"
   },
   "dependencies": {
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^5.7.0",
     "ora": "5.4.1"
   }
 }
