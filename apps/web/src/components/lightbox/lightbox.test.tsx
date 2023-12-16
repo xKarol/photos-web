@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-mocks-import */
-import type { API } from "@app/types";
+import type { Photo } from "@app/types";
 
 import { faker } from "@faker-js/faker";
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -11,7 +11,7 @@ import "../../__mocks__/next-image";
 import { getFakeImageData } from "../../tests/utils";
 import Lightbox from "./index";
 
-const photos: API["Photos"]["GetOne"][] = Array.from(
+const photos: Awaited<ReturnType<Photo.Api["findOne"]>>[] = Array.from(
   { length: faker.number.int({ min: 5, max: 25 }) },
   getFakeImageData
 );

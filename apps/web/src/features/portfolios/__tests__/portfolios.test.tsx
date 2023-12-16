@@ -1,4 +1,4 @@
-import type { API } from "@app/types";
+import type { Portfolio } from "@app/types";
 
 import { render, screen } from "@testing-library/react";
 import { rest } from "msw";
@@ -80,9 +80,8 @@ function mockPortfolios() {
     rest.get("/portfolios", (_req, res, ctx) => {
       return res(
         ctx.status(200),
-        ctx.json<API["Portfolios"]["Get"]>({
+        ctx.json<Awaited<ReturnType<Portfolio.Api["findAll"]>>>({
           nextPage: undefined,
-          limit: 5,
           data: data,
         })
       );

@@ -1,4 +1,4 @@
-import type { Image as ImageType } from "@app/types";
+import type { Image as ImageType } from "@app/prisma";
 
 import { Dialog } from "@headlessui/react";
 import clsx from "clsx";

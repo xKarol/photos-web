@@ -1,5 +1,5 @@
 import prisma from "@app/prisma";
-import type { API } from "@app/types";
+import type { Photo } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
@@ -21,7 +21,7 @@ type CreatePhotoBody = {
 
 export const Create = async (
   req: Request<unknown, unknown, CreatePhotoBody>,
-  res: Response<API["Photos"]["Create"]>,
+  res: Response<Awaited<ReturnType<Photo.Api["create"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -41,7 +41,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<GetPhotoSchema["params"]>,
-  res: Response<API["Photos"]["GetOne"]>,
+  res: Response<Awaited<ReturnType<Photo.Api["findOne"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -55,7 +55,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<unknown, unknown, unknown, GetPhotosSchema["query"]>,
-  res: Response<API["Photos"]["Get"]>,
+  res: Response<Awaited<ReturnType<Photo.Api["findAll"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -69,7 +69,7 @@ export const Get = async (
     const data = photos.map(({ image }) => image);
 
     const nextPage = getPaginationNextPage(photos, limit, page);
-    return res.send({ data: data.slice(0, limit), nextPage, limit });
+    return res.send({ data: data.slice(0, limit), nextPage });
   } catch (error) {
     next(error);
   }
@@ -77,7 +77,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<DeletePhotoSchema["params"]>,
-  res: Response<API["Photos"]["Delete"]>,
+  res: Response<Awaited<ReturnType<Photo.Api["delete"]>>>,
   next: NextFunction
 ) => {
   try {

@@ -1,4 +1,4 @@
-import type { API } from "@app/types";
+import type { Contact } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 
@@ -8,7 +8,7 @@ import { sendEmail } from "../utils/mailer";
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreateContact["body"]>,
-  res: Response<API["Contact"]["Create"]>,
+  res: Response<Awaited<ReturnType<Contact.Api["create"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -27,12 +27,12 @@ export const Create = async (
 
 export const Delete = async (
   req: Request<Schema.DeleteContact["params"]>,
-  res: Response<API["Contact"]["Delete"]>,
+  res: Response<Awaited<ReturnType<Contact.Api["delete"]>>>,
   next: NextFunction
 ) => {
   try {
     const { contactId } = req.params;
-    await deleteContact({ contactId });
+    await deleteContact(contactId);
 
     return res.sendStatus(200);
   } catch (error) {

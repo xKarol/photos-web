@@ -1,4 +1,4 @@
-import type { Contact } from "@app/types";
+import type { Contact } from "@app/prisma";
 
 export type FormValues = Pick<
   Contact,

@@ -12,7 +12,8 @@ export const queryOptions = {
   ): UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPhotos>>> => ({
     ...options,
     queryKey: queryKeys.findAll,
-    queryFn: ({ pageParam = 1 }) => getPhotos(pageParam ?? 1, 5),
+    queryFn: ({ pageParam = 1 }) =>
+      getPhotos({ page: pageParam ?? 1, limit: 5 }),
     getNextPageParam: ({ nextPage }) => nextPage,
   }),
 } satisfies Record<keyof typeof queryKeys, unknown>;

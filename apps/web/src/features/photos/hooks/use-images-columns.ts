@@ -1,4 +1,4 @@
-import type { Image as ImageType } from "@app/types";
+import type { Image as ImageType } from "@app/prisma";
 
 import { useEffect, useState } from "react";
 

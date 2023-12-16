@@ -1,11 +1,9 @@
 import prisma from "@app/prisma";
+import type { Photo } from "@app/types";
 
-import type { Image } from "@prisma/client";
 import createError from "http-errors";
 
-export const createPhoto = async (
-  data: Omit<Image, "type" | "createdAt" | "updatedAt">
-) => {
+export const createPhoto: Photo.Services["create"] = async (data) => {
   try {
     const res = await prisma.photos.create({
       data: {
@@ -21,7 +19,7 @@ export const createPhoto = async (
   }
 };
 
-export const getPhoto = async (photoId: string) => {
+export const getPhoto: Photo.Services["findOne"] = async (photoId) => {
   try {
     const data = await prisma.photos.findUniqueOrThrow({
       where: { imageId: photoId },
@@ -33,7 +31,7 @@ export const getPhoto = async (photoId: string) => {
   }
 };
 
-export const deletePhoto = async (photoId: string) => {
+export const deletePhoto: Photo.Services["delete"] = async (photoId) => {
   try {
     const data = await prisma.photos.delete({
       where: { imageId: photoId },

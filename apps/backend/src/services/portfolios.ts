@@ -1,30 +1,30 @@
 import prisma from "@app/prisma";
-import type { API } from "@app/types";
+import type { Portfolio } from "@app/types";
 
 import createError from "http-errors";
 
-import type { CreatePortfolio } from "../schemas/portfolios";
+export const getPortfolios: Portfolio.Services["findAll"] = async ({
+  page = 1,
+  skip,
+  limit = 10,
+}) => {
+  const response = await prisma.portfolios.findMany({
+    skip: skip,
+    take: limit + 1,
+    include: {
+      images: true,
+    },
+  });
 
-export const createPortfolio = async ({
-  slug,
-  name,
-  images,
-}: CreatePortfolio["body"] & { slug: string }) => {
-  try {
-    const response = (await prisma.portfolios.create({
-      data: {
-        slug,
-        name,
-        images: { connect: transformImages(images) },
-      },
-    })) as API["Portfolios"]["Create"]; //TODO why prisma return wrong types?
-    return response;
-  } catch {
-    throw createError(400, "Could not create portfolio.");
-  }
+  return {
+    data: response.slice(0, limit),
+    nextPage: response.length > limit ? page + 1 : undefined,
+  };
 };
 
-export const getPortfolio = async (portfolioSlug: string) => {
+export const getPortfolio: Portfolio.Services["findOne"] = async (
+  portfolioSlug
+) => {
   try {
     const data = await prisma.portfolios.findUniqueOrThrow({
       where: { slug: portfolioSlug },
@@ -36,7 +36,27 @@ export const getPortfolio = async (portfolioSlug: string) => {
   }
 };
 
-export const deletePortfolio = async (portfolioSlug: string) => {
+export const createPortfolio: Portfolio.Services["create"] = async (
+  payload
+) => {
+  try {
+    const { slug, name, images } = payload;
+    const response = (await prisma.portfolios.create({
+      data: {
+        slug,
+        name,
+        images: { connect: transformImages(images) },
+      },
+    })) as Awaited<ReturnType<Portfolio.Services["create"]>>; //TODO why prisma return wrong types?
+    return response;
+  } catch {
+    throw createError(400, "Could not create portfolio.");
+  }
+};
+
+export const deletePortfolio: Portfolio.Services["delete"] = async (
+  portfolioSlug
+) => {
   try {
     const response = await prisma.portfolios.delete({
       where: { slug: portfolioSlug },
@@ -47,7 +67,10 @@ export const deletePortfolio = async (portfolioSlug: string) => {
   }
 };
 
-export const updateName = async (portfolioSlug: string, newName: string) => {
+export const updateName: Portfolio.Services["updateName"] = async (
+  portfolioSlug,
+  newName
+) => {
   try {
     const response = await prisma.portfolios.update({
       where: { slug: portfolioSlug },
@@ -61,9 +84,9 @@ export const updateName = async (portfolioSlug: string, newName: string) => {
   }
 };
 
-export const updateImages = async (
-  portfolioSlug: string,
-  imagesIds: string[]
+export const updateImages: Portfolio.Services["updateImages"] = async (
+  portfolioSlug,
+  imagesIds
 ) => {
   try {
     const response = await prisma.portfolios.update({

@@ -1,5 +1,5 @@
 import prisma from "@app/prisma";
-import type { API } from "@app/types";
+import type { Portfolio } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 import slugify from "slugify";
@@ -17,7 +17,7 @@ import { getPaginationNextPage, paginationParams } from "../utils/misc";
 
 export const Create = async (
   req: Request<unknown, unknown, Schema.CreatePortfolio["body"]>,
-  res: Response<API["Portfolios"]["Create"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["create"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -34,7 +34,7 @@ export const Create = async (
 
 export const GetOne = async (
   req: Request<Schema.GetPortfolio["params"]>,
-  res: Response<API["Portfolios"]["GetOne"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["findOne"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -49,7 +49,7 @@ export const GetOne = async (
 
 export const Get = async (
   req: Request<unknown, unknown, unknown, Schema.GetPortfolios["query"]>,
-  res: Response<API["Portfolios"]["Get"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["findAll"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -62,14 +62,14 @@ export const Get = async (
       },
     });
 
-    const nextPage = getPaginationNextPage(portfolios, limit, page);
     const data = portfolios.map((portfolio) => ({
       ...portfolio,
       // TODO add thumbnail field to prisma schema
       images: [portfolio.images[0]],
     }));
 
-    return res.send({ data: data.slice(0, limit), nextPage, limit });
+    const nextPage = getPaginationNextPage(portfolios, limit, page);
+    return res.send({ data: data.slice(0, limit), nextPage });
   } catch (error) {
     next(error);
   }
@@ -77,7 +77,7 @@ export const Get = async (
 
 export const Delete = async (
   req: Request<Schema.DeletePortfolio["params"]>,
-  res: Response<API["Portfolios"]["Delete"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["delete"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -100,7 +100,7 @@ export const UpdateName = async (
     unknown,
     Schema.UpdatePortfolioName["body"]
   >,
-  res: Response<API["Portfolios"]["UpdateName"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["updateName"]>>>,
   next: NextFunction
 ) => {
   try {
@@ -121,7 +121,7 @@ export const UpdateImages = async (
     unknown,
     Schema.UpdatePortfolioImages["body"]
   >,
-  res: Response<API["Portfolios"]["UpdateImages"]>,
+  res: Response<Awaited<ReturnType<Portfolio.Api["updateImages"]>>>,
   next: NextFunction
 ) => {
   try {

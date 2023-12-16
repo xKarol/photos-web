@@ -1,4 +1,4 @@
-import type { Image, Portfolios } from "@app/types";
+import type { Image, Portfolios } from "@app/prisma";
 
 import { faker } from "@faker-js/faker";
 

@@ -3,7 +3,7 @@ import { newsletter as Schema } from "@app/schemas";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { newsletterSubscribe } from "../services/newsletter";
+import { subscribeToNewsletter } from "../services/newsletter";
 
 const useNewsletter = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +14,9 @@ const useNewsletter = () => {
     error: mutationError,
     isError,
     isSuccess,
-  } = useMutation(newsletterSubscribe);
+  } = useMutation({
+    mutationFn: subscribeToNewsletter,
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ const useNewsletter = () => {
       if (isLoading) return;
       setError(null);
       await Schema.subscribeNewsletter.parseAsync({ email });
-      await mutateAsync({ email });
+      await mutateAsync(email);
       setEmail("");
     } catch (error) {
       setError(error);

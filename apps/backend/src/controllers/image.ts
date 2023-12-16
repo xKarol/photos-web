@@ -1,5 +1,5 @@
 import prisma from "@app/prisma";
-import type { API } from "@app/types";
+import type { Image } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 import mime from "mime-types";
@@ -15,7 +15,7 @@ type CacheType = {
 
 export const GetOne = async (
   req: Request<Schema.GetImageSchema["params"]>,
-  res: Response<API["Image"]["GetOne"]>,
+  res: Response<Awaited<ReturnType<Image.Api["findOne"]>>>,
   next: NextFunction
 ) => {
   try {

@@ -1,4 +1,4 @@
-import type { API } from "@app/types";
+import type { Portfolio } from "@app/types";
 
 import { rest } from "msw";
 
@@ -14,8 +14,7 @@ export const handlers = [
   rest.get(`/portfolios`, (_req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json<API["Portfolios"]["Get"]>({
-        limit: 5,
+      ctx.json<Awaited<ReturnType<Portfolio.Api["findAll"]>>>({
         nextPage: 2,
         data: getMany(getFakePortfolioData, { min: 5, max: 20 }),
       })

@@ -1,4 +1,4 @@
-import type { API } from "@app/types";
+import type { Newsletter } from "@app/types";
 
 import type { NextFunction, Request, Response } from "express";
 
@@ -7,7 +7,7 @@ import { subscribeToNewsletter } from "../services/newsletter";
 
 export const Subscribe = async (
   req: Request<unknown, unknown, Schema.SubscribeNewsletter["body"]>,
-  res: Response<API["Newsletter"]["Subscribe"]>,
+  res: Response<Awaited<ReturnType<Newsletter.Api["subscribe"]>>>,
   next: NextFunction
 ) => {
   try {

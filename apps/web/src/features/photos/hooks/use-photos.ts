@@ -1,10 +1,12 @@
-import type { API } from "@app/types";
+import type { Photo } from "@app/types";
 
 import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 import { queryOptions } from "../config/react-query";
 
-const transformData = (data: InfiniteData<API["Photos"]["Get"]>) => {
+const transformData = (
+  data: InfiniteData<Awaited<ReturnType<Photo.Api["findAll"]>>>
+) => {
   return data?.pages.flatMap(({ data }) => data) || [];
 };
 

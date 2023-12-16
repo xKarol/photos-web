@@ -1,24 +1,16 @@
 import { apiUrls } from "@app/config";
-import type { API } from "@app/types";
+import type { Photo } from "@app/types";
 
 import axios from "../../../libs/axios";
 
-export const getPhotos = async (
-  page = 1,
-  limit = 10
-): Promise<API["Photos"]["Get"]> => {
+export const getPhotos: Photo.Api["findAll"] = async (params) => {
   const { data } = await axios.get(apiUrls.photo.findAll, {
-    params: {
-      page,
-      limit,
-    },
+    params,
   });
   return data;
 };
 
-export const getPhoto = async (
-  photoId: string
-): Promise<API["Photos"]["GetOne"]> => {
+export const getPhoto: Photo.Api["findOne"] = async (photoId) => {
   const { data } = await axios.get(apiUrls.photo.findOne(photoId));
   return data;
 };

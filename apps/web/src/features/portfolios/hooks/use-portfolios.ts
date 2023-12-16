@@ -1,10 +1,12 @@
-import type { API } from "@app/types";
+import type { Portfolio } from "@app/types";
 
 import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 import { queryOptions } from "../config/react-query";
 
-const transformData = (data: InfiniteData<API["Portfolios"]["Get"]>) => {
+const transformData = (
+  data: InfiniteData<Awaited<ReturnType<Portfolio.Api["findAll"]>>>
+) => {
   return data?.pages.flatMap(({ data }) => data) || [];
 };
 

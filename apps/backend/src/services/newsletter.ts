@@ -1,10 +1,12 @@
+import type { Newsletter } from "@app/types";
+
 import mailchimp from "../lib/mailchimp";
 import type * as Schema from "../schemas/newsletter";
 import logger from "../utils/logger";
 
 const newsletterListId = process.env.MAILCHIMP_NEWSLETTER_LIST_ID as string;
 
-export const subscribeToNewsletter = async ({
+export const subscribeToNewsletter: Newsletter.Services["subscribe"] = async ({
   email,
 }: Schema.SubscribeNewsletter["body"]) => {
   try {

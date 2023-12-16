@@ -1,11 +1,9 @@
 import { apiUrls } from "@app/config";
-import type { contact as Schema } from "@app/schemas";
-import type { API } from "@app/types";
+import type { Contact } from "@app/types";
 
 import axios from "../../../libs/axios";
 
-export const createContact = async (
-  data: Schema.CreateSchema
-): Promise<API["Contact"]["Create"]> => {
-  return await axios.post(apiUrls.contact.create, data);
+export const createContact: Contact.Api["create"] = async (payload) => {
+  const { data } = await axios.post(apiUrls.contact.create, payload);
+  return data;
 };

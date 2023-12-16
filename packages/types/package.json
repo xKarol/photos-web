@@ -2,7 +2,7 @@
   "name": "@app/types",
   "version": "0.0.0",
   "private": true,
-  "types": "index.d.ts",
+  "types": "./src/index.d.ts",
   "devDependencies": {
     "@app/prisma": "*"
   }
