@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 16",
+  "display": "Node 18",
   "extends": "./base.json",
   "compilerOptions": {
     "lib": ["esnext"],
     "module": "CommonJS",
     "esModuleInterop": true,
-    "target": "es2016"
+    "target": "ES2022"
   }
 }

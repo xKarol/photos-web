@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/app.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/app.js --tsconfig=tsconfig.production.json",
-    "dev": "cross-env NODE_ENV=development concurrently \"esbuild src/app.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/app.js --watch\" \"nodemon -q dist/app.js'\"",
+    "build": "esbuild src/app.ts --bundle --packages=external --platform=node --target=node18 --outfile=dist/app.js --tsconfig=tsconfig.production.json",
+    "dev": "cross-env NODE_ENV=development concurrently \"esbuild src/app.ts --bundle --packages=external --platform=node --target=node18 --outfile=dist/app.js --watch\" \"nodemon -q dist/app.js'\"",
     "start": "cross-env NODE_ENV=production node ./dist/app.js",
     "setup": "npx prisma db push && npx prisma db seed",
     "test": "cross-env NODE_ENV=test jest",

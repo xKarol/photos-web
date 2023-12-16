@@ -1,5 +1,5 @@
 {
-  "extends": "@app/tsconfig/node16.json",
+  "extends": "@app/tsconfig/node18.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./dist"
