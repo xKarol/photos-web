@@ -1,3 +1,5 @@
+import { apiUrls } from "@app/config";
+
 import express from "express";
 
 import * as newsletterController from "../controllers/newsletter";
@@ -7,7 +9,7 @@ import * as Schema from "../schemas/newsletter";
 const router = express.Router();
 
 router.post(
-  "/newsletter/subscribe",
+  apiUrls.newsletter.subscribe,
   validateSchema(Schema.subscribeNewsletter),
   newsletterController.Subscribe
 );

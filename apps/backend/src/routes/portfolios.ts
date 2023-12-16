@@ -1,3 +1,5 @@
+import { apiUrls } from "@app/config";
+
 import express from "express";
 
 import * as portfoliosController from "../controllers/portfolios";
@@ -8,42 +10,40 @@ import * as Schema from "../schemas/portfolios";
 const router = express.Router();
 
 router.get(
-  "/portfolios",
+  apiUrls.portfolio.findAll,
   validateSchema(Schema.getPortfolios),
   portfoliosController.Get
 );
 
+router.get(
+  apiUrls.portfolio.findOne(":slug"),
+  validateSchema(Schema.getPortfolio),
+  portfoliosController.GetOne
+);
+
 router.post(
-  "/portfolios",
+  apiUrls.portfolio.create,
   requireAuth,
   validateSchema(Schema.createPortfolio),
   portfoliosController.Create
 );
 
-router.get(
-  "/portfolios/:slug",
-  validateSchema(Schema.getPortfolio),
-  portfoliosController.GetOne
-);
-
 router.delete(
-  "/portfolios/:slug",
+  apiUrls.portfolio.delete(":slug"),
   requireAuth,
   validateSchema(Schema.deletePortfolio),
   portfoliosController.Delete
 );
 
-// Portfolio images
-
 router.put(
-  "/portfolios/:slug/images",
+  apiUrls.portfolio.updateImages(":slug"),
   requireAuth,
   validateSchema(Schema.updatePortfolioImages),
   portfoliosController.UpdateImages
 );
 
 router.put(
-  "/portfolios/:slug/name",
+  apiUrls.portfolio.updateName(":slug"),
   requireAuth,
   validateSchema(Schema.updatePortfolioNameSchema),
   portfoliosController.UpdateName

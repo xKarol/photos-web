@@ -1,3 +1,5 @@
+import { apiUrls } from "@app/config";
+
 import express from "express";
 
 import { cloudinaryConfig } from "../config/cloudinary";
@@ -10,7 +12,7 @@ const router = express.Router();
 cloudinaryConfig();
 
 router.get(
-  "/images/:id",
+  apiUrls.image.findOne(":id"),
   validateSchema(getImageSchema),
   imageController.GetOne
 );

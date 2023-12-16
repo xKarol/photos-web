@@ -1,3 +1,5 @@
+import { apiUrls } from "@app/config";
+
 import express from "express";
 
 import * as contactController from "../controllers/contact";
@@ -8,13 +10,13 @@ import * as Schema from "../schemas/contact";
 const router = express.Router();
 
 router.post(
-  "/contact",
+  apiUrls.contact.create,
   validateSchema(Schema.createContact),
   contactController.Create
 );
 
 router.delete(
-  "/contact/:contactId",
+  apiUrls.contact.delete(":contactId"),
   requireAuth,
   validateSchema(Schema.deleteContact),
   contactController.Delete

@@ -1,0 +1,16 @@
+{
+  "name": "@app/config",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "tsup ./src/index.ts --target node18 --format cjs,esm --dts"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "extends": "@app/tsconfig/base",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}

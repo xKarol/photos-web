@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@app/config": "*",
     "@app/schemas": "*",
     "@faker-js/faker": "^8.0.1",
     "@mailchimp/mailchimp_marketing": "^3.0.80",

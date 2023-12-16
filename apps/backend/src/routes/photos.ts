@@ -1,3 +1,5 @@
+import { apiUrls } from "@app/config";
+
 import express from "express";
 
 import { cloudinaryConfig } from "../config/cloudinary";
@@ -16,22 +18,26 @@ const router = express.Router();
 cloudinaryConfig();
 
 router.post(
-  "/photos",
+  apiUrls.photo.create,
   requireAuth,
   upload.single("image"),
   photosController.Create
 );
 
 router.get(
-  "/photos/:photoId",
+  apiUrls.photo.findOne(":photoId"),
   validateSchema(getPhotoSchema),
   photosController.GetOne
 );
 
-router.get("/photos", validateSchema(getPhotosSchema), photosController.Get);
+router.get(
+  apiUrls.photo.findAll,
+  validateSchema(getPhotosSchema),
+  photosController.Get
+);
 
 router.delete(
-  "/photos/:photoId",
+  apiUrls.photo.delete(":photoId"),
   requireAuth,
   validateSchema(deletePhotoSchema),
   photosController.Delete

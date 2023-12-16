@@ -18,6 +18,7 @@
     "e2e:ui": "npx playwright test --ui"
   },
   "dependencies": {
+    "@app/config": "*",
     "@app/schemas": "*",
     "@headlessui/react": "^1.7.4",
     "@hookform/resolvers": "^3.0.0",
