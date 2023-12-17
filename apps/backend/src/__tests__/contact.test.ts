@@ -1,4 +1,5 @@
 import prisma from "@app/prisma";
+import type { Contact } from "@app/types";
 
 import { faker } from "@faker-js/faker";
 import supertest from "supertest";
@@ -73,7 +74,7 @@ describe("Contact", () => {
   });
 });
 
-function createFakeContactData() {
+function createFakeContactData(): Contact.CreateContactPayload {
   const input: Schema.CreateContact["body"] = {
     email: faker.internet.email(),
     firstName: faker.person.firstName(),

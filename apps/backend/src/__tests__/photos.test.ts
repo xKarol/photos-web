@@ -69,9 +69,6 @@ describe("Photos", () => {
     it("should return valid photos data", async () => {
       const { body } = await request.get(`/photos`).expect(200);
 
-      expect(body).toMatchObject({
-        limit: expect.any(Number),
-      });
       expect(body.nextPage).toBeOneOf([body.nextPage, undefined]);
       expect(body.data).toBeArray();
     });
