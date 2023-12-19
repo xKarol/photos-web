@@ -7,13 +7,13 @@ module.exports = {
     "plugin:unicorn/recommended",
     "plugin:prettier/recommended",
   ],
+  plugins: ["@typescript-eslint"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: ["./tsconfig.json"],
+    tsconfigRootDir: __dirname,
+    project: ["./apps/*/tsconfig.json", "./packages/*/tsconfig.json"],
   },
   rules: {
-    "no-console": 1,
-    "prettier/prettier": "error",
     "@typescript-eslint/consistent-type-imports": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
     "unicorn/prevent-abbreviations": "off",
@@ -21,21 +21,6 @@ module.exports = {
     "unicorn/better-regex": "off",
     "unicorn/catch-error-name": "off",
     "unicorn/prefer-top-level-await": "off",
-  },
-  settings: {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts"],
-    },
-    "import/resolver": {
-      node: {
-        extensions: [".js", ".ts"],
-        moduleDirectory: ["node_modules", "src/"],
-      },
-      typescript: {
-        alwaysTryTypes: true,
-        project: ".",
-      },
-    },
   },
   ignorePatterns: ["node_modules"],
 };
