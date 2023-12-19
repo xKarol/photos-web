@@ -11,9 +11,9 @@ export type LogoProps = {
 
 const Logo = ({ href = routes.HOME, ...rest }: LogoProps) => {
   return (
-    <figure className="w-[40px]">
+    <figure className="relative h-[40px] w-[40px]">
       <Link href={href}>
-        <Image {...rest} src={logoSrc} alt="logo" />
+        <Image {...rest} src={logoSrc} alt="logo" fill />
       </Link>
     </figure>
   );
