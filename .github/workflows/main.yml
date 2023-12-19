@@ -11,8 +11,8 @@ jobs:
       - name: Build packages
         run: npx lerna run build --ignore="{web,backend}"
 
-      - name: Eslint
-        run: npm run lint
+      - name: Lint
+        run: npx lerna run lint
 
       - name: Type Check
         run: npm run type-check
