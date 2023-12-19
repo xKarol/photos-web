@@ -3,6 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import React, { useState } from "react";
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Hydrate state={pageProps.dehydratedState}>
           <Component {...pageProps} />
           <ReactQueryDevtools />
+          <Analytics />
         </Hydrate>
       </QueryClientProvider>
     </>
