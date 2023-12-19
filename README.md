@@ -38,8 +38,10 @@ This project is a web application built with Next.js and Express.js. The Photo P
   - [/backend](./apps/backend)
   - [/web](./apps/web)
 - /packages
+  - [/config](./packages/config)
   - [/eslint-config](./packages/eslint-config)
   - [/prettier-config](./packages/prettier-config)
+  - [/prisma](./packages/prisma)
   - [/schemas](./packages/schemas)
   - [/tsconfig](./packages/tsconfig)
   - [/types](./packages/types)
@@ -50,8 +52,8 @@ This project is a web application built with Next.js and Express.js. The Photo P
 <img src="https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fphotos-web-web.vercel.app%2F" />
 </a>
 
-<a href="https://magenta-harmony-production.up.railway.app" target="blank">
-<img src="https://img.shields.io/website?label=backend&style=flat-square&url=https%3A%2F%2Fmagenta-harmony-production.up.railway.app%2Fhealth-check" />
+<a href="https://photos-backend.onrender.com" target="blank">
+<img src="https://img.shields.io/website?label=backend&style=flat-square&url=https%3A%2F%2Fphotos-backend.onrender.com%2Fhealth-check" />
 </a>
 
 ## 🛠️ Installation Steps
