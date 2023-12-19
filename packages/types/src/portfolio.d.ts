@@ -14,6 +14,10 @@ export interface Api {
 
 // @ts-expect-error
 export interface Services extends Api {
+  create: (
+    payload: CreatePortfolioPayload & { slug: string }
+  ) => Promise<ApiResponse["create"]>;
+
   findAll: (params: ServerPaginationParams) => Promise<ApiResponse["findAll"]>;
   updateName: (
     portfolioSlug: string,
