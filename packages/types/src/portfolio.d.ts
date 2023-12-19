@@ -36,7 +36,6 @@ export type ApiResponse = {
 };
 
 export type CreatePortfolioPayload = {
-  slug: string;
   name: string;
   images: string[];
 };
