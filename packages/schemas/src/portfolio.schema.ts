@@ -1,14 +1,11 @@
+import type { Portfolio } from "@app/types";
 import { z } from "zod";
-import type { API } from "@app/types";
 
-export type CreatePortfolio = Pick<API["Portfolios"]["Create"], "name"> & {
-  images: string[];
-};
-
-export const createPortfolio: z.Schema<CreatePortfolio> = z.object({
-  name: z.string().min(3),
-  images: z.array(z.string()),
-});
+export const createPortfolio: z.Schema<Portfolio.CreatePortfolioPayload> =
+  z.object({
+    name: z.string().min(3),
+    images: z.array(z.string()),
+  });
 
 export const requiredPortfolioSlug = z.object({
   slug: z.string({

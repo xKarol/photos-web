@@ -1,12 +1,7 @@
+import type { Contact } from "@app/types";
 import { z } from "zod";
-import type { API } from "@app/types";
 
-export type CreateSchema = Pick<
-  API["Contact"]["Create"],
-  "firstName" | "lastName" | "email" | "subject" | "message"
->;
-
-export const createContact: z.Schema<CreateSchema> = z.object({
+export const createContact: z.Schema<Contact.CreateContactPayload> = z.object({
   firstName: z.string({ required_error: "First Name is required." }).min(2),
   lastName: z.string({ required_error: "Last Name is required." }).min(2),
   email: z.string({ required_error: "Email is required." }).email(),
