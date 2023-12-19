@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@app/config": "*",
+    "@app/prisma": "*",
     "@app/schemas": "*",
     "@faker-js/faker": "^8.0.1",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
@@ -51,7 +52,6 @@
   "devDependencies": {
     "@app/eslint-config": "*",
     "@app/prettier-config": "*",
-    "@app/prisma": "*",
     "@app/tsconfig": "*",
     "@app/types": "*",
     "@types/cors": "^2.8.13",
