@@ -8,8 +8,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Build packages
+        run: npx lerna run build --ignore="{web,backend}"
+
       - name: Eslint
         run: npm run lint
 
-      # - name: Type Check
-      #   run: cd apps/backend && npx prisma generate && cd ../../ && npm run type-check
+      - name: Type Check
+        run: npm run type-check
