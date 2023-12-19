@@ -5,6 +5,6 @@ import { server } from "./src/mocks/server";
 
 dotenv.config({ path: "./.env.test" });
 
-beforeAll(() => server.listen({ onUnhandledRequest: "warn" }));
+beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
