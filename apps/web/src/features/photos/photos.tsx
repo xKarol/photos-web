@@ -5,18 +5,17 @@ import EmptyState from "../../components/empty-state";
 import Spinner from "../../components/spinner";
 import useLightbox from "../../hooks/use-lightbox";
 import PhotosColumns from "./components/photos-columns";
-import { usePhotosRef } from "./hooks/use-photos-ref";
+import { usePhotos } from "./hooks";
 
 const Photos = () => {
   const {
-    ref,
     data: photos,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isLoading,
     refetch,
-  } = usePhotosRef();
+  } = usePhotos();
   const { Lightbox } = useLightbox();
 
   const isEmptyState = !photos?.[0]?.id;
@@ -35,7 +34,7 @@ const Photos = () => {
           <>
             {isLoading ? null : <PhotosColumns photos={photos} />}
             {hasNextPage ? (
-              <div className="mx-auto mt-[2.5rem]" ref={ref}>
+              <div className="mx-auto mt-[2.5rem]">
                 {isFetching ? (
                   <Spinner color="black" />
                 ) : (

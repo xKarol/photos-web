@@ -1,7 +1,4 @@
-import { setupIntersectionMocking } from "react-intersection-observer/test-utils";
-
-setupIntersectionMocking(jest.fn);
-
+// eslint-disable-next-line unicorn/no-empty-file
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
