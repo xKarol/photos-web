@@ -3,7 +3,7 @@ import type { Photo } from "@app/types";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
-import cache from "../lib/cache";
+import { apicache } from "../lib/cache-manager";
 import type {
   DeletePhotoSchema,
   GetPhotoSchema,
@@ -85,7 +85,7 @@ export const Delete = async (
     await deleteCloudinaryImageById(photoId);
     await deletePhoto(photoId);
 
-    cache.del(photoId);
+    apicache.clear("");
 
     return res.sendStatus(200);
   } catch (error) {

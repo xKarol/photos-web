@@ -7,6 +7,7 @@ import * as photosController from "../controllers/photos";
 import { upload } from "../middlewares/multer";
 import { requireAuth } from "../middlewares/require-auth";
 import { validateSchema } from "../middlewares/validate-schema";
+import { withCache } from "../middlewares/with-cache";
 import { withPagination } from "../middlewares/with-pagination";
 import {
   deletePhotoSchema,
@@ -28,6 +29,7 @@ router.post(
 router.get(
   apiUrls.photo.findOne(":photoId"),
   validateSchema(getPhotoSchema),
+  withCache("2 hours"),
   photosController.GetOne
 );
 
@@ -35,6 +37,7 @@ router.get(
   apiUrls.photo.findAll,
   validateSchema(getPhotosSchema),
   withPagination,
+  withCache("2 hours"),
   photosController.Get
 );
 
