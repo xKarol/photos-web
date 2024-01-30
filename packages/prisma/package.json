@@ -14,7 +14,7 @@
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
-    "db:seed:clear": "ts-node prisma/seed.ts --clear",
+    "db:seed:clear": "ts-node seed.ts --clear",
     "post-install": "prisma generate"
   },
   "prisma": {
