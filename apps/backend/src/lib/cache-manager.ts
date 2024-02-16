@@ -1,7 +1,7 @@
 import apicache from "apicache";
 
 apicache.options({
-  debug: true,
+  debug: false,
 });
 
 export { default as apicache } from "apicache";
