@@ -1,5 +1,5 @@
 import { QueryClient, dehydrate } from "@tanstack/react-query";
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import { NextSeo } from "next-seo";
 
 import Layout from "../components/layout";
@@ -8,7 +8,7 @@ import { Header } from "../features/header";
 import { Photos } from "../features/photos";
 import { queryOptions } from "../features/photos/config/react-query";
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery(queryOptions.findAll());
 
@@ -17,7 +17,7 @@ export async function getStaticProps() {
       dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
     },
   };
-}
+};
 
 const Home: NextPage = () => {
   return (
