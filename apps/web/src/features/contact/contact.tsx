@@ -14,7 +14,7 @@ const Contact = () => {
           width={500}
           height={600}
           style={{ objectFit: "cover" }}
-          className="max-h-[600px] w-full"
+          className="max-h-[600px]"
         />
       </div>
       <div className="flex-1">
