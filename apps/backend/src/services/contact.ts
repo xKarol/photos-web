@@ -13,10 +13,6 @@ export const createContact: Contact.Services["create"] = async (data) => {
 };
 
 export const deleteContact: Contact.Services["delete"] = async (contactId) => {
-  try {
-    const response = await prisma.contact.delete({ where: { id: contactId } });
-    return response;
-  } catch {
-    throw createError(404, "Contact not found.");
-  }
+  const response = await prisma.contact.delete({ where: { id: contactId } });
+  return response;
 };

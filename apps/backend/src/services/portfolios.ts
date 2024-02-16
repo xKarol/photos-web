@@ -1,8 +1,6 @@
 import prisma from "@app/prisma";
 import type { Portfolio } from "@app/types";
 
-import createError from "http-errors";
-
 import { getPaginationData } from "../utils/misc";
 
 export const getPortfolios: Portfolio.Services["findAll"] = async ({
@@ -24,81 +22,61 @@ export const getPortfolios: Portfolio.Services["findAll"] = async ({
 export const getPortfolio: Portfolio.Services["findOne"] = async (
   portfolioSlug
 ) => {
-  try {
-    const data = await prisma.portfolios.findUniqueOrThrow({
-      where: { slug: portfolioSlug },
-      include: { images: true },
-    });
-    return data;
-  } catch {
-    throw createError(404, "Portfolio not found.");
-  }
+  const data = await prisma.portfolios.findUniqueOrThrow({
+    where: { slug: portfolioSlug },
+    include: { images: true },
+  });
+  return data;
 };
 
 export const createPortfolio: Portfolio.Services["create"] = async (
   payload
 ) => {
-  try {
-    const { slug, name, images } = payload;
-    const response = (await prisma.portfolios.create({
-      data: {
-        slug,
-        name,
-        images: { connect: transformImages(images) },
-      },
-    })) as Awaited<ReturnType<Portfolio.Services["create"]>>; //TODO why prisma return wrong types?
-    return response;
-  } catch {
-    throw createError(400, "Could not create portfolio.");
-  }
+  const { slug, name, images } = payload;
+  const response = (await prisma.portfolios.create({
+    data: {
+      slug,
+      name,
+      images: { connect: transformImages(images) },
+    },
+  })) as Awaited<ReturnType<Portfolio.Services["create"]>>; //TODO why prisma return wrong types?
+  return response;
 };
 
 export const deletePortfolio: Portfolio.Services["delete"] = async (
   portfolioSlug
 ) => {
-  try {
-    const response = await prisma.portfolios.delete({
-      where: { slug: portfolioSlug },
-    });
-    return response;
-  } catch {
-    throw createError(404, "Photo not found.");
-  }
+  const response = await prisma.portfolios.delete({
+    where: { slug: portfolioSlug },
+  });
+  return response;
 };
 
 export const updateName: Portfolio.Services["updateName"] = async (
   portfolioSlug,
   newName
 ) => {
-  try {
-    const response = await prisma.portfolios.update({
-      where: { slug: portfolioSlug },
-      data: {
-        name: newName,
-      },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not update portfolio.");
-  }
+  const response = await prisma.portfolios.update({
+    where: { slug: portfolioSlug },
+    data: {
+      name: newName,
+    },
+  });
+  return response;
 };
 
 export const updateImages: Portfolio.Services["updateImages"] = async (
   portfolioSlug,
   imagesIds
 ) => {
-  try {
-    const response = await prisma.portfolios.update({
-      where: { slug: portfolioSlug },
-      data: {
-        images: { set: transformImages(imagesIds) },
-      },
-      include: { images: true },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not update portfolio images.");
-  }
+  const response = await prisma.portfolios.update({
+    where: { slug: portfolioSlug },
+    data: {
+      images: { set: transformImages(imagesIds) },
+    },
+    include: { images: true },
+  });
+  return response;
 };
 
 function transformImages(images: string[]) {

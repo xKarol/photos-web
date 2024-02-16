@@ -18,5 +18,6 @@ export const subscribeToNewsletter: Newsletter.Services["subscribe"] = async ({
     return response;
   } catch (e) {
     logger.error("User could not subscribe to the newsletter.", e);
+    throw e;
   }
 };
