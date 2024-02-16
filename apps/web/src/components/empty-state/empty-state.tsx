@@ -25,7 +25,7 @@ const EmptyState = ({
       aria-label="No data available"
     >
       <Lottie
-        className="mx-auto w-[150px] max-w-[300px] "
+        className="mx-auto h-40 w-[150px] max-w-[400px]"
         animationData={emptyStateAnimation}
         loop={true}
         aria-label="Animation of empty state"
