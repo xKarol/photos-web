@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <NextSeo title="About" />
       <Header />
       <Layout as="main">
-        <div className="flex flex-col space-y-10 md:flex-row md:space-x-10 md:space-y-0">
+        <div className="flex flex-col space-y-20 md:flex-row md:space-x-10 md:space-y-0 lg:space-x-20">
           <figure className="flex-1">
             <Image
               src={aboutImg}
