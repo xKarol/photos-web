@@ -16,7 +16,8 @@ export const queryOptions = {
   ): UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPortfolios>>> => ({
     ...options,
     queryKey: queryKeys.findAll,
-    queryFn: ({ pageParam = 1 }) => getPortfolios(pageParam ?? 1),
+    queryFn: ({ pageParam = 1 }) =>
+      getPortfolios({ page: pageParam ?? 1, limit: 10 }),
     getNextPageParam: ({ nextPage }) => nextPage,
   }),
   findOne: (
