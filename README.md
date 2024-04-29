@@ -17,10 +17,6 @@
 <img src="https://github.com/xKarol/photos-web/actions/workflows/test.yml/badge.svg?branch=main&event=push" alt="testing" />
 </a>
 
-<a href="https://img.shields.io/snyk/vulnerabilities/github/xkarol/photos-web?style=flat-badge" target="blank">
-<img src="https://img.shields.io/snyk/vulnerabilities/github/xkarol/photos-web?style=flat-badge" alt="vulnerabilities" />
-</a>
-
 </p>
 
 ## ❔ About
@@ -30,7 +26,8 @@ This project is a web application built with Next.js and Express.js. The Photo P
 ### 🔍 Prerequisites
 
 - NodeJS
-- Docker (optional)
+- Yarn
+- Docker
 
 ## 📁 Folder structure
 
@@ -73,7 +70,7 @@ cd photos-web
 3. Install dependencies
 
 ```bash
-npm install
+yarn install
 ```
 
 4. Set up `.env` file
@@ -81,7 +78,7 @@ npm install
 5. Run the app
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ## 💻 Built with
