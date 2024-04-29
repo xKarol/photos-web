@@ -9,6 +9,7 @@ test.describe("Accessibility", () => {
       page,
     }, testInfo) => {
       await page.goto(pagePath);
+      // @ts-ignore
       const results = await new AxeBuilder({ page }).analyze();
       await testInfo.attach("accessibility-violations", {
         body: JSON.stringify(results.violations, null, 2),
